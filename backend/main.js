@@ -17,6 +17,7 @@ fastify.get('/', async function (req, rep) {
 })
 
 fastify.register(require('./routes/youtube'), { prefix: 'youtube' })
+fastify.register(require('./routes/soundcloud'), { prefix: 'soundcloud' })
 
 fastify.listen(3000).then(() => {
     console.log("Server listening..")
