@@ -27,11 +27,7 @@ async function routes (fastify, options) {
      */
     fastify.post('/stream', async (req, rep) => {
 
-        console.log(req.body.videoID)
-
         let results = await stream(`https://www.youtube.com/watch?v=${req.body.videoID}`);
-
-        console.log(results)
 
         rep.send({
             url: results.url,
@@ -46,12 +42,7 @@ async function routes (fastify, options) {
      */
     fastify.post('/video-info', async (req, rep) => {
 
-        console.log(req.body.videoID)
-
         let results = await video_basic_info(`https://www.youtube.com/watch?v=${req.body.videoID}`);
-
-        console.log(results)
-
         rep.send(results)
     })
 }

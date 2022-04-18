@@ -37,7 +37,6 @@ async function routes (fastify, options) {
     fastify.post('/stream', async (req, rep) => {
 
         let results = await stream(`https://api.soundcloud.com/tracks/${req.body.musicID}`);
-
         rep.send({ url: results.url })
     })
 }
