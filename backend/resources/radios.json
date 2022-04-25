@@ -1,0 +1,44 @@
+{
+  "french": [
+    {
+      "name": "France Inter",
+      "image": "https://e-cdns-images.dzcdn.net/images/misc/a9acbb7432e2431eca378da16aa0a64c/264x264-000000-80-0-0.jpg",
+      "stream": "https://icecast.radiofrance.fr/franceinter-midfi.mp3",
+      "current": false
+    },
+    {
+      "name": "NRJ",
+      "image": "https://e-cdns-images.dzcdn.net/images/misc/4aa5aa686430c52345f168441995e2f4/264x264-000000-80-0-0.jpg",
+      "stream": "https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3",
+      "current": false
+    },
+    {
+      "name": "Rire & Chansons",
+      "image": "https://e-cdns-images.dzcdn.net/images/misc/7765f2b60a8ddb42dabe8411f29c824c/264x264-000000-80-0-0.jpg",
+      "stream": "https://scdn.nrjaudio.fm/fr/30401/mp3_128.mp3",
+      "current": false
+    },
+    {
+      "name": "RFM",
+      "image": "https://e-cdns-images.dzcdn.net/images/misc/168bdb624ba5019363bf260004b6b2a3/264x264-000000-80-0-0.jpg",
+      "stream": "https://ais-live.cloud-services.paris:8443/rfm.aac",
+      "current": false
+    },
+    {
+      "name": "Virgin Radio",
+      "image": "https://e-cdns-images.dzcdn.net/images/misc/dcffdcd67188c161b4ba823cacd073f6/264x264-000000-80-0-0.jpg",
+      "stream": "https://ais-live.cloud-services.paris:8443/virgin.aac",
+      "current": false
+    },
+    {
+      "name": "radiopommedapi",
+      "image": "https://www.radiopommedapi.com/wp-content/uploads/2014/05/copy-LogoRadioPommeDapi-e1400085058915-150x150.png",
+      "stream": "https://listen.radioking.com/radio/361753/stream/411352",
+      "current": {
+        "ws": false,
+        "xml": false,
+        "basic": "https://api.radioking.io/widget/radio/radio-pomme-dapi/track/current"
+      }
+    }
+  ]
+}

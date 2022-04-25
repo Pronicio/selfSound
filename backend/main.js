@@ -17,6 +17,8 @@ fastify.get('/', async function (req, rep) {
 })
 
 fastify.register(require('./routes/deezer'), { prefix: 'standard' })
+fastify.register(require('./routes/radio'), { prefix: 'radio' })
+fastify.register(require('./routes/lyrics'), { prefix: 'lyrics' })
 fastify.register(require('./routes/youtube'), { prefix: 'youtube' })
 fastify.register(require('./routes/soundcloud'), { prefix: 'soundcloud' })
 
