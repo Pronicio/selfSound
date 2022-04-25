@@ -12,6 +12,7 @@
   "dependencies": {
     "fastify": "^3.28.0",
     "fastify-cors": "^6.0.3",
+    "genius-lyrics": "^4.3.6",
     "nodemon": "^2.0.15",
     "play-dl": "^1.9.4"
   }
