@@ -8,10 +8,6 @@ async function routes (fastify, options) {
         }
     }))
 
-    fastify.get('/', async (req, rep) => {
-        return { hello: 'world' }
-    })
-
     /**
      * Search music in SoundCloud
      * @body {string} query The title to search

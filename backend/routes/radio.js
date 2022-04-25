@@ -1,11 +1,6 @@
 const radios = require('../resources/radios.json')
 
 async function routes (fastify, options) {
-
-    fastify.get('/', async (req, rep) => {
-        return { hello: 'world' }
-    })
-
     /**
      * Get all famous french radio
      */
