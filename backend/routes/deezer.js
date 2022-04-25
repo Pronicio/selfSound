@@ -29,8 +29,16 @@ async function routes (fastify, options) {
      * @body {string} musicID The musicID of the music
      */
     fastify.post('/music', async (req, rep) => {
-
         let results = await deezer(`https://www.deezer.com/track/${req.body.musicID}`);
+        rep.send(results)
+    })
+
+    /**
+     * Get the Trend playlist
+     * @body {string} musicID The musicID of the music
+     */
+    fastify.get('/trend', async (req, rep) => {
+        let results = await deezer(`https://www.deezer.com/en/playlist/53362031`);
         rep.send(results)
     })
 }
