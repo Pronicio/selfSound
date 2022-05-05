@@ -1,3 +1,5 @@
+const config = require("./config.json")
+
 const fastify = require('fastify')({
     logger: false,
     trustProxy: true
@@ -22,6 +24,8 @@ fastify.register(require('./routes/lyrics'), { prefix: 'lyrics' })
 fastify.register(require('./routes/youtube'), { prefix: 'youtube' })
 fastify.register(require('./routes/soundcloud'), { prefix: 'soundcloud' })
 
-fastify.listen(3000).then(() => {
+fastify.listen(config.port).then(() => {
     console.log("Server listening..")
 })
+
+module.exports = fastify;

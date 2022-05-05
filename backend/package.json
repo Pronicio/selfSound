@@ -2,7 +2,7 @@
   "name": "selfsound",
   "version": "1.0.0",
   "description": "The selfSound Backend",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "start": "node .",
     "dev": "nodemon"
