@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button  } from 'react-native';
+import { StyleSheet, Text, View, Button, Appearance   } from 'react-native';
 import { Audio } from 'expo-av';
 import { AdMobBanner, AdMobInterstitial, AdMobRewarded } from 'expo-ads-admob';
 
@@ -9,9 +9,10 @@ export default function App() {
   const [sound, setSound] = React.useState();
 
   async function playSound() {
-    const { sound } = await Audio.Sound.createAsync({
-      uri: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-    });
+    const { sound } = await Audio.Sound.createAsync(
+        { uri: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+        { shouldPlay: true }
+    );
     setSound(sound);
 
     await sound.playAsync();
@@ -21,20 +22,12 @@ export default function App() {
     await sound.stopAsync()
   }
 
-  React.useEffect(() => {
-    return sound
-        ? () => {
-          sound.unloadAsync(); }
-        : undefined;
-  }, [sound]);
-
   async function popAd() {
     await AdMobInterstitial.setAdUnitID('ca-app-pub-1686394253591485/6567582620');
     await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true});
     await AdMobInterstitial.showAdAsync();
   }
-
-    async function rewardedAd() {
+  async function rewardedAd() {
         await AdMobRewarded.setAdUnitID('ca-app-pub-1686394253591485/4349694963');
         await AdMobRewarded.requestAdAsync();
         await AdMobRewarded.showAdAsync();
@@ -49,6 +42,8 @@ export default function App() {
       <Text>Open up App.js to start working on your app!</Text>
       <Button title="Play Sound" onPress={playSound} />
       <Button title="Stop Sound" onPress={stopSound} />
+
+      <Text>Theme : {Appearance.getColorScheme()}</Text>
 
       <Button title="Pop Ad" onPress={popAd} />
         <Button title="Rewarded Ad" onPress={rewardedAd} />
