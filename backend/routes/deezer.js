@@ -1,4 +1,5 @@
-const { search, deezer } = require('play-dl');
+const { deezer } = require('play-dl');
+const axios = require('axios')
 
 async function routes (fastify, options) {
 
@@ -7,21 +8,21 @@ async function routes (fastify, options) {
     })
 
     /**
-     * Search music in deezer
+     * Search a track/album/artist... in deezer
      * @body {string} query The title to search
-     * @param {number} limit Number of musics
+     * @body {string} type The type of the element : track/album...
+     * @param {number} limit Number of elements
      */
     fastify.post('/search', async (req, rep) => {
         let query = req.body.query;
+        let type = req.body.type;
 
-        let results = await search(query, {
-            limit : req.query.limit ? parseInt(req.query.limit) : 1,
-            source : {
-                deezer : "track"
-            }
+        let res = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/search/${type}?q=${query}&limit=${req.query.limit ? parseInt(req.query.limit) : 1}`
         })
 
-        rep.send(results)
+        rep.send(res.data.data)
     })
 
     /**
