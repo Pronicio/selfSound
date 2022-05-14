@@ -1,4 +1,4 @@
-const config = require("./config.json")
+const dotenv = require('dotenv').config().parsed;
 
 const fastify = require('fastify')({
     logger: false,
@@ -24,8 +24,8 @@ fastify.register(require('./routes/lyrics'), { prefix: 'lyrics' })
 fastify.register(require('./routes/youtube'), { prefix: 'youtube' })
 fastify.register(require('./routes/soundcloud'), { prefix: 'soundcloud' })
 
-fastify.listen(config.port).then(() => {
-    console.log("Server listening..")
+fastify.listen(process.env.PORT, '0.0.0.0').then(() => {
+    console.log(`Server listening.. PORT: ${process.env.PORT}`)
 })
 
 module.exports = fastify;
