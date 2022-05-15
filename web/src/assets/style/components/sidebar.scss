@@ -1,0 +1,18 @@
+.sidebar {
+  width: 15.6vw;
+  height: 100vh;
+  border: red 2px solid;
+
+  img {
+    margin: 15px;
+  }
+}
+
+ul, li {
+  all: unset;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+}
