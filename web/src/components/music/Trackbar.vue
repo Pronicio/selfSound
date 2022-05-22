@@ -6,7 +6,6 @@
         <p>all I want is you (feat. hoshie star)</p>
         <p class="sub-text">Rebzyyx</p>
       </div>
-      <img width="30" src="../../assets/images/icons/heart_full.svg" alt=""/>
     </div>
     <div class="progressbar">
       <div class="controls">
@@ -18,11 +17,12 @@
       </div>
       <div class="slider">
         <p id="rangeValue"> {{ sliderValue }}</p>
-        <input @mousemove="changeProgress" type="range" id="slider" value="1">
+        <input @click="changeProgress" type="range" id="slider" value="1">
         <p id="rangeValueFinal">2:30</p>
       </div>
     </div>
     <div class="tools">
+      <div id="like"></div>
       <div id="lyrics"></div>
       <div id="volume"></div>
       <div id="arrow"></div>
@@ -36,7 +36,7 @@ export default {
   name: "TrackBar",
   data: function () {
     return {
-      sliderValue: 0
+      sliderValue: "00:00"
     }
   },
   mounted: function () {},

@@ -29,11 +29,6 @@ p {
 .track {
   display: flex;
 
-  img {
-    margin: 10px 10px 10px 30px;
-    cursor: pointer;
-  }
-
   div p {
     cursor: pointer;
 
@@ -48,7 +43,7 @@ p {
   flex-direction: column;
 
   width: 50vw;
-  margin-left: 6vw;
+  margin-left: 2vw;
 
   .controls {
     display: flex;
@@ -93,6 +88,7 @@ p {
 
     input {
       width: 100%;
+      accent-color: $color;
     }
   }
 }
@@ -114,6 +110,12 @@ p {
     }
   }
 
+  #like {
+    background: url("src/assets/images/icons/heart_full.svg") no-repeat;
+    background-size: 2rem;
+    fill: #b3b3b3;
+  }
+
   #lyrics {
     background: url("src/assets/images/icons/lyrics.svg") no-repeat;
     background-size: 2rem;
@@ -129,5 +131,6 @@ p {
   #arrow {
     background: url("src/assets/images/icons/arrow.svg") no-repeat;
     background-size: 2rem;
+    margin-left: 5vw;
   }
 }
