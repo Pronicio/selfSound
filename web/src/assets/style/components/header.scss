@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  align-items: center;
+
+  margin-left: 15.6vw;
+  width: 100%;
+  height: 8vh;
+
+  border-bottom: $separators 1px solid;
+
+  img {
+    border-radius: 50%;
+  }
+}

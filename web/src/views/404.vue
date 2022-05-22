@@ -21,8 +21,8 @@ h1 {
   color: $color;
   margin: 0 auto;
   position: relative;
-  top: 24vh;
-  left: 27vw;
+  top: 17vh;
+  left: 25vw;
   font-size: 15rem;
 }
 

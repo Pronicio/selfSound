@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <Sidebar/>
   <main>
     <router-view/>
@@ -7,14 +8,14 @@
 </template>
 
 <script>
-
+import Header from './components/partials/Header.vue'
 import Sidebar from './components/partials/Sidebar.vue'
 import Trackbar from './components/music/Trackbar.vue'
 
 export default {
   name: "Home",
   components: {
-    Sidebar, Trackbar
+    Sidebar, Trackbar, Header
   },
   data: function () {
     return {}
