@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-    { path: '/:catchAll(.*)', redirect: '/' },
+    {
+        path: '/:catchAll(.*)',
+        component: () => import('../views/404.vue')
+    },
     {
         path: '/',
         name: 'Home',
