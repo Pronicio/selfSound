@@ -1,6 +1,8 @@
 <template>
   <Sidebar />
-  <router-view/>
+  <main>
+    <router-view/>
+  </main>
   <Trackbar />
 </template>
 

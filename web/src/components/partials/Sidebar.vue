@@ -2,10 +2,11 @@
   <div class="sidebar">
     <img src="../../assets/images/logo.svg"  alt="logo"/>
 
-    <div>
+    <div class="nav">
       <ul>
-        <li>Accueil</li>
-        <li>Découvrir</li>
+        <li @click="this.$router.push('Home')" :class="`primitive ${this.$route.name === 'Home' ? 'selected' : ''}`"><div class="home"></div> Accueil</li>
+        <li @click="this.$router.push('Discover')" :class="`primitive ${this.$route.name === 'Discover' ? 'selected' : ''}`"><div class="discover"></div> Découvrir</li>
+        <li @click="this.$router.push('Radio')" :class="`primitive ${this.$route.name === 'Radio' ? 'selected' : ''}`"><div class="radio"></div> Radios</li>
 
         <li>Bibliothèque :</li>
         <ul>
@@ -25,6 +26,18 @@
     </div>
   </div>
 </template>
+
+<script>
+
+export default {
+  name: "SideBar",
+  data: function () {
+    return {}
+  },
+  methods: {}
+}
+
+</script>
 
 <style lang="scss">
 @import '../../assets/style/components/sidebar.scss';

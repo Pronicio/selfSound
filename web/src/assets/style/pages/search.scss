@@ -34,12 +34,24 @@ input {
   }
 }
 
+h1, h3, label {
+  color: $text;
+}
+
 h4 {
-  color: #000000;
+  color: $text;
   margin: 5px 0 0 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.sub-text:hover {
+  text-decoration: underline;
 }
 
 p {
-  color: #000000;
+  color: $text;
   margin: 0;
 }

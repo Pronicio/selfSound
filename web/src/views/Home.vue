@@ -1,3 +1,7 @@
+<template>
+  <h1>SelfSound : Hello World</h1>
+</template>
+
 <script>
 
 export default {
@@ -10,6 +14,7 @@ export default {
 
 </script>
 
-<template>
-  <h1>SelfSound : Hello World</h1>
-</template>
+
+<style lang="scss">
+@import '../assets/style/pages/home.scss';
+</style>

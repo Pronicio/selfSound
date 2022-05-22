@@ -4,14 +4,15 @@
     <div class="track">
       <div>
         <p>all I want is you (feat. hoshie star)</p>
-        <p>Rebzyyx</p>
+        <p class="sub-text">Rebzyyx</p>
       </div>
-      <img width="30" src="../../assets/images/icons/full_heart.svg" alt=""/>
+      <img width="30" src="../../assets/images/icons/heart_full.svg" alt=""/>
     </div>
     <div class="progressbar">
       <div class="controls">
         <div id="shuffle"></div>
         <div id="backward"></div>
+        <div id="play"></div>
         <div id="forward"></div>
         <div id="repeat-mode"></div>
       </div>
@@ -21,7 +22,11 @@
         <p id="rangeValueFinal">2:30</p>
       </div>
     </div>
-    <div class="tools"></div>
+    <div class="tools">
+      <div id="lyrics"></div>
+      <div id="volume"></div>
+      <div id="arrow"></div>
+    </div>
   </div>
 </template>
 
@@ -31,11 +36,10 @@ export default {
   name: "TrackBar",
   data: function () {
     return {
-      sliderValue: 1
+      sliderValue: 0
     }
   },
-  mounted: function () {
-  },
+  mounted: function () {},
   methods: {
     changeProgress: function () {
       this.sliderValue = document.getElementById('slider').value;

@@ -1,12 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
+$main: #171717;
+$sub-main: #272727;
+$separators: #7A8580;
+
+$color: #EE4950;
+
+$text: #FFFFFF;
+$sub-text: #AFB6B3;
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   font-style: normal;
+  background: $main;
 }
 
 #app {
   display: grid;
-  grid-template-columns: 16% 84%;
+  grid-template-columns: 100%;
+}
+
+main {
+  background: $main;
+  margin: 5px 5px 12vh 16vw;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sub-text {
+  color: $sub-text;
 }

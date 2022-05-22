@@ -8,9 +8,9 @@ const routes = [
         component: () => import('../views/Home.vue')
     },
     {
-        path: '/search',
-        name: 'Search',
-        component: () => import('../views/Search.vue')
+        path: '/discover',
+        name: 'Discover',
+        component: () => import('../views/Discover.vue')
     }
 ]
 const router = createRouter({
