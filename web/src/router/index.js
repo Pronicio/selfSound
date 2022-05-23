@@ -11,9 +11,9 @@ const routes = [
         component: () => import('../views/Home.vue')
     },
     {
-        path: '/discover',
-        name: 'Discover',
-        component: () => import('../views/Discover.vue')
+        path: '/search/:query',
+        name: 'Search',
+        component: () => import('../views/Search.vue')
     }
 ]
 const router = createRouter({

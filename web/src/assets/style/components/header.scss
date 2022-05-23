@@ -1,14 +1,56 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   margin-left: 15.6vw;
-  width: 100%;
-  height: 8vh;
 
   border-bottom: $separators 1px solid;
 
-  img {
-    border-radius: 50%;
+  .left {
+
+    form {
+      display: flex;
+      align-items: center;
+
+      margin: 7px;
+    }
+
+    .search-icon {
+      background: url("@/assets/images/icons/search.svg") no-repeat;
+      background-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+
+      cursor: pointer;
+    }
+
+    input {
+      all: unset;
+
+      margin: 7px;
+      color: $text;
+      width: 40vw;
+
+      &::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+      }
+    }
+
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin: 5px;
+      border-radius: 50%;
+    }
+
+    h4 {
+      color: $text;
+      margin: 0 10px 0 10px;
+    }
   }
 }

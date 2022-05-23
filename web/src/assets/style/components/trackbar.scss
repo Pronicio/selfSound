@@ -57,24 +57,24 @@ p {
     }
 
     #shuffle {
-      background: url("src/assets/images/icons/shuffle.svg") no-repeat;
+      background: url("@/assets/images/icons/shuffle.svg") no-repeat;
     }
 
     #backward {
-      background: url("src/assets/images/icons/backward.svg") no-repeat;
+      background: url("@/assets/images/icons/backward.svg") no-repeat;
     }
 
     #play {
-      background: url("src/assets/images/icons/play.svg") no-repeat;
+      background: url("@/assets/images/icons/play.svg") no-repeat;
     }
 
     #forward {
-      background: url("src/assets/images/icons/backward.svg") no-repeat;
+      background: url("@/assets/images/icons/backward.svg") no-repeat;
       transform: rotate(180deg);
     }
 
     #repeat-mode {
-      background: url("src/assets/images/icons/repeat.svg") no-repeat;
+      background: url("@/assets/images/icons/repeat.svg") no-repeat;
     }
   }
 
@@ -111,25 +111,25 @@ p {
   }
 
   #like {
-    background: url("src/assets/images/icons/heart_full.svg") no-repeat;
+    background: url("@/assets/images/icons/heart_full.svg") no-repeat;
     background-size: 2rem;
     fill: #b3b3b3;
   }
 
   #lyrics {
-    background: url("src/assets/images/icons/lyrics.svg") no-repeat;
+    background: url("@/assets/images/icons/lyrics.svg") no-repeat;
     background-size: 2rem;
     fill: #b3b3b3;
   }
 
   #volume {
-    background: url("src/assets/images/icons/volume.svg") no-repeat;
+    background: url("@/assets/images/icons/volume.svg") no-repeat;
     background-size: 2rem;
     fill: #b3b3b3;
   }
 
   #arrow {
-    background: url("src/assets/images/icons/arrow.svg") no-repeat;
+    background: url("@/assets/images/icons/arrow.svg") no-repeat;
     background-size: 2rem;
     margin-left: 5vw;
   }
