@@ -1,7 +1,7 @@
 <template>
   <div class="search">
 
-    <h3> Tracks : </h3>
+    <h3 v-if="searchResult.track.length"> Tracks : </h3>
 
     <div class="result">
       <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <h3> Albums : </h3>
+    <h3 v-if="searchResult.album.length"> Albums : </h3>
 
     <div class="result">
       <div v-for="item in searchResult.album" :key="item.id" :id="item.id">
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <h3> Artists : </h3>
+    <h3 v-if="searchResult.artist.length"> Artists : </h3>
 
     <div class="result">
       <div v-for="item in searchResult.artist" :key="item.id" :id="item.id">
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <h3> Playlists : </h3>
+    <h3 v-if="searchResult.playlist.length"> Playlists : </h3>
 
     <div class="result">
       <div v-for="item in searchResult.playlist" :key="item.id" :id="item.id">
@@ -50,15 +50,20 @@ export default {
     return {
       searchInput: this.$route.params.query,
       searchResult: {
-        track: null,
-        album: null,
-        artist: null,
-        playlist: null
+        track: [],
+        album: [],
+        artist: [],
+        playlist: []
       }
     }
   },
+  mounted: function () {
+    this.eventBus.on('onSearch', (data) => {
+      this.searchInput = data;
+      this.search();
+    })
+  },
   created: function () {
-    console.log("created")
     if (this.$route.params.query) {
       this.search()
     } else {
@@ -71,9 +76,9 @@ export default {
 
       const object = {
         track: 10,
-        album: 4,
+        album: 6,
         artist: 4,
-        playlist: 5
+        playlist: 7
       };
 
       for (const property in object) {

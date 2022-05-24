@@ -3,7 +3,7 @@
     <div class="left">
       <form v-on:submit.prevent="search">
         <div class="search-icon"></div>
-        <input type="search" v-model="searchInput" placeholder="Search a music...">
+        <input type="search" v-model="searchInput" placeholder="Rechercher...">
       </form>
     </div>
     <div class="right">
@@ -19,13 +19,17 @@ export default {
   name: "Header",
   data: function () {
     return {
-      searchInput: this.$route.params.query
+      searchInput: null
     }
+  },
+  mounted: function () {
+    let url = window.location.href;
+    this.searchInput = url.substring(url.indexOf('ch/')).replace('ch/', '')
   },
   methods: {
     search: function () {
-      this.$router.push({ name: 'Search', params: { query: this.searchInput } })
-      //this.eventBus.emit('onSearch', true)
+      this.$router.push({name: 'Search', params: {query: this.searchInput}})
+      this.eventBus.emit('onSearch', this.searchInput)
     }
   }
 }
