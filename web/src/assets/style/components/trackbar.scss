@@ -18,6 +18,10 @@ p {
 
   border-top: $separators 1px solid;
   background: #272727;
+
+  @media (max-width: 770px) {
+    display: none;
+  }
 }
 
 .cover {

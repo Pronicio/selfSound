@@ -24,6 +24,10 @@ body {
 main {
   background: $main;
   margin: 5px 5px 12vh 16vw;
+
+  @media (max-width: 770px) {
+    margin: 5px 5px 12vh 5px;
+  }
 }
 
 ::-webkit-scrollbar {

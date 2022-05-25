@@ -23,8 +23,11 @@ export default {
     }
   },
   mounted: function () {
-    let url = window.location.href;
-    this.searchInput = url.substring(url.indexOf('ch/')).replace('ch/', '')
+    try {
+      let url = window.location.href;
+      this.searchInput = url.match(/search.*$/)[0].replace('search/', '');
+      console.log(this.searchInput)
+    } catch (e) {}
   },
   methods: {
     search: function () {
