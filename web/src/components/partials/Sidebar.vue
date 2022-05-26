@@ -8,18 +8,19 @@
         <li @click="this.$router.push('Discover')" :class="`primitive ${this.$route.name === 'Discover' ? 'selected' : ''}`"><div class="discover"></div> Découvrir</li>
         <li @click="this.$router.push('Radio')" :class="`primitive ${this.$route.name === 'Radio' ? 'selected' : ''}`"><div class="radio"></div> Radios</li>
 
-        <li>Bibliothèque :</li>
+        <h5>Bibliothèque :</h5>
         <ul>
+          <li>Explorer</li>
           <li>Favoris</li>
           <li>Playlists</li>
           <li>Albums</li>
           <li>Artistes</li>
         </ul>
 
-        <li>Playlists :</li>
+        <h5>Playlists :</h5>
         <ul>
           <li>Exemple 112</li>
-          <li>Créer une playlist</li>
+          <li id="create_playlist"><div class="addp"></div> Créer une playlist</li>
         </ul>
 
       </ul>
@@ -39,6 +40,6 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '../../assets/style/components/sidebar.scss';
 </style>

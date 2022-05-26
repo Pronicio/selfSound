@@ -25,12 +25,37 @@ ul, li {
 ul {
   display: flex;
   flex-direction: column;
-}
+  margin: 8px;
 
-li {
-  display: flex;
-  margin: 5px;
-  cursor: pointer;
+  li {
+    display: flex;
+    margin: 2px 5px 0 5px;
+    cursor: pointer;
+    color: gray;
+
+    &:hover {
+      color: $color;
+
+      div{
+        filter: $effect;
+      }
+    }
+
+    > div {
+      filter: $white;
+      width: 28px;
+      height: 19px;
+    }
+  }
+
+  h5 {
+    all: unset;
+    margin: 24px 8px 8px 8px;
+
+    + ul li {
+      margin: 12px 5px 0 5px;
+    }
+  }
 }
 
 .nav {
@@ -38,16 +63,27 @@ li {
     color: $text;
     border-radius: 3px;
     border: 8px solid rgb(255 255 255 / 0%);
+
+    &:hover {
+      color: $color;
+
+      > div {
+        filter: $effect;
+      }
+    }
   }
 
   .selected {
     background: $color;
-  }
-}
 
-li > div {
-  width: 28px;
-  height: 19px;
+    &:hover {
+      color: $text;
+
+      > div {
+        filter: $white;
+      }
+    }
+  }
 }
 
 .home {
@@ -61,6 +97,12 @@ li > div {
 .radio {
   background: url("@/assets/images/icons/radio.svg") no-repeat;
   background-size: 19px;
+}
+
+.addp {
+  background: url("@/assets/images/icons/playlist_add.svg") no-repeat;
+  background-size: 24px;
+  height: 22px;
 }
 
 

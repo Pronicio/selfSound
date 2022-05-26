@@ -9,6 +9,9 @@ $color: #EE4950;
 $text: #FFFFFF;
 $sub-text: #AFB6B3;
 
+$effect: invert(32%) sepia(47%) saturate(4281%) hue-rotate(336deg) brightness(105%) contrast(86%);
+$white: invert(100%) sepia(1%) saturate(7497%) hue-rotate(151deg) brightness(102%) contrast(100%);
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -23,10 +26,10 @@ body {
 
 main {
   background: $main;
-  margin: 5px 5px 12vh 16vw;
+  margin: 8.6vh 5px 12vh 16vw;
 
   @media (max-width: 770px) {
-    margin: 5px 5px 12vh 5px;
+    margin: 8.6vh 5px 12vh 5px;
   }
 }
 
