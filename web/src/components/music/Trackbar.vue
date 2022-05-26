@@ -1,10 +1,12 @@
 <template>
   <div class="trackbar">
-    <img class="cover" src="https://e-cdns-images.dzcdn.net/images/cover/57975f903eb1a6323d03d735eca9c3fa/1000x1000-000000-80-0-0.jpg" width="80" alt="cover"/>
-    <div class="track">
-      <div>
-        <p>all I want is you (feat. hoshie star)</p>
-        <p class="sub-text">Rebzyyx</p>
+    <div class="infos">
+      <img class="cover" src="https://e-cdns-images.dzcdn.net/images/cover/57975f903eb1a6323d03d735eca9c3fa/1000x1000-000000-80-0-0.jpg" width="80" alt="cover"/>
+      <div class="track">
+        <div>
+          <p>all I want is you (feat. hoshie star)</p>
+          <p class="sub-text">Rebzyyx</p>
+        </div>
       </div>
     </div>
     <div class="progressbar">

@@ -12,6 +12,7 @@ p {
   flex-wrap: nowrap;
   align-content: center;
   align-items: center;
+  justify-content: space-evenly;
 
   height: 12vh;
   width: 100%;
@@ -24,20 +25,25 @@ p {
   }
 }
 
-.cover {
-  width: 9vh;
-  border-radius: 8px;
-  margin: 0 1vw 0 2vw;
-}
-
-.track {
+.infos {
   display: flex;
+  align-items: center;
 
-  div p {
-    cursor: pointer;
+  .cover {
+    width: 9vh;
+    border-radius: 8px;
+    margin: 0 1vw 0 2vw;
+  }
 
-    &:hover {
-      text-decoration: underline;
+  .track {
+    display: flex;
+
+    div p {
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
