@@ -2,7 +2,7 @@
   <div class="header">
     <div class="left">
       <form v-on:submit.prevent="search">
-        <div class="search-icon"></div>
+        <div @click="search" class="search-icon"></div>
         <input type="search" v-model="searchInput" placeholder="Rechercher...">
       </form>
     </div>
@@ -24,7 +24,7 @@ export default {
   },
   mounted: function () {
     try {
-      let url = window.location.href;
+      let url = decodeURI(window.location.href);
       this.searchInput = url.match(/search.*$/)[0].replace('search/', '');
       console.log(this.searchInput)
     } catch (e) {}

@@ -5,7 +5,7 @@
 
     <div class="result">
       <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
-        <img :src="item.album.cover_medium" alt="Album cover"/>
+        <img :src="item.album.cover_medium" alt="Album cover" loading="lazy"/>
         <h4>{{ item.title }}</h4>
         <p class="sub-text">{{ item.artist.name}}</p>
       </div>
@@ -15,7 +15,7 @@
 
     <div class="result">
       <div v-for="item in searchResult.album" :key="item.id" :id="item.id">
-        <img :src="item.cover_medium" alt="Album cover"/>
+        <img :src="item.cover_medium" alt="Album cover" loading="lazy"/>
         <h4>{{ item.title }}</h4>
         <p class="sub-text">{{ item.artist.name}}</p>
       </div>
@@ -25,7 +25,7 @@
 
     <div class="result">
       <div v-for="item in searchResult.artist" :key="item.id" :id="item.id">
-        <img class="rounded_img" :src="item.picture_medium" alt="Artist picture"/>
+        <img class="rounded_img" :src="item.picture_medium" alt="Artist picture" loading="lazy"/>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
 
     <div class="result">
       <div v-for="item in searchResult.playlist" :key="item.id" :id="item.id">
-        <img :src="item.picture_medium" alt="Playlist cover"/>
+        <img :src="item.picture_medium" alt="Playlist cover" loading="lazy"/>
         <h4>{{ item.title }}</h4>
       </div>
     </div>
