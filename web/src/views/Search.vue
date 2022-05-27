@@ -15,7 +15,7 @@
 
     <div class="result">
       <div v-for="item in searchResult.album" :key="item.id" :id="item.id">
-        <img :src="item.cover_medium" alt="Album cover" loading="lazy"/>
+        <img :src="item.cover_medium" alt="Album cover" loading="lazy" @click="this.$router.push({ name: 'Album', params: { query: item.id } })"/>
         <h4>{{ item.title }}</h4>
         <p class="sub-text">{{ item.artist.name}}</p>
       </div>

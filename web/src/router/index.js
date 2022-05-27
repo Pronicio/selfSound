@@ -14,6 +14,11 @@ const routes = [
         path: '/search/:query',
         name: 'Search',
         component: () => import('../views/Search.vue')
+    },
+    {
+        path: '/album/:query',
+        name: 'Album',
+        component: () => import('../views/elements/Album.vue')
     }
 ]
 const router = createRouter({

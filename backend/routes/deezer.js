@@ -26,6 +26,21 @@ async function routes (fastify, options) {
     })
 
     /**
+     * Get an album
+     * @body {string} id The ID of the album
+     */
+    fastify.post('/album', async (req, rep) => {
+        let id = req.body.id;
+
+        let res = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/album/${id}`
+        })
+
+        rep.send(res.data)
+    })
+
+    /**
      * Get all info of a music from deezer
      * @body {string} musicID The musicID of the music
      */
