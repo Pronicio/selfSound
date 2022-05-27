@@ -1,7 +1,7 @@
-const { search, stream, video_basic_info } = require('play-dl');
+const {search, stream, video_basic_info} = require('play-dl');
 const YoutubeMusicApi = require('youtube-music-api')
 
-async function routes (fastify, options) {
+async function routes(fastify, options) {
 
     const api = new YoutubeMusicApi()
     await api.initalize();
@@ -18,11 +18,11 @@ async function routes (fastify, options) {
         if (req.query.music === "true") {
             let music = await api.search(query, "song");
 
-            return rep.send(music.content[0])
+            return rep.send(music.content)
         }
 
         let results = await search(query, {
-            limit : req.query.limit ? parseInt(req.query.limit) : 1
+            limit: req.query.limit ? parseInt(req.query.limit) : 1
         })
 
         rep.send(results)
@@ -34,13 +34,18 @@ async function routes (fastify, options) {
      */
     fastify.post('/stream', async (req, rep) => {
 
-        let results = await stream(`https://www.youtube.com/watch?v=${req.body.videoID}`);
+        try {
+            let results = await stream(`https://www.youtube.com/watch?v=${req.body.videoID}`);
 
-        rep.send({
-            url: results.url,
-            quality: results.quality,
-            video_url: results.video_url
-        })
+            rep.send({
+                url: results.url
+            })
+        } catch (e) {
+            rep.status(500).send({
+                error: true
+            })
+        }
+
     })
 
     /**
