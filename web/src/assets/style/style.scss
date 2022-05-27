@@ -52,3 +52,13 @@ main {
 .sub-text {
   color: $sub-text;
 }
+
+.bot-t-top-enter-active,
+.bot-t-top-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.bot-t-top-enter-from,
+.bot-t-top-leave-to {
+  opacity: 0;
+}

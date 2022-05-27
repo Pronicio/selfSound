@@ -5,7 +5,7 @@
 
     <div class="result">
       <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
-        <img :src="item.album.cover_medium" alt="Album cover" loading="lazy"/>
+        <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="play(item)"/>
         <h4>{{ item.title }}</h4>
         <p class="sub-text">{{ item.artist.name}}</p>
       </div>
@@ -43,6 +43,7 @@
 
 <script>
 import axios from 'axios';
+import { useStore } from '@/store/main'
 
 export default {
   name: "Search",
@@ -95,7 +96,45 @@ export default {
       }
 
       this.searchResult = result;
+    },
+    play: async function (data) {
+
+      let req = await axios({
+        method: 'post',
+        url: `http://localhost:9000/youtube/search?music=true`,
+        data: {
+          query: `${data.title} ${data.artist.name}`
+        }
+      })
+
+      let track = {
+        trackId: data.id,
+        videoId: req.data[0].videoId,
+        title: data.title_short? data.title_short : data.title,
+        artist: {
+          id: data.artist.id,
+          name: data.artist.name,
+        },
+        album: {
+          id: data.album.id,
+          cover: {
+            big: data.album.cover_big,
+            xl: data.album.cover_xl,
+          },
+        }
+      };
+
+      this.store.currentMusic = track;
+      localStorage.setItem('track', JSON.stringify(track));
+
+      this.eventBus.emit('play', track)
+
+      this.store.queue = req.data;
     }
+  },
+  setup() {
+    const store = useStore()
+    return {store}
   }
 }
 

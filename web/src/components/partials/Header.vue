@@ -26,7 +26,6 @@ export default {
     try {
       let url = decodeURI(window.location.href);
       this.searchInput = url.match(/search.*$/)[0].replace('search/', '');
-      console.log(this.searchInput)
     } catch (e) {}
   },
   methods: {

@@ -15,6 +15,6 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '../assets/style/pages/home.scss';
 </style>

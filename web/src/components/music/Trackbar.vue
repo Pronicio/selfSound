@@ -1,52 +1,100 @@
 <template>
-  <div class="trackbar">
+  <Transition name="bot-t-top">
+    <MusicView v-show="view"/>
+  </Transition>
+
+  <div class="trackbar" v-if="store.currentMusic.title">
     <div class="infos">
-      <img class="cover" src="https://e-cdns-images.dzcdn.net/images/cover/57975f903eb1a6323d03d735eca9c3fa/1000x1000-000000-80-0-0.jpg" width="80" alt="cover"/>
+      <img class="cover" :src="store.currentMusic.album.cover.big" width="80" alt="cover"/>
       <div class="track">
-        <div>
-          <p>all I want is you (feat. hoshie star)</p>
-          <p class="sub-text">Rebzyyx</p>
-        </div>
+        <p>{{ store.currentMusic.title }}</p>
+        <p class="sub-text">{{ store.currentMusic.artist.name }}</p>
       </div>
     </div>
     <div class="progressbar">
       <div class="controls">
         <div id="shuffle"></div>
         <div id="backward"></div>
-        <div id="play"></div>
+        <div id="play" @click="changeState($event)"></div>
         <div id="forward"></div>
         <div id="repeat-mode"></div>
       </div>
       <div class="slider">
         <p id="rangeValue"> {{ sliderValue }}</p>
         <input @click="changeProgress" type="range" id="slider" value="1">
-        <p id="rangeValueFinal">2:30</p>
+        <p id="rangeValueFinal">00:00</p>
       </div>
     </div>
     <div class="tools">
       <div id="like"></div>
       <div id="lyrics"></div>
       <div id="volume"></div>
-      <div id="arrow"></div>
+      <div id="arrow" @click="changeView"></div>
     </div>
   </div>
 </template>
 
 <script>
+import MusicView from "./MusicView.vue";
+import {useStore} from '@/store/main'
 
 export default {
   name: "TrackBar",
   data: function () {
     return {
+      view: false,
       sliderValue: "00:00"
     }
   },
-  mounted: function () {},
+  components: {
+    MusicView
+  },
+  mounted: function () {
+    if (this.store.currentMusic.videoId) {
+      this.eventBus.emit('play', this.store.currentMusic)
+    }
+
+    this.eventBus.on("onControl", (data) => {
+      console.log(data)
+      let play = document.getElementById('play')
+      let pause = document.getElementById('pause')
+
+      if (play) play.id = data;
+      else pause.id = data;
+    })
+  },
   methods: {
     changeProgress: function () {
       this.sliderValue = document.getElementById('slider').value;
+    },
+    changeView: function () {
+      this.view = !this.view
+      if (this.view) {
+        document.getElementById("arrow").classList.add("rotate");
+      } else {
+        document.getElementById("arrow").classList.remove("rotate");
+      }
+    },
+    control: function (name) {
+      this.eventBus.emit('control', name)
+    },
+    changeState: function (event) {
+      let targetId = event.currentTarget.id;
+      let el = document.getElementById(targetId)
+
+      if (targetId === "play") {
+        el.id = "pause"
+        this.eventBus.emit('control', 'play')
+      } else {
+        el.id = "play"
+        this.eventBus.emit('control', 'pause')
+      }
     }
-  }
+  },
+  setup() {
+    const store = useStore()
+    return {store}
+  },
 }
 
 </script>

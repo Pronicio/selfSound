@@ -37,6 +37,7 @@ p {
 
   .track {
     display: flex;
+    flex-direction: column;
 
     div p {
       cursor: pointer;
@@ -76,6 +77,10 @@ p {
 
     #play {
       background: url("@/assets/images/icons/play.svg") no-repeat;
+    }
+
+    #pause {
+      background: url("@/assets/images/icons/pause.svg") no-repeat;
     }
 
     #forward {
@@ -142,5 +147,11 @@ p {
     background: url("@/assets/images/icons/arrow.svg") no-repeat;
     background-size: 2rem;
     margin-left: 5vw;
+
+    transition: transform 1s;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
   }
 }
