@@ -1,10 +1,13 @@
-section {
+.sec1 {
   display: flex;
   align-items: center;
 
-  img {
+  .album_cover {
     margin: 2rem 1rem;
     border-radius: 10px;
+
+    width: 250px;
+    height: 250px;
   }
 
   .infos {
@@ -22,39 +25,142 @@ section {
       margin: 0;
     }
 
-    h2 {
-      font-weight: 100;
-      cursor: pointer;
+    h1 {
+      font-size: 3rem;
+      margin-top: 15px;
+    }
 
-      &:hover {
-        text-decoration: underline;
+    .artist {
+      display: flex;
+      margin: 20px 0 15px 0;
+
+      h2 {
+        font-weight: 100;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .artist_picture {
+        border-radius: 50%;
+        margin-right: 5px;
+        width: 30px;
+        height: 30px;
       }
     }
 
-    button {
-      all: unset;
+    p {
+      color: $text;
+      margin: 0;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      margin: 15px 0 0 0;
+
+      #listen {
+        all: unset;
+        cursor: pointer;
+
+        color: $text;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px transparent solid;
+
+        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+
+        text-decoration: none;
+        transition-property: background-color, border-color, color, transform;
+        transition-duration: 200ms;
+
+        border-radius: 40px;
+        height: 30px;
+        padding: 0 32px;
+
+        background-color: $color;
+
+        .logo_play {
+          background: url("@/assets/images/icons/play.svg") no-repeat;
+          background-size: 18px;
+          width: 24px;
+          height: 19px;
+
+          margin-right: 5px;
+        }
+      }
+
+      #like {
+        all: unset;
+        cursor: pointer;
+
+        background: url("@/assets/images/icons/heart.svg") no-repeat;
+        background-size: 26px;
+        width: 26px;
+        height: 24px;
+
+        margin: 0 0 0 10px;
+      }
+    }
+  }
+
+  img {
+    background: $gradient;
+    background-size: 200% 100%;
+    -webkit-animation: 1.5s shine linear infinite;
+    animation: 1.5s shine linear infinite;
+  }
+}
+
+.sec2 {
+  margin: 10px;
+
+  h2 {
+    color: $text;
+  }
+
+  .tracks {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+
+    .track {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
       cursor: pointer;
 
-      color: $text;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      margin: 10px 0;
 
-      border: 1px transparent solid;
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+      }
 
-      font-family: "Open Sans", Helvetica, Arial, sans-serif;
-      font-weight: 700;
+      img {
+        border-radius: 6px;
+      }
 
-      text-decoration: none;
-      transition-property: background-color, border-color, color, transform;
-      transition-duration: 200ms;
+      p {
+        margin: 10px;
+        color: $sub-text;
 
-      border-radius: 40px;
-      height: 30px;
-      padding: 0 32px;
-      margin: 20px 0 0 0;
-
-      background-color: $color;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
+  }
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
   }
 }
