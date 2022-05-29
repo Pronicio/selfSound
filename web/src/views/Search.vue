@@ -6,8 +6,8 @@
     <div class="result">
       <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
         <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="play(item)"/>
-        <h4>{{ item.title }}</h4>
-        <p class="sub-text">{{ item.artist.name}}</p>
+        <h4>{{ item.title.substring(0, 33) }}</h4>
+        <p class="sub-text">{{ item.artist.name.substring(0, 33) }}</p>
       </div>
     </div>
 
@@ -16,8 +16,8 @@
     <div class="result">
       <div v-for="item in searchResult.album" :key="item.id" :id="item.id">
         <img :src="item.cover_medium" alt="Album cover" loading="lazy" @click="this.$router.push({ name: 'Album', params: { query: item.id } })"/>
-        <h4>{{ item.title }}</h4>
-        <p class="sub-text">{{ item.artist.name}}</p>
+        <h4>{{ item.title.substring(0, 33) }}</h4>
+        <p class="sub-text">{{ item.artist.name.substring(0, 33) }}</p>
       </div>
     </div>
 
@@ -34,7 +34,7 @@
     <div class="result">
       <div v-for="item in searchResult.playlist" :key="item.id" :id="item.id">
         <img :src="item.picture_medium" alt="Playlist cover" loading="lazy"/>
-        <h4>{{ item.title }}</h4>
+        <h4>{{ item.title.substring(0, 33) }}</h4>
       </div>
     </div>
 
