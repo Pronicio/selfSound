@@ -75,10 +75,9 @@ export default {
         this.player = new YT.Player('player', options);
       } else {
         this.player.destroy();
-        this.player = new YT.Player('player', options);
+        this.player = new YT.Player('player', Object.assign(options, { playerVars: { 'autoplay': 1 } }));
 
         await new Promise(r => setTimeout(r, 1000));
-        await this.player.playVideo();
         this.eventBus.emit('onControl', 'pause')
         this.player.setVolume(document.getElementById('volume_slider').value);
       }
