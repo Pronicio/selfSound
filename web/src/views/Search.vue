@@ -87,7 +87,7 @@ export default {
       for (const property in object) {
         let req = await axios({
           method: 'post',
-          url: `http://localhost:9000/standard/search?limit=${object[property]}`,
+          url: `${import.meta.env.VITE_BACK}/standard/search?limit=${object[property]}`,
           data: {
             query: this.searchInput,
             type: property
@@ -103,7 +103,7 @@ export default {
 
       let req = await axios({
         method: 'post',
-        url: `http://localhost:9000/youtube/search?music=true`,
+        url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
         data: {
           query: `${data.title} ${data.artist.name}`
         }

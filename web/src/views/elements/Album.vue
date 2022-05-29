@@ -63,7 +63,7 @@ export default {
     getData: async function () {
       let req = await axios({
         method: 'post',
-        url: `http://localhost:9000/standard/album`,
+        url: `${import.meta.env.VITE_BACK}/standard/album`,
         data: {
           id: this.id
         }
@@ -76,7 +76,7 @@ export default {
 
       let req = await axios({
         method: 'post',
-        url: `http://localhost:9000/youtube/search?music=true`,
+        url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
         data: {
           query: `${music.title} ${music.artist.name}`
         }
