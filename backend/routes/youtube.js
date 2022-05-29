@@ -1,10 +1,7 @@
-const {search, stream, video_basic_info} = require('play-dl');
-const YoutubeMusicApi = require('youtube-music-api')
+const { stream, video_basic_info } = require('play-dl');
+const { search } = require("youtube-ext");
 
 async function routes(fastify, options) {
-
-    const api = new YoutubeMusicApi()
-    await api.initalize();
 
     /**
      * Search video in YouTube
@@ -16,16 +13,14 @@ async function routes(fastify, options) {
         let query = req.body.query;
 
         if (req.query.music === "true") {
-            let music = await api.search(query, "song");
+            let music = await search(`${query} audio`, { filterType: "video" })
 
-            return rep.send(music.content)
+            return rep.send(music.videos[0])
         }
 
-        let results = await search(query, {
-            limit: req.query.limit ? parseInt(req.query.limit) : 1
-        })
+        let results = await search(query)
 
-        rep.send(results)
+        rep.send(results.videos)
     })
 
     /**

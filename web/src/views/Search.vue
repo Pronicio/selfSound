@@ -111,7 +111,7 @@ export default {
 
       let track = {
         trackId: data.id,
-        videoId: req.data[0].videoId,
+        videoId: req.data.id,
         title: data.title_short? data.title_short : data.title,
         artist: {
           id: data.artist.id,

@@ -17,6 +17,6 @@
     "genius-lyrics": "^4.3.6",
     "nodemon": "^2.0.15",
     "play-dl": "^1.9.4",
-    "youtube-music-api": "^1.0.6"
+    "youtube-ext": "^1.0.11"
   }
 }
