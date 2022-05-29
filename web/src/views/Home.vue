@@ -9,7 +9,9 @@ export default {
   data: function () {
     return {}
   },
-  methods: {}
+  mounted() {
+    document.title = 'SelfSound - Home'
+  }
 }
 
 </script>

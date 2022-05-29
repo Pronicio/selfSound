@@ -9,7 +9,10 @@ export default {
   data: function () {
     return {}
   },
-  methods: {}
+  methods: {},
+  mounted() {
+    document.title = 'SelfSound - 404'
+  }
 }
 
 </script>

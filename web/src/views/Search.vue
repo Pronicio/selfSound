@@ -63,6 +63,8 @@ export default {
       this.searchInput = data;
       this.search();
     })
+
+    document.title = 'SelfSound - Search'
   },
   created: function () {
     if (this.$route.params.query) {

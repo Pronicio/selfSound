@@ -8,7 +8,7 @@
         <img class="artist_picture" :src="data.artist.picture_small" alt="Artist picture" width="30"/>
         <h2>{{ data.artist.name }}</h2>
       </div>
-      <p> {{ data.nb_tracks }} tracks - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>
+      <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>
       <div class="controls">
         <button id="listen"><div class="logo_play"></div>Écouter</button>
         <button id="like"></button>
@@ -60,7 +60,7 @@ export default {
       })
 
       this.data = req.data;
-      console.log(this.data);
+      document.title = `SelfSound - ${this.data.title}`
     }
   },
   setup() {
