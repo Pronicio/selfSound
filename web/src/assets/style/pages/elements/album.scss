@@ -117,6 +117,12 @@
     -webkit-animation: 1.5s shine linear infinite;
     animation: 1.5s shine linear infinite;
   }
+
+  @media (max-width: 500px) {
+    align-items: center;
+    flex-direction: column;
+  }
+
 }
 
 .sec2 {
