@@ -31,6 +31,7 @@ export default {
     this.eventBus.on("control", (data) => {
       if (data === "play") this.player.playVideo();
       if (data === "pause") this.player.pauseVideo();
+      if (data === "volume") this.player.setVolume(document.getElementById('volume_slider').value);
     })
 
     const slider = document.getElementById('slider');
@@ -79,6 +80,7 @@ export default {
         await new Promise(r => setTimeout(r, 1000));
         await this.player.playVideo();
         this.eventBus.emit('onControl', 'pause')
+        this.player.setVolume(document.getElementById('volume_slider').value);
       }
     },
     onPlayerReady: function () {

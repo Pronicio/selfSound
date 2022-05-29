@@ -28,7 +28,12 @@
     <div class="tools">
       <div id="like"></div>
       <div id="lyrics"></div>
-      <div id="volume"></div>
+      <div class="volume_wrapper">
+        <div id="volume"></div>
+        <div class="volume_popover">
+          <input type="range" id="volume_slider" value="100" @input="changeVolume()">
+        </div>
+      </div>
       <div id="arrow" @click="changeView"></div>
     </div>
   </div>
@@ -89,6 +94,9 @@ export default {
         el.id = "play"
         this.eventBus.emit('control', 'pause')
       }
+    },
+    changeVolume: function (event) {
+      this.eventBus.emit('control', 'volume')
     }
   },
   setup() {

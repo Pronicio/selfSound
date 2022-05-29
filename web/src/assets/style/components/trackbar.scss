@@ -137,10 +137,47 @@ p {
     fill: #b3b3b3;
   }
 
-  #volume {
-    background: url("@/assets/images/icons/volume.svg") no-repeat;
-    background-size: 2rem;
-    fill: #b3b3b3;
+  .volume_wrapper {
+
+    &:hover .volume_popover {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      transform: translate(0, -20px);
+      transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+    }
+
+    #volume {
+      background: url("@/assets/images/icons/volume.svg") no-repeat;
+      background-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+      fill: #b3b3b3;
+    }
+
+    .volume_popover {
+      opacity: 0;
+      visibility: hidden;
+
+      position: relative;
+      bottom: 3rem;
+      right: 4.2rem;
+      width: 10rem;
+      height: 2rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: $color 2px solid;
+      border-radius: 15px;
+      background: $main;
+
+      #volume_slider {
+        margin: 0;
+        accent-color: $color;
+      }
+    }
   }
 
   #arrow {
