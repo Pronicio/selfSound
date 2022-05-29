@@ -60,7 +60,6 @@ export default {
     }
 
     this.eventBus.on("onControl", (data) => {
-      console.log(data)
       let play = document.getElementById('play')
       let pause = document.getElementById('pause')
 

@@ -142,8 +142,9 @@
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
-      cursor: pointer;
+      justify-content: space-between;
 
+      cursor: pointer;
       margin: 10px 0;
 
       &:hover {
@@ -151,16 +152,47 @@
         border-radius: 12px;
       }
 
-      img {
-        border-radius: 6px;
+      .details {
+        display: flex;
+        align-items: center;
+
+        img {
+          border-radius: 6px;
+        }
+
+        p {
+          margin: 10px;
+          color: var(--sub-text);
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
 
-      p {
-        margin: 10px;
-        color: var(--sub-text);
+      .right {
+        display: flex;
+        align-items: center;
+        margin: 5px;
 
-        &:hover {
-          text-decoration: underline;
+        > div {
+          margin: 5px;
+        }
+
+        #like_music {
+          background: url("@/assets/images/icons/heart_empty.svg") no-repeat;
+          background-size: 1.5rem;
+          width: 1.5rem;
+          height: 1.5rem;
+          filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg) brightness(97%) contrast(88%);
+        }
+
+        #menu {
+          background: url("@/assets/images/icons/menu.svg") no-repeat;
+          background-size: 1.5rem;
+          width: 1.5rem;
+          height: 0.4rem;
+          filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg) brightness(97%) contrast(88%);
         }
       }
     }

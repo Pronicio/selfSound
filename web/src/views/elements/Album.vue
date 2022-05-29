@@ -10,7 +10,10 @@
       </div>
       <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>
       <div class="controls">
-        <button id="listen"><div class="logo_play"></div>Écouter</button>
+        <button id="listen">
+          <div class="logo_play"></div>
+          Écouter
+        </button>
         <button id="like"></button>
       </div>
     </div>
@@ -18,9 +21,15 @@
   <section class="sec2">
     <h2>Tracks : </h2>
     <div class="tracks">
-      <div class="track" v-for="(item, index) in data.tracks.data" key="item.id" :id="item.id">
-        <img :src="data.cover_small" alt="Album cover" width="50"/>
-        <p>{{ index + 1 }}. {{ item.title }}</p>
+      <div class="track" v-for="(item, index) in data.tracks.data" key="item.id" :id="item.id" @click="play(item)">
+        <div class="details">
+          <img :src="data.cover_small" alt="Album cover" width="50"/>
+          <p>{{ index + 1 }}. {{ item.title }}</p>
+        </div>
+        <div class="right">
+          <div id="like_music"></div>
+          <div id="menu"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -29,6 +38,7 @@
 <script>
 import axios from "axios";
 import { secondsToString } from '@/api'
+import { useStore } from '@/store/main'
 
 export default {
   name: "Album.vue",
@@ -61,11 +71,48 @@ export default {
 
       this.data = req.data;
       document.title = `SelfSound - ${this.data.title}`
+    },
+    play: async function (music) {
+
+      let req = await axios({
+        method: 'post',
+        url: `http://localhost:9000/youtube/search?music=true`,
+        data: {
+          query: `${music.title} ${music.artist.name}`
+        }
+      })
+
+      let track = {
+        trackId: music.id,
+        videoId: req.data.id,
+        title: music.title_short ? music.title_short : music.title,
+        artist: {
+          id: music.artist.id,
+          name: music.artist.name,
+        },
+        album: {
+          id: this.data.id,
+          cover: {
+            big: this.data.cover_big,
+            xl: this.data.cover_xl,
+          },
+        }
+      };
+
+      this.store.currentMusic = track;
+      localStorage.setItem('track', JSON.stringify(track));
+
+      this.eventBus.emit('play', track)
+
+      this.store.queue = req.data;
     }
   },
   setup() {
+    const store = useStore()
+
     return {
-      secondsToString
+      secondsToString,
+      store
     }
   }
 }
