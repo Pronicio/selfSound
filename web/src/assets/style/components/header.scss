@@ -5,11 +5,11 @@
 
   margin-left: 13.6vw;
 
-  border-bottom: $separators 1px solid;
+  border-bottom: var(--separators) 1px solid;
 
   position: fixed;
   width: 87%;
-  background: #171717;
+  background: var(--main);
 
   .left {
 
@@ -22,6 +22,7 @@
 
     .search-icon {
       background: url("@/assets/images/icons/search.svg") no-repeat;
+      filter: var(--base);
       background-size: 2rem;
       width: 2rem;
       height: 2rem;
@@ -33,7 +34,7 @@
       all: unset;
 
       margin: 7px;
-      color: $text;
+      color: var(--text);
       width: 40vw;
 
       &::-webkit-search-cancel-button {
@@ -53,7 +54,7 @@
     }
 
     h4 {
-      color: $text;
+      color: var(--text);
       margin: 0 20px 0 10px;
     }
   }

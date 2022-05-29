@@ -18,7 +18,7 @@ export default {
 <style scoped lang="scss">
 
 h1 {
-  color: $color;
+  color: var(--color);
   margin: 0 auto;
   position: relative;
   top: 17vh;

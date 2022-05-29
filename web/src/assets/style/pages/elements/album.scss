@@ -16,12 +16,12 @@
     align-items: flex-start;
 
     #label {
-      color: $text;
-      border: 1px $text solid;
+      color: var(--text);
+      border: 1px var(--text) solid;
     }
 
     h1, h2 {
-      color: $text;
+      color: var(--text);
       margin: 0;
     }
 
@@ -52,7 +52,7 @@
     }
 
     p {
-      color: $text;
+      color: var(--text);
       margin: 0;
     }
 
@@ -65,7 +65,7 @@
         all: unset;
         cursor: pointer;
 
-        color: $text;
+        color: var(--text);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -83,13 +83,14 @@
         height: 30px;
         padding: 0 32px;
 
-        background-color: $color;
+        background-color: var(--color);
 
         .logo_play {
           background: url("@/assets/images/icons/play.svg") no-repeat;
           background-size: 18px;
           width: 24px;
           height: 19px;
+          filter: var(--base);
 
           margin-right: 5px;
         }
@@ -103,6 +104,7 @@
         background-size: 26px;
         width: 26px;
         height: 24px;
+        filter: var(--base);
 
         margin: 0 0 0 10px;
       }
@@ -110,7 +112,7 @@
   }
 
   img {
-    background: $gradient;
+    background: var(--gradient);
     background-size: 200% 100%;
     -webkit-animation: 1.5s shine linear infinite;
     animation: 1.5s shine linear infinite;
@@ -121,7 +123,7 @@
   margin: 10px;
 
   h2 {
-    color: $text;
+    color: var(--text);
   }
 
   .tracks {
@@ -149,7 +151,7 @@
 
       p {
         margin: 10px;
-        color: $sub-text;
+        color: var(--sub-text);
 
         &:hover {
           text-decoration: underline;

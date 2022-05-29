@@ -21,6 +21,7 @@ section {
   margin: 1.5rem;
 
   img {
+    filter: var(--base);
     margin: 2vh 0 10vh 0;
   }
 }
