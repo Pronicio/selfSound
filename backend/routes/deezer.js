@@ -19,7 +19,7 @@ async function routes (fastify, options) {
 
         const res = await axios({
             method: 'get',
-            url: `https://api.deezer.com/search/${type}?q=${query}&limit=${req.query.limit ? parseInt(req.query.limit, 10) : 1}`
+            url: `https://api.deezer.com/search/${type}?q=${query}&limit=${req.query.limit ? parseInt(req.query.limit) : 1}`
         })
 
         rep.send(res.data.data)

@@ -13,7 +13,7 @@ async function routes(fastify, options) {
         const query = req.body.query;
 
         if (req.query.music === "true") {
-            const music = await search(`${query} audio`, { filterType: "video" })
+            const music = await search(`${query} audio`, /*{ filterType: "video" }*/)
 
             return rep.send(music.videos[0])
         }
