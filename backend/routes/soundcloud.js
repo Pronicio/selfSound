@@ -17,7 +17,7 @@ async function routes (fastify, options) {
         const query = req.body.query;
 
         const results = await search(query, {
-            limit : req.query.limit ? parseInt(req.query.limit, "10") : 1,
+            limit : req.query.limit ? parseInt(req.query.limit, 10) : 1,
             source : {
                 soundcloud : "tracks"
             }
