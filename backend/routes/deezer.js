@@ -17,9 +17,11 @@ async function routes (fastify, options) {
         const query = req.body.query;
         const type = req.body.type;
 
+        const url = `https://api.deezer.com/search/${type}?q=${query}&limit=${req.query.limit ? parseInt(req.query.limit) : 1}`
+
         const res = await axios({
             method: 'get',
-            url: `https://api.deezer.com/search/${type}?q=${query}&limit=${req.query.limit ? parseInt(req.query.limit) : 1}`
+            url: encodeURI(url)
         })
 
         rep.send(res.data.data)
