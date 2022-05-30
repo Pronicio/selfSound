@@ -21,7 +21,7 @@
   <section class="sec2">
     <h2>Tracks : </h2>
     <div class="tracks">
-      <div class="track" v-for="(item, index) in data.tracks.data" key="item.id" :id="item.id" @click="play(item)">
+      <div class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id" @click="play(item)">
         <div class="details">
           <img :src="data.cover_small" alt="Album cover" width="50"/>
           <p>{{ index + 1 }}. {{ item.title }}</p>

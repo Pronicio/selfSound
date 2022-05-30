@@ -14,10 +14,10 @@ async function routes (fastify, options) {
      * @param {number} limit Number of musics
      */
     fastify.post('/search', async (req, rep) => {
-        let query = req.body.query;
+        const query = req.body.query;
 
-        let results = await search(query, {
-            limit : req.query.limit ? parseInt(req.query.limit) : 1,
+        const results = await search(query, {
+            limit : req.query.limit ? parseInt(req.query.limit, "10") : 1,
             source : {
                 soundcloud : "tracks"
             }
@@ -32,7 +32,7 @@ async function routes (fastify, options) {
      */
     fastify.post('/stream', async (req, rep) => {
 
-        let results = await stream(`https://api.soundcloud.com/tracks/${req.body.musicID}`);
+        const results = await stream(`https://api.soundcloud.com/tracks/${req.body.musicID}`);
         rep.send({ url: results.url })
     })
 }

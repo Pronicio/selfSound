@@ -14,17 +14,17 @@ async function routes(fastify, options) {
         const query = req.body.query;
         const author = req.body.author;
 
-        let searches = await Client.songs.search(`${query} ${author}`);
+        const searches = await Client.songs.search(`${query} ${author}`);
 
-        let songInfo = searches[0];
-        let lyrics = await songInfo.lyrics();
+        const songInfo = searches[0];
+        const lyrics = await songInfo.lyrics();
 
         rep.send({
-            id: songInfo.id,
-            url: songInfo.url,
-            image: songInfo.image,
-            lyrics: lyrics,
-            provider: "Genius"
+            "id": songInfo.id,
+            "url": songInfo.url,
+            "image": songInfo.image,
+            "lyrics": lyrics,
+            "provider": "Genius"
         })
     })
 
@@ -37,7 +37,7 @@ async function routes(fastify, options) {
         const trackId = req.body.trackId;
         const auth = req.body.auth;
 
-        let res = await axios({
+        const res = await axios({
             method: "POST",
             url: "https://pipe.deezer.com/api",
             headers: {
@@ -52,7 +52,7 @@ async function routes(fastify, options) {
                 operationName: 'SynchronizedTrackLyrics',
                 query: "query SynchronizedTrackLyrics($trackId: String!) {\n  track(trackId: $trackId) {\n    ...SynchronizedTrackLyrics\n    __typename\n  }\n}\n\nfragment SynchronizedTrackLyrics on Track {\n  id\n  lyrics {\n    ...Lyrics\n    __typename\n  }\n  album {\n    cover {\n      small: urls(pictureRequest: {width: 100, height: 100})\n      medium: urls(pictureRequest: {width: 264, height: 264})\n      large: urls(pictureRequest: {width: 800, height: 800})\n      explicitStatus\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment Lyrics on Lyrics {\n  id\n  copyright\n  text\n  writers\n  synchronizedLines {\n    ...LyricsSynchronizedLines\n    __typename\n  }\n  __typename\n}\n\nfragment LyricsSynchronizedLines on LyricsSynchronizedLine {\n  lrcTimestamp\n  line\n  lineTranslated\n  milliseconds\n  duration\n  __typename\n}\n",
                 variables: {
-                    trackId: trackId
+                    "trackId": trackId
                 }
             }
         })

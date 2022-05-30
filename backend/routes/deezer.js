@@ -14,12 +14,12 @@ async function routes (fastify, options) {
      * @param {number} limit Number of elements
      */
     fastify.post('/search', async (req, rep) => {
-        let query = req.body.query;
-        let type = req.body.type;
+        const query = req.body.query;
+        const type = req.body.type;
 
-        let res = await axios({
+        const res = await axios({
             method: 'get',
-            url: `https://api.deezer.com/search/${type}?q=${query}&limit=${req.query.limit ? parseInt(req.query.limit) : 1}`
+            url: `https://api.deezer.com/search/${type}?q=${query}&limit=${req.query.limit ? parseInt(req.query.limit, "10") : 1}`
         })
 
         rep.send(res.data.data)
@@ -30,9 +30,9 @@ async function routes (fastify, options) {
      * @body {string} id The ID of the album
      */
     fastify.post('/album', async (req, rep) => {
-        let id = req.body.id;
+        const id = req.body.id;
 
-        let res = await axios({
+        const res = await axios({
             method: 'get',
             url: `https://api.deezer.com/album/${id}`
         })
@@ -45,7 +45,7 @@ async function routes (fastify, options) {
      * @body {string} musicID The musicID of the music
      */
     fastify.post('/music', async (req, rep) => {
-        let results = await deezer(`https://www.deezer.com/track/${req.body.musicID}`);
+        const results = await deezer(`https://www.deezer.com/track/${req.body.musicID}`);
         rep.send(results)
     })
 
@@ -54,7 +54,7 @@ async function routes (fastify, options) {
      * @body {string} musicID The musicID of the music
      */
     fastify.get('/trend', async (req, rep) => {
-        let results = await deezer(`https://www.deezer.com/en/playlist/53362031`);
+        const results = await deezer(`https://www.deezer.com/en/playlist/53362031`);
         rep.send(results)
     })
 }

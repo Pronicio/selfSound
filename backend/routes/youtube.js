@@ -10,15 +10,15 @@ async function routes(fastify, options) {
      * @param {number} limit Number of video
      */
     fastify.post('/search', async (req, rep) => {
-        let query = req.body.query;
+        const query = req.body.query;
 
         if (req.query.music === "true") {
-            let music = await search(`${query} audio`, { filterType: "video" })
+            const music = await search(`${query} audio`, { filterType: "video" })
 
             return rep.send(music.videos[0])
         }
 
-        let results = await search(query)
+        const results = await search(query)
 
         rep.send(results.videos)
     })
@@ -30,7 +30,7 @@ async function routes(fastify, options) {
     fastify.post('/stream', async (req, rep) => {
 
         try {
-            let results = await stream(`https://www.youtube.com/watch?v=${req.body.videoID}`);
+            const results = await stream(`https://www.youtube.com/watch?v=${req.body.videoID}`);
 
             rep.send({
                 url: results.url
@@ -49,7 +49,7 @@ async function routes(fastify, options) {
      */
     fastify.post('/video-info', async (req, rep) => {
 
-        let results = await video_basic_info(`https://www.youtube.com/watch?v=${req.body.videoID}`);
+        const results = await video_basic_info(`https://www.youtube.com/watch?v=${req.body.videoID}`);
         rep.send(results)
     })
 }
