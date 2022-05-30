@@ -3,23 +3,19 @@
 </template>
 
 <script>
-
 export default {
   name: "Home",
   data: function () {
-    return {}
+    return {};
   },
   methods: {},
   mounted() {
-    document.title = 'SelfSound - 404'
-  }
-}
-
+    document.title = "SelfSound - 404";
+  },
+};
 </script>
 
-
 <style scoped lang="scss">
-
 h1 {
   color: var(--color);
   margin: 0 auto;
@@ -28,5 +24,4 @@ h1 {
   left: 25vw;
   font-size: 15rem;
 }
-
 </style>

@@ -3,20 +3,17 @@
 </template>
 
 <script>
-
 export default {
   name: "Home",
   data: function () {
-    return {}
+    return {};
   },
   mounted() {
-    document.title = 'SelfSound - Home'
-  }
-}
-
+    document.title = "SelfSound - Home";
+  },
+};
 </script>
 
-
 <style scoped lang="scss">
-@import '../assets/style/pages/home.scss';
+@import "../assets/style/pages/home.scss";
 </style>

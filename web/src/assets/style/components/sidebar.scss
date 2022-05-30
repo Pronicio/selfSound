@@ -17,10 +17,10 @@
   @media (max-width: $mobile) {
     display: none;
   }
-
 }
 
-ul, li {
+ul,
+li {
   all: unset;
   color: var(--text);
 }
@@ -107,5 +107,3 @@ ul {
   background-size: 24px;
   height: 22px;
 }
-
-

@@ -20,7 +20,8 @@
       border: 1px var(--text) solid;
     }
 
-    h1, h2 {
+    h1,
+    h2 {
       color: var(--text);
       margin: 0;
     }
@@ -122,7 +123,6 @@
     align-items: center;
     flex-direction: column;
   }
-
 }
 
 .sec2 {
@@ -184,7 +184,8 @@
           background-size: 1.5rem;
           width: 1.5rem;
           height: 1.5rem;
-          filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg) brightness(97%) contrast(88%);
+          filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg)
+            brightness(97%) contrast(88%);
         }
 
         #menu {
@@ -192,7 +193,8 @@
           background-size: 1.5rem;
           width: 1.5rem;
           height: 0.4rem;
-          filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg) brightness(97%) contrast(88%);
+          filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg)
+            brightness(97%) contrast(88%);
         }
       }
     }
