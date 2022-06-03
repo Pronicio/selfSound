@@ -19,11 +19,21 @@ section {
 
 .main {
   display: flex;
-  flex-direction: column;
   margin: 1.5rem;
 
-  img {
-    filter: var(--base);
-    margin: 2vh 0 10vh 0;
+  .video {
+    display: flex;
+    flex-direction: column;
+
+    img {
+      filter: var(--base);
+      margin: 2vh 0 10vh 0;
+    }
+  }
+
+  .others {
+    position: relative;
+    top: 0;
+    left: 16vw;
   }
 }

@@ -15,7 +15,8 @@
 
     <div class="result">
       <div v-for="item in searchResult.album" :key="item.id" :id="item.id">
-        <img :src="item.cover_medium" alt="Album cover" loading="lazy" @click="this.$router.push({ name: 'Album', params: { query: item.id } })"/>
+        <img :src="item.cover_medium" alt="Album cover" loading="lazy"
+             @click="this.$router.push({ name: 'Album', params: { query: item.id } })"/>
         <h4>{{ item.title.substring(0, 33) }}</h4>
         <p class="sub-text">{{ item.artist.name.substring(0, 33) }}</p>
       </div>
@@ -43,7 +44,7 @@
 
 <script>
 import axios from 'axios';
-import { useStore } from '@/store/main'
+import {useStore} from '@/store/main'
 
 export default {
   name: "Search",
@@ -74,7 +75,7 @@ export default {
     }
   },
   methods: {
-    search: async function() {
+    search: async function () {
       let result = {}
 
       const object = {
@@ -112,7 +113,7 @@ export default {
       let track = {
         trackId: data.id,
         videoId: req.data.id,
-        title: data.title_short? data.title_short : data.title,
+        title: data.title_short ? data.title_short : data.title,
         artist: {
           id: data.artist.id,
           name: data.artist.name,
@@ -131,7 +132,29 @@ export default {
 
       this.eventBus.emit('play', track)
 
-      this.store.queue = req.data;
+      this.store.queue = []
+
+      this.searchResult.track.forEach(el => {
+        if (data.id !== el.id) {
+          track = {
+            trackId: el.id,
+            videoId: null,
+            title: el.title_short ? el.title_short : el.title,
+            artist: {
+              id: el.artist.id,
+              name: el.artist.name,
+            },
+            album: {
+              id: el.album.id,
+              cover: {
+                big: el.album.cover_big,
+                xl: el.album.cover_xl,
+              },
+            }
+          };
+          this.store.queue.push(track)
+        }
+      })
     }
   },
   setup() {

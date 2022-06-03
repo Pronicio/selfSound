@@ -2,24 +2,38 @@
   <section>
     <div class="background" :style="'background: url('+ videoThumbnail +') center center / cover no-repeat;'"></div>
     <div class="main">
-      <img src="../../assets/images/logo.svg" width="200" alt=""/>
-      <div id="player"></div>
+      <div class="video">
+        <img src="../../assets/images/logo.svg" width="200" alt=""/>
+        <div id="player"></div>
+      </div>
+
+      <div class="others">
+        <Transition name="fade" mode="out-in">
+          <component :is="activeComponent"></component>
+        </Transition>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-import { useStore } from '@/store/main'
-import { secondsToString } from '@/api'
+import Queue from './Queue.vue'
+import {useStore} from '@/store/main'
+import {secondsToString} from '@/api'
+import axios from "axios";
 
 export default {
   name: "MusicView",
+  components: {
+    Queue
+  },
   data: function () {
     return {
       videoThumbnail: this.store.currentMusic.album.cover.xl,
       player: null,
       iframeEnable: false,
-      interval: null
+      interval: null,
+      activeComponent: 'Queue'
     }
   },
   mounted() {
@@ -75,12 +89,29 @@ export default {
         this.player = new YT.Player('player', options);
       } else {
         this.player.destroy();
-        this.player = new YT.Player('player', Object.assign(options, { playerVars: { 'autoplay': 1 } }));
+        this.player = new YT.Player('player', Object.assign(options, {playerVars: {'autoplay': 1}}));
 
         await new Promise(r => setTimeout(r, 1000));
         this.eventBus.emit('onControl', 'pause')
         this.player.setVolume(document.getElementById('volume_slider').value);
       }
+    },
+    play: async function (data) {
+
+      let req = await axios({
+        method: 'post',
+        url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
+        data: {
+          query: `${data.title} ${data.artist.name}`
+        }
+      })
+
+      let track = Object.assign(data, { videoId: req.data.id })
+
+      this.store.currentMusic = track;
+      localStorage.setItem('track', JSON.stringify(track));
+
+      this.eventBus.emit('play', track)
     },
     onPlayerReady: function () {
       document.getElementById("rangeValueFinal").innerHTML = this.secondsToString(this.player.getDuration());
@@ -92,6 +123,13 @@ export default {
 
       if (event.data !== 1) {
         clearInterval(this.interval);
+      }
+
+      if (event.data === 0) {
+        if (!!this.store.queue.length) {
+          this.play(this.store.queue[0]);
+          this.store.queue.shift();
+        }
       }
     },
     timer: function () {
@@ -105,7 +143,7 @@ export default {
   },
   setup() {
     const store = useStore()
-    return { store, secondsToString }
+    return {store, secondsToString}
   },
 }
 </script>
