@@ -21,7 +21,7 @@
   <section class="sec2">
     <h2>Tracks : </h2>
     <div class="tracks">
-      <div class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id" @click="play(item)">
+      <div class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id" @click="playFromProvider(item)">
         <div class="details">
           <img :src="data.cover_small" alt="Album cover" width="50"/>
           <p>{{ index + 1 }}. {{ item.title }}</p>
@@ -72,7 +72,7 @@ export default {
       this.data = req.data;
       document.title = `SelfSound - ${this.data.title}`
     },
-    play: async function (music) {
+    playFromProvider: async function (music) {
 
       let req = await axios({
         method: 'post',
@@ -99,12 +99,12 @@ export default {
         }
       };
 
+      //Store music locally for later.
       this.store.currentMusic = track;
       localStorage.setItem('track', JSON.stringify(track));
 
+      //Announces the arrival of the music.
       this.eventBus.emit('play', track)
-
-      this.store.queue = req.data;
     }
   },
   setup() {

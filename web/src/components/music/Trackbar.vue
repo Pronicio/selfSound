@@ -1,5 +1,5 @@
 <template>
-  <Transition name="bot-t-top">
+  <Transition name="magic">
     <MusicView v-show="view"/>
   </Transition>
 
@@ -31,7 +31,7 @@
       <div class="volume_wrapper">
         <div id="volume"></div>
         <div class="volume_popover">
-          <input type="range" id="volume_slider" value="100" @input="changeVolume()">
+          <input type="range" id="volume_slider" :value="store.controls.volume" @input="changeVolume()">
         </div>
       </div>
       <div id="arrow" @click="changeView"></div>
@@ -59,7 +59,7 @@ export default {
       this.eventBus.emit('play', this.store.currentMusic)
     }
 
-    this.eventBus.on("onControl", (data) => {
+    this.eventBus.on("putControl", (data) => {
       let play = document.getElementById('play')
       let pause = document.getElementById('pause')
 

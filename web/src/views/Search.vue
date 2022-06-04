@@ -5,7 +5,7 @@
 
     <div class="result">
       <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
-        <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="play(item)"/>
+        <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="playFromProvider(item)"/>
         <h4>{{ item.title.substring(0, 33) }}</h4>
         <p class="sub-text">{{ item.artist.name.substring(0, 33) }}</p>
       </div>
@@ -45,6 +45,8 @@
 <script>
 import axios from 'axios';
 import {useStore} from '@/store/main'
+
+import { getYoutubeVideoFromProvider } from '../api'
 
 export default {
   name: "Search",
@@ -100,61 +102,42 @@ export default {
 
       this.searchResult = result;
     },
-    play: async function (data) {
+    playFromProvider: async function (data) {
 
-      let req = await axios({
-        method: 'post',
-        url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
-        data: {
-          query: `${data.title} ${data.artist.name}`
-        }
-      })
+      let track = await getYoutubeVideoFromProvider(data);
 
-      let track = {
-        trackId: data.id,
-        videoId: req.data.id,
-        title: data.title_short ? data.title_short : data.title,
-        artist: {
-          id: data.artist.id,
-          name: data.artist.name,
-        },
-        album: {
-          id: data.album.id,
-          cover: {
-            big: data.album.cover_big,
-            xl: data.album.cover_xl,
-          },
-        }
-      };
-
+      //Store music locally for later.
       this.store.currentMusic = track;
       localStorage.setItem('track', JSON.stringify(track));
 
+      //Announces the arrival of the music.
       this.eventBus.emit('play', track)
 
-      this.store.queue = []
-
-      this.searchResult.track.forEach(el => {
-        if (data.id !== el.id) {
-          track = {
-            trackId: el.id,
-            videoId: null,
-            title: el.title_short ? el.title_short : el.title,
-            artist: {
-              id: el.artist.id,
-              name: el.artist.name,
-            },
-            album: {
-              id: el.album.id,
-              cover: {
-                big: el.album.cover_big,
-                xl: el.album.cover_xl,
+      // Put in the queue the other music you are looking for, if it is empty.
+      if (!!this.store.queue.length) {
+        this.store.queue = []
+        this.searchResult.track.forEach(el => {
+          if (data.id !== el.id) {
+            track = {
+              trackId: el.id,
+              videoId: null,
+              title: el.title_short ? el.title_short : el.title,
+              artist: {
+                id: el.artist.id,
+                name: el.artist.name,
               },
-            }
-          };
-          this.store.queue.push(track)
-        }
-      })
+              album: {
+                id: el.album.id,
+                cover: {
+                  big: el.album.cover_big,
+                  xl: el.album.cover_xl,
+                },
+              }
+            };
+            this.store.queue.push(track)
+          }
+        })
+      }
     }
   },
   setup() {

@@ -8,7 +8,7 @@
       </div>
 
       <div class="others">
-        <Transition name="fade" mode="out-in">
+        <Transition name="magic">
           <component :is="activeComponent"></component>
         </Transition>
       </div>
@@ -45,7 +45,13 @@ export default {
     this.eventBus.on("control", (data) => {
       if (data === "play") this.player.playVideo();
       if (data === "pause") this.player.pauseVideo();
-      if (data === "volume") this.player.setVolume(document.getElementById('volume_slider').value);
+      if (data === "volume") {
+        let value = document.getElementById('volume_slider').value
+        localStorage.setItem('volume', value);
+
+        this.store.controls.volume = value
+        this.player.setVolume(value);
+      }
     })
 
     const slider = document.getElementById('slider');
@@ -74,6 +80,9 @@ export default {
         events: {
           'onReady': this.onPlayerReady,
           'onStateChange': this.onPlayerStateChange
+        },
+        playerVars: {
+          controls: 1
         }
       }
 
@@ -90,13 +99,10 @@ export default {
       } else {
         this.player.destroy();
         this.player = new YT.Player('player', Object.assign(options, {playerVars: {'autoplay': 1}}));
-
-        await new Promise(r => setTimeout(r, 1000));
-        this.eventBus.emit('onControl', 'pause')
-        this.player.setVolume(document.getElementById('volume_slider').value);
+        this.eventBus.emit('putControl', 'pause')
       }
     },
-    play: async function (data) {
+    playFromProvider: async function (data) {
 
       let req = await axios({
         method: 'post',
@@ -106,7 +112,7 @@ export default {
         }
       })
 
-      let track = Object.assign(data, { videoId: req.data.id })
+      let track = Object.assign(data, {videoId: req.data.id})
 
       this.store.currentMusic = track;
       localStorage.setItem('track', JSON.stringify(track));
@@ -115,6 +121,8 @@ export default {
     },
     onPlayerReady: function () {
       document.getElementById("rangeValueFinal").innerHTML = this.secondsToString(this.player.getDuration());
+
+      this.player.setVolume(this.store.controls.volume);
     },
     onPlayerStateChange: function (event) {
       if (event.data === 1) {
@@ -126,8 +134,10 @@ export default {
       }
 
       if (event.data === 0) {
+        //If the music is over then put the next one on if there is a queue.
+        //Then remove it from the queue.
         if (!!this.store.queue.length) {
-          this.play(this.store.queue[0]);
+          this.playFromProvider(this.store.queue[0]);
           this.store.queue.shift();
         }
       }

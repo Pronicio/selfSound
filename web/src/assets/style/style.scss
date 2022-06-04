@@ -71,12 +71,12 @@ main {
   color: var(--sub-text);
 }
 
-.bot-t-top-enter-active,
-.bot-t-top-leave-active {
+.magic-enter-active,
+.magic-leave-active {
   transition: opacity 0.5s ease;
 }
 
-.bot-t-top-enter-from,
-.bot-t-top-leave-to {
+.magic-enter-from,
+.magic-leave-to {
   opacity: 0;
 }

@@ -19,6 +19,9 @@ export const useStore = defineStore('main', {
                     },
                 }
             },
+            controls: {
+                volume: localStorage.getItem('volume') || "100"
+            },
             queue: []
         }
     }
