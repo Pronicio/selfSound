@@ -81,7 +81,7 @@ export default {
       let result = {}
 
       const object = {
-        track: 10,
+        track: 18,
         album: 6,
         artist: 4,
         playlist: 7
@@ -113,9 +113,8 @@ export default {
       //Announces the arrival of the music.
       this.eventBus.emit('play', track)
 
-      // Put in the queue the other music you are looking for, if it is empty.
-      if (!!this.store.queue.length) {
-        this.store.queue = []
+      // Put in the queue the other music you are looking for.
+      if (this.store.queue.length === 0) {
         this.searchResult.track.forEach(el => {
           if (data.id !== el.id) {
             track = {

@@ -75,8 +75,10 @@ export default {
       this.view = !this.view
       if (this.view) {
         document.getElementById("arrow").classList.add("rotate");
+        document.querySelector("body").style.overflow = "hidden"
       } else {
         document.getElementById("arrow").classList.remove("rotate");
+        document.querySelector("body").style.overflow = "auto"
       }
     },
     control: function (name) {
