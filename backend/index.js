@@ -1,4 +1,5 @@
 const dotenv = require('dotenv').config().parsed;
+const { PrismaClient } = require('@prisma/client')
 
 const fastify = require('fastify')({
     logger: false,
@@ -11,6 +12,9 @@ fastify.register(require('fastify-cors'), {
     methods: ['GET', 'POST'],
     credentials: true
 });
+
+const prisma = new PrismaClient()
+fastify.decorate('db', prisma);
 
 fastify.get('/', async function (req, rep) {
     rep.send({
