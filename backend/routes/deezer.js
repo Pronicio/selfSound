@@ -53,10 +53,17 @@ async function routes (fastify, options) {
 
     /**
      * Get the Trend playlist
-     * @body {string} musicID The musicID of the music
      */
     fastify.get('/trend', async (req, rep) => {
         const results = await deezer(`https://www.deezer.com/en/playlist/53362031`);
+        rep.send(results)
+    })
+
+    /**
+     * Get the Top worldwide playlist
+     */
+    fastify.get('/top_world', async (req, rep) => {
+        const results = await deezer(`https://www.deezer.com/en/playlist/3155776842`);
         rep.send(results)
     })
 }

@@ -84,7 +84,7 @@ export default {
       let result = {}
 
       const object = {
-        track: 18,
+        track: 12,
         album: 6,
         artist: 4,
         playlist: 9
