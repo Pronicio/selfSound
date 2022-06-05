@@ -1,17 +1,5 @@
 import axios from "axios";
 
-export function secondsToString (seconds, aff) {
-    const numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
-    const numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
-    const numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
-
-    if (numhours <= 0) {
-        return `${("0" + numminutes).slice(-2)}:${("0" + Math.trunc(numseconds)).slice(-2)}${aff ? 'min' : ''}`;
-    }
-
-    return `${("0" + numhours).slice(-2)}:${("0" + numminutes).slice(-2)}:${("0" + Math.trunc(numseconds)).slice(-2)}${aff ? 'h' : ''}`;
-}
-
 export async function getYoutubeVideoFromProvider (data) {
     let req = await axios({
         method: 'post',
@@ -37,4 +25,54 @@ export async function getYoutubeVideoFromProvider (data) {
             },
         }
     };
+}
+
+export function secondsToString (seconds, aff) {
+    const numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
+    const numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
+    const numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
+
+    if (numhours <= 0) {
+        return `${("0" + numminutes).slice(-2)}:${("0" + Math.trunc(numseconds)).slice(-2)}${aff ? 'min' : ''}`;
+    }
+
+    return `${("0" + numhours).slice(-2)}:${("0" + numminutes).slice(-2)}:${("0" + Math.trunc(numseconds)).slice(-2)}${aff ? 'h' : ''}`;
+}
+
+export function toHumanString(number) {
+    const PREFIXES = {
+        '24': 'Y',
+        '21': 'Z',
+        '18': 'E',
+        '15': 'P',
+        '12': 'T',
+        '9': 'G',
+        '6': 'M',
+        '3': 'k',
+        '0': '',
+        '-3': 'm',
+        '-6': 'µ',
+        '-9': 'n',
+        '-12': 'p',
+        '-15': 'f',
+        '-18': 'a',
+        '-21': 'z',
+        '-24': 'y'
+    };
+
+    function _getExponent(n) {
+        if (n === 0) {
+            return 0;
+        }
+        return Math.floor(Math.log10(Math.abs(n)));
+    }
+
+    function _precise(n) {
+        return Number.parseFloat(n.toPrecision(3));
+    }
+
+    let n = _precise(Number.parseFloat(number));
+    let e = Math.max(Math.min(3 * Math.floor(_getExponent(n) / 3), 24), -24);
+
+    return _precise(n / Math.pow(10, e)).toString() + PREFIXES[e];
 }

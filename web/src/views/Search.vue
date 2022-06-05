@@ -25,8 +25,10 @@
     <h3 v-if="searchResult.artist.length"> Artists : </h3>
 
     <div class="result">
-      <div v-for="item in searchResult.artist" :key="item.id" :id="item.id">
+      <div v-for="item in searchResult.artist" :key="item.id" :id="item.id" class="artist_section">
         <img class="rounded_img" :src="item.picture_medium" alt="Artist picture" loading="lazy"/>
+        <h5>{{ item.name }}</h5>
+        <p class="sub-text">{{ toHumanString(item.nb_fan) }} fans</p>
       </div>
     </div>
 
@@ -45,6 +47,7 @@
 <script>
 import axios from 'axios';
 import {useStore} from '@/store/main'
+import { toHumanString } from "../api";
 
 import { getYoutubeVideoFromProvider } from '../api'
 
@@ -84,7 +87,7 @@ export default {
         track: 18,
         album: 6,
         artist: 4,
-        playlist: 7
+        playlist: 9
       };
 
       for (const property in object) {
@@ -141,7 +144,10 @@ export default {
   },
   setup() {
     const store = useStore()
-    return {store}
+    return {
+      store,
+      toHumanString
+    }
   }
 }
 

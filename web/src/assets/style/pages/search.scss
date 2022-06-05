@@ -22,15 +22,35 @@
       border-radius: 50%;
     }
   }
+
+  .artist_section {
+    align-items: center;
+
+    .sub-text {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }
 
 h1, h3, label {
   color: var(--text);
 }
 
-h4 {
+h3 {
+  margin: 5rem 0 1rem 0;
+  font-size: 2rem;
+
+  &:first-of-type {
+    margin: 1rem 0 1rem 0;
+  }
+}
+
+h4, h5 {
   color: var(--text);
   margin: 5px 0 0 0;
+  font-weight: bold;
 
   &:hover {
     text-decoration: underline;
@@ -44,4 +64,8 @@ h4 {
 p {
   color: var(--text);
   margin: 0;
+}
+
+h5 {
+  font-size: 1.1rem;
 }
