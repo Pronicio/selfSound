@@ -57,11 +57,8 @@ export default {
         this.store.controls.volume = value
         this.player.setVolume(value);
       }
-      if (data === "forward") {
-        this.player.stopVideo()
-        this.playFromProvider(this.store.queue[0]);
-        this.store.queue.shift();
-      }
+      if (data === "backward") this.beforeMusic();
+      if (data === "forward") this.nextMusic();
     })
 
     const slider = document.getElementById('slider');
@@ -139,10 +136,21 @@ export default {
       if (event.data === 0) {
         //If the music is over then put the next one on if there is a queue.
         //Then remove it from the queue.
-        if (!!this.store.queue.length) {
-          this.playFromProvider(this.store.queue[0]);
-          this.store.queue.shift();
-        }
+        this.nextMusic()
+      }
+    },
+    nextMusic: function () {
+      if (!!this.store.queue.length) {
+        this.store.cache_queue.push(this.store.currentMusic)
+        this.playFromProvider(this.store.queue[0]);
+        this.store.queue.shift();
+      }
+    },
+    beforeMusic: function () {
+      if (!!this.store.cache_queue.length) {
+        let musicToPut = this.store.cache_queue.pop();
+        this.playFromProvider(musicToPut);
+        this.store.queue.unshift(this.store.currentMusic)
       }
     },
     timer: function () {
