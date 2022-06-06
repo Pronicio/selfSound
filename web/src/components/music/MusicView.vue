@@ -32,11 +32,28 @@ export default {
       videoThumbnail: this.store.currentMusic.album.cover.xl,
       player: null,
       iframeEnable: false,
+      options: {
+        height: '360',
+        width: '640',
+        videoId: this.store.currentMusic.videoId,
+        events: {
+          'onReady': this.onPlayerReady,
+          'onStateChange': this.onPlayerStateChange
+        },
+        playerVars: {
+          controls: 1
+        }
+      },
       interval: null,
       activeComponent: 'Queue'
     }
   },
-  mounted() {
+  mounted: async function() {
+
+    window.onYouTubeIframeAPIReady = () => {
+      this.iframeEnable = true;
+    };
+
     this.eventBus.on('play', (data) => {
       this.videoThumbnail = data.album.cover.xl;
       this.playVideo()
@@ -55,7 +72,6 @@ export default {
     })
 
     const slider = document.getElementById('slider');
-
     slider.addEventListener('click', e => {
 
       clearInterval(this.interval);
@@ -73,32 +89,14 @@ export default {
   },
   methods: {
     playVideo: async function () {
-      let options = {
-        height: '360',
-        width: '640',
-        videoId: this.store.currentMusic.videoId,
-        events: {
-          'onReady': this.onPlayerReady,
-          'onStateChange': this.onPlayerStateChange
-        },
-        playerVars: {
-          controls: 1
-        }
-      }
-
       if (!this.iframeEnable) {
         let tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         let firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        this.iframeEnable = true
-        await new Promise(r => setTimeout(r, 1000));
-
-        this.player = new YT.Player('player', options);
       } else {
         this.player.destroy();
-        this.player = new YT.Player('player', Object.assign(options, {playerVars: {'autoplay': 1}}));
+        this.player = new YT.Player('player', Object.assign(this.options, {playerVars: {'autoplay': 1}}));
         this.eventBus.emit('putControl', 'pause')
       }
     },
@@ -155,6 +153,11 @@ export default {
     const store = useStore()
     return {store, secondsToString}
   },
+  watch: {
+    iframeEnable(value) {
+      this.player = new YT.Player('player', this.options);
+    }
+  }
 }
 </script>
 
