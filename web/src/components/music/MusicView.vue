@@ -32,23 +32,11 @@ export default {
       videoThumbnail: this.store.currentMusic.album.cover.xl,
       player: null,
       iframeEnable: false,
-      options: {
-        height: '360',
-        width: '640',
-        videoId: this.store.currentMusic.videoId,
-        events: {
-          'onReady': this.onPlayerReady,
-          'onStateChange': this.onPlayerStateChange
-        },
-        playerVars: {
-          controls: 1
-        }
-      },
       interval: null,
       activeComponent: 'Queue'
     }
   },
-  mounted: async function() {
+  mounted: async function () {
 
     window.onYouTubeIframeAPIReady = () => {
       this.iframeEnable = true;
@@ -68,6 +56,11 @@ export default {
 
         this.store.controls.volume = value
         this.player.setVolume(value);
+      }
+      if (data === "forward") {
+        this.player.stopVideo()
+        this.playFromProvider(this.store.queue[0]);
+        this.store.queue.shift();
       }
     })
 
@@ -89,6 +82,19 @@ export default {
   },
   methods: {
     playVideo: async function () {
+      let options = {
+        height: '360',
+        width: '640',
+        videoId: this.store.currentMusic.videoId,
+        events: {
+          'onReady': this.onPlayerReady,
+          'onStateChange': this.onPlayerStateChange
+        },
+        playerVars: {
+          controls: 1
+        }
+      }
+
       if (!this.iframeEnable) {
         let tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -96,12 +102,11 @@ export default {
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       } else {
         this.player.destroy();
-        this.player = new YT.Player('player', Object.assign(this.options, {playerVars: {'autoplay': 1}}));
+        this.player = new YT.Player('player', Object.assign(options, {playerVars: {'autoplay': 1}}));
         this.eventBus.emit('putControl', 'pause')
       }
     },
     playFromProvider: async function (data) {
-
       let req = await axios({
         method: 'post',
         url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
@@ -155,7 +160,19 @@ export default {
   },
   watch: {
     iframeEnable(value) {
-      this.player = new YT.Player('player', this.options);
+      let options = {
+        height: '360',
+        width: '640',
+        videoId: this.store.currentMusic.videoId,
+        events: {
+          'onReady': this.onPlayerReady,
+          'onStateChange': this.onPlayerStateChange
+        },
+        playerVars: {
+          controls: 1
+        }
+      }
+      this.player = new YT.Player('player', options);
     }
   }
 }

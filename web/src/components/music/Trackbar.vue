@@ -14,9 +14,9 @@
     <div class="progressbar">
       <div class="controls">
         <div id="shuffle"></div>
-        <div id="backward"></div>
+        <div id="backward" @click="control('backward')"></div>
         <div id="play" @click="changeState($event)"></div>
-        <div id="forward"></div>
+        <div id="forward" @click="control('forward')"></div>
         <div id="repeat-mode"></div>
       </div>
       <div class="slider">
@@ -90,14 +90,14 @@ export default {
 
       if (targetId === "play") {
         el.id = "pause"
-        this.eventBus.emit('control', 'play')
+        this.control('play')
       } else {
         el.id = "play"
-        this.eventBus.emit('control', 'pause')
+        this.control('pause')
       }
     },
     changeVolume: function (event) {
-      this.eventBus.emit('control', 'volume')
+      this.control('volume')
     }
   },
   setup() {
