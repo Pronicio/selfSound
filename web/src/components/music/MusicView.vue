@@ -59,6 +59,9 @@ export default {
       }
       if (data === "backward") this.beforeMusic();
       if (data === "forward") this.nextMusic();
+
+      if (data === "shuffle") this.shuffle();
+      if (data === "repeat-mode") this.repeat_mode();
     })
 
     const slider = document.getElementById('slider');
@@ -134,6 +137,12 @@ export default {
       }
 
       if (event.data === 0) {
+
+        //If repeat mode is enabled then replay
+        if (this.store.controls.repeat_mode) {
+          return this.playVideo();
+        }
+
         //If the music is over then put the next one on if there is a queue.
         //Then remove it from the queue.
         this.nextMusic()
@@ -152,6 +161,16 @@ export default {
         this.playFromProvider(musicToPut);
         this.store.queue.unshift(this.store.currentMusic)
       }
+    },
+    shuffle: function () {
+      const queue = this.store.queue;
+      for (let i = queue.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [queue[i], queue[j]] = [queue[j], queue[i]];
+      }
+    },
+    repeat_mode: function () {
+      this.store.controls.repeat_mode = !this.store.controls.repeat_mode
     },
     timer: function () {
 

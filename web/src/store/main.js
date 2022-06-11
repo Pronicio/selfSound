@@ -20,7 +20,8 @@ export const useStore = defineStore('main', {
                 }
             },
             controls: {
-                volume: localStorage.getItem('volume') || "100"
+                volume: localStorage.getItem('volume') || "100",
+                repeat_mode: false
             },
             queue: [],
             cache_queue: []

@@ -13,11 +13,11 @@
     </div>
     <div class="progressbar">
       <div class="controls">
-        <div id="shuffle"></div>
+        <div id="shuffle" @click="control('shuffle')"></div>
         <div id="backward" @click="control('backward')"></div>
         <div id="play" @click="changeState($event)"></div>
         <div id="forward" @click="control('forward')"></div>
-        <div id="repeat-mode"></div>
+        <div id="repeat-mode" @click="control('repeat-mode')" :style="`filter: ${store.controls.repeat_mode ? 'var(--base)' : 'var(--unused)'}`"></div>
       </div>
       <div class="slider">
         <p id="rangeValue"> {{ sliderValue }}</p>
