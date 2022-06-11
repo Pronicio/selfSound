@@ -9,7 +9,7 @@
         </div>
         <div class="musics">
           <div class="track" v-for="item in top" :key="item.id" :id="item.id">
-
+            <h5>{{item.title}}</h5>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@ export default {
   name: "Home",
   data: function () {
     return {
-      top: {},
+      top: [],
       categories: [
         { id: 132, name: "Pop", img: "db7a604d9e7634a67d45cfc86b48370a" },
         { id: 116, name: "Rap/Hip Hop", img: "5c27115d3b797954afff59199dad98d1" },
@@ -54,12 +54,17 @@ export default {
   mounted: async function() {
     document.title = 'SelfSound - Home'
 
-    let req = await axios({
-      method: 'post',
-      url: `${import.meta.env.VITE_BACK}/standard/top_world`,
-    })
+    await this.getTopWorldMusics();
+  },
+  methods: {
+    getTopWorldMusics: async function () {
+      let req = await axios({
+        method: 'get',
+        url: `${import.meta.env.VITE_BACK}/standard/top_world?limit=10`,
+      })
 
-    //TODO: req => gogogogo
+      this.top = req.data.data;
+    }
   }
 }
 

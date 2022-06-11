@@ -61,10 +61,16 @@ async function routes (fastify, options) {
 
     /**
      * Get the Top worldwide playlist
+     * @param {number} limit Number of elements
      */
     fastify.get('/top_world', async (req, rep) => {
-        const results = await deezer(`https://www.deezer.com/en/playlist/3155776842`);
-        rep.send(results)
+
+        const results = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/playlist/3155776842/tracks?limit=${req.query.limit ? parseInt(req.query.limit) : 1}`
+        })
+
+        rep.send(results.data)
     })
 }
 
