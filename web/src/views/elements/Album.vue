@@ -10,7 +10,7 @@
       </div>
       <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>
       <div class="controls">
-        <button id="listen">
+        <button id="listen" @click="playFromProvider(data.tracks.data[0])">
           <div class="logo_play"></div>
           Écouter
         </button>
@@ -105,6 +105,30 @@ export default {
 
       //Announces the arrival of the music.
       this.eventBus.emit('play', track)
+
+      // Queue up the other music from the album.
+      this.store.queue = [];
+      this.data.tracks.data.forEach(el => {
+        if (music.id !== el.id) {
+          track = {
+            trackId: el.id,
+            videoId: null,
+            title: el.title_short ? el.title_short : el.title,
+            artist: {
+              id: el.artist.id,
+              name: el.artist.name,
+            },
+            album: {
+              id: this.data.id,
+              cover: {
+                big: this.data.cover_big,
+                xl: this.data.cover_xl,
+              },
+            }
+          };
+          this.store.queue.push(track)
+        }
+      })
     }
   },
   setup() {

@@ -117,29 +117,28 @@ export default {
       this.eventBus.emit('play', track)
 
       // Put in the queue the other music you are looking for.
-      if (this.store.queue.length === 0) {
-        this.searchResult.track.forEach(el => {
-          if (data.id !== el.id) {
-            track = {
-              trackId: el.id,
-              videoId: null,
-              title: el.title_short ? el.title_short : el.title,
-              artist: {
-                id: el.artist.id,
-                name: el.artist.name,
+      this.store.queue = [];
+      this.searchResult.track.forEach(el => {
+        if (data.id !== el.id) {
+          track = {
+            trackId: el.id,
+            videoId: null,
+            title: el.title_short ? el.title_short : el.title,
+            artist: {
+              id: el.artist.id,
+              name: el.artist.name,
+            },
+            album: {
+              id: el.album.id,
+              cover: {
+                big: el.album.cover_big,
+                xl: el.album.cover_xl,
               },
-              album: {
-                id: el.album.id,
-                cover: {
-                  big: el.album.cover_big,
-                  xl: el.album.cover_xl,
-                },
-              }
-            };
-            this.store.queue.push(track)
-          }
-        })
-      }
+            }
+          };
+          this.store.queue.push(track)
+        }
+      })
     }
   },
   setup() {
