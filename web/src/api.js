@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function getYoutubeVideoFromProvider (data) {
-    let req = await axios({
+    const req = await axios({
         method: 'post',
         url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
         data: {
@@ -28,15 +28,15 @@ export async function getYoutubeVideoFromProvider (data) {
 }
 
 export function secondsToString (seconds, aff) {
-    const numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
-    const numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
-    const numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
+    const numHours = Math.floor(((seconds % 31536000) % 86400) / 3600);
+    const numMinutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
+    const numSeconds = (((seconds % 31536000) % 86400) % 3600) % 60;
 
-    if (numhours <= 0) {
-        return `${("0" + numminutes).slice(-2)}:${("0" + Math.trunc(numseconds)).slice(-2)}${aff ? 'min' : ''}`;
+    if (numHours <= 0) {
+        return `${("0" + numMinutes).slice(-2)}:${("0" + Math.trunc(numSeconds)).slice(-2)}${aff ? 'min' : ''}`;
     }
 
-    return `${("0" + numhours).slice(-2)}:${("0" + numminutes).slice(-2)}:${("0" + Math.trunc(numseconds)).slice(-2)}${aff ? 'h' : ''}`;
+    return `${("0" + numHours).slice(-2)}:${("0" + numMinutes).slice(-2)}:${("0" + Math.trunc(numSeconds)).slice(-2)}${aff ? 'h' : ''}`;
 }
 
 export function toHumanString (number) {
@@ -71,17 +71,17 @@ export function toHumanString (number) {
         return Number.parseFloat(n.toPrecision(3));
     }
 
-    let n = _precise(Number.parseFloat(number));
-    let e = Math.max(Math.min(3 * Math.floor(_getExponent(n) / 3), 24), -24);
+    const n = _precise(Number.parseFloat(number));
+    const e = Math.max(Math.min(3 * Math.floor(_getExponent(n) / 3), 24), -24);
 
     return _precise(n / Math.pow(10, e)).toString() + PREFIXES[e];
 }
 
 export function cleanString (text) {
-    text = text
+    let result = text
         .replace(/ *\([^)]*\) */g, "") //Remove brackets
         .replace(/\[.*?]/g, "") //Remove hooks
         .replace(/[^a-zA-Z0-9 ]/g, ""); //Remove special characters
 
-    return text.trim();
+    return result.trim();
 }
