@@ -6,8 +6,8 @@
     <div class="result">
       <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
         <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="playFromProvider(item)"/>
-        <h4>{{ item.title.substring(0, 33) }}</h4>
-        <p class="sub-text">{{ item.artist.name.substring(0, 33) }}</p>
+        <h4>{{ cleanString(item.title_short) }}</h4>
+        <p class="sub-text">{{ item.artist.name }}</p>
       </div>
     </div>
 
@@ -17,8 +17,8 @@
       <div v-for="item in searchResult.album" :key="item.id" :id="item.id">
         <img :src="item.cover_medium" alt="Album cover" loading="lazy"
              @click="this.$router.push({ name: 'Album', params: { query: item.id } })"/>
-        <h4>{{ item.title.substring(0, 33) }}</h4>
-        <p class="sub-text">{{ item.artist.name.substring(0, 33) }}</p>
+        <h4>{{ cleanString(item.title) }}</h4>
+        <p class="sub-text">{{ item.artist.name }}</p>
       </div>
     </div>
 
@@ -37,7 +37,7 @@
     <div class="result">
       <div v-for="item in searchResult.playlist" :key="item.id" :id="item.id">
         <img :src="item.picture_medium" alt="Playlist cover" loading="lazy"/>
-        <h4>{{ item.title.substring(0, 33) }}</h4>
+        <h4>{{ cleanString(item.title) }}</h4>
       </div>
     </div>
 
@@ -46,8 +46,8 @@
 
 <script>
 import axios from 'axios';
-import {useStore} from '@/store/main'
-import { toHumanString } from "../api";
+import { useStore } from '@/store/main'
+import { toHumanString, cleanString } from "../api";
 
 import { getYoutubeVideoFromProvider } from '../api'
 
@@ -139,13 +139,13 @@ export default {
           this.store.queue.push(track)
         }
       })
-    }
+    },
   },
   setup() {
     const store = useStore()
     return {
       store,
-      toHumanString
+      toHumanString, cleanString
     }
   }
 }

@@ -39,7 +39,7 @@ export function secondsToString (seconds, aff) {
     return `${("0" + numhours).slice(-2)}:${("0" + numminutes).slice(-2)}:${("0" + Math.trunc(numseconds)).slice(-2)}${aff ? 'h' : ''}`;
 }
 
-export function toHumanString(number) {
+export function toHumanString (number) {
     const PREFIXES = {
         '24': 'Y',
         '21': 'Z',
@@ -75,4 +75,13 @@ export function toHumanString(number) {
     let e = Math.max(Math.min(3 * Math.floor(_getExponent(n) / 3), 24), -24);
 
     return _precise(n / Math.pow(10, e)).toString() + PREFIXES[e];
+}
+
+export function cleanString (text) {
+    text = text
+        .replace(/ *\([^)]*\) */g, "") //Remove brackets
+        .replace(/\[.*?]/g, "") //Remove hooks
+        .replace(/[^a-zA-Z0-9 ]/g, ""); //Remove special characters
+
+    return text.trim();
 }
