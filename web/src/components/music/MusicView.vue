@@ -163,11 +163,19 @@ export default {
       }
     },
     shuffle: function () {
-      const queue = this.store.queue;
-      for (let i = queue.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [queue[i], queue[j]] = [queue[j], queue[i]];
+      let queue = this.store.queue;
+      let shuffle_cache_queue = this.store.shuffle_cache_queue
+
+      if (this.store.controls.shuffle) {
+        this.store.controls.shuffle = false
+        this.store.queue = shuffle_cache_queue
+      } else {
+        this.store.controls.shuffle = true
+        this.store.shuffle_cache_queue = [...queue];
+
+        this.store.shuffleQueue();
       }
+
     },
     repeat_mode: function () {
       this.store.controls.repeat_mode = !this.store.controls.repeat_mode

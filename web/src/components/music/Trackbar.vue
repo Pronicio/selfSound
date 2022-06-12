@@ -13,7 +13,7 @@
     </div>
     <div class="progressbar">
       <div class="controls">
-        <div id="shuffle" @click="control('shuffle')"></div>
+        <div id="shuffle" @click="control('shuffle')" :style="`filter: ${store.controls.shuffle ? 'var(--base)' : 'var(--unused)'}`"></div>
         <div id="backward" @click="control('backward')"></div>
         <div id="play" @click="changeState($event)"></div>
         <div id="forward" @click="control('forward')"></div>
