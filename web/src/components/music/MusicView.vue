@@ -149,14 +149,14 @@ export default {
       }
     },
     nextMusic: function () {
-      if (!!this.store.queue.length) {
+      if (this.store.queue.length) {
         this.store.cache_queue.push(this.store.currentMusic)
         this.playFromProvider(this.store.queue[0]);
         this.store.queue.shift();
       }
     },
     beforeMusic: function () {
-      if (!!this.store.cache_queue.length) {
+      if (this.store.cache_queue.length) {
         let musicToPut = this.store.cache_queue.pop();
         this.playFromProvider(musicToPut);
         this.store.queue.unshift(this.store.currentMusic)
