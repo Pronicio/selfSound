@@ -1,11 +1,15 @@
 section {
   display: flex;
 
+  @media (max-width: 700px) { flex-direction: column; }
+
   .left {
     width: 70%;
     height: 100%;
 
     border: green 2px solid;
+
+    @media (max-width: 700px) { width: 100%; }
   }
 
   .right {
@@ -16,6 +20,11 @@ section {
 
     .top {
       margin: 8px;
+      padding: 10px;
+
+      background: var(--sub-main);
+      box-shadow: 0 3px 21px rgb(16 18 35 / 30%);
+      border-radius: 9px;
 
       .title {
         display: flex;
@@ -24,11 +33,60 @@ section {
         margin: 3px;
 
         h3 {
+          margin: 5px 0;
           color: var(--text);
         }
 
         a {
           color: var(--color);
+        }
+      }
+
+      .musics {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        height: 50vh;
+
+        .track {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          cursor: pointer;
+          margin: 5px 0;
+
+          #index {
+            margin: 0 7px 0 0;
+          }
+
+          p {
+            margin: 0;
+            color: var(--sub-text);
+          }
+
+          .info {
+            display: flex;
+            flex-direction: column;
+            margin: 5px;
+
+            h6 {
+              font-weight: bold;
+              font-size: 0.9rem;
+              margin: 0;
+              color: var(--text);
+            }
+          }
+        }
+      }
+
+      .more {
+        display: flex;
+        justify-content: center;
+
+        p {
+          cursor: pointer;
+          color: var(--sub-text);
         }
       }
     }
@@ -67,8 +125,8 @@ section {
 
           .img {
             color: var(--text);
-            width: 11vw;
-            height: 11vh;
+            width: 11rem;
+            height: 5rem;
 
             font-size: 1.5rem;
             font-family: 'Inter', sans-serif;
@@ -83,5 +141,7 @@ section {
         }
       }
     }
+
+    @media (max-width: 700px) { width: 100%; }
   }
 }
