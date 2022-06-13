@@ -52,7 +52,7 @@ export default {
       }
     }
   },
-  created: function () {
+  beforeMount: function () {
     if (this.$route.params.query) {
       this.getData()
     } else {

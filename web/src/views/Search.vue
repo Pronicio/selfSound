@@ -64,6 +64,13 @@ export default {
       }
     }
   },
+  beforeMount: function () {
+    if (this.$route.params.query) {
+      this.search()
+    } else {
+      this.$router.push('/')
+    }
+  },
   mounted: function () {
     this.eventBus.on('onSearch', (data) => {
       this.searchInput = data;
@@ -71,13 +78,6 @@ export default {
     })
 
     document.title = 'SelfSound - Search'
-  },
-  created: function () {
-    if (this.$route.params.query) {
-      this.search()
-    } else {
-      this.$router.push('/')
-    }
   },
   methods: {
     search: async function () {
