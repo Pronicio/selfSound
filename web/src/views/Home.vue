@@ -9,7 +9,7 @@
         </div>
         <div class="musics" @scroll="infiniteScroll">
           <div class="track" v-for="(item, index) in top" :key="item.id" :id="item.id">
-            <div class="details">
+            <div class="details" @click="playFromProvider(item)">
               <p id="index">{{ index + 1 }}.</p>
               <img :src="item.album.cover_small" alt="Album Cover"/>
               <div class="info">
@@ -46,7 +46,8 @@
 
 <script>
 import axios from "axios";
-import { cleanString } from "../api";
+import {cleanString, getYoutubeVideoFromProvider} from "../api";
+import {useStore} from "../store/main";
 
 export default {
   name: "Home",
@@ -96,10 +97,48 @@ export default {
       if (scrollTop + clientHeight >= scrollHeight) {
         this.moreTopWorldMusics()
       }
-    }
+    },
+    playFromProvider: async function (data) {
+
+      let track = await getYoutubeVideoFromProvider(data);
+
+      //Store music locally for later.
+      this.store.currentMusic = track;
+      localStorage.setItem('track', JSON.stringify(track));
+
+      //Announces the arrival of the music.
+      this.eventBus.emit('play', track)
+
+      // Put in the queue the other top music.
+      this.store.queue = [];
+      this.top.forEach(el => {
+        if (data.id !== el.id) {
+          track = {
+            trackId: el.id,
+            videoId: null,
+            title: el.title_short ? el.title_short : el.title,
+            artist: {
+              id: el.artist.id,
+              name: el.artist.name,
+            },
+            album: {
+              id: el.album.id,
+              cover: {
+                big: el.album.cover_big,
+                xl: el.album.cover_xl,
+              },
+            }
+          };
+          this.store.queue.push(track)
+        }
+      })
+    },
   },
   setup: function () {
+    const store = useStore()
+
     return {
+      store,
       cleanString
     }
   }
