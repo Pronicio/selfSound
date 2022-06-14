@@ -28,6 +28,7 @@
     <div class="tools">
       <div id="like"></div>
       <div id="lyrics"></div>
+      <div id="playlist"></div>
       <div class="volume_wrapper">
         <div id="volume"></div>
         <div class="volume_popover">

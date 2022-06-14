@@ -119,6 +119,7 @@ p {
 
 .tools {
   display: flex;
+  align-items: flex-end;
   margin-left: 4vw;
 
   > div {
@@ -142,6 +143,15 @@ p {
     background: url("@/assets/images/icons/lyrics.svg") no-repeat;
     background-size: 2rem;
     filter: var(--base);
+  }
+
+  #playlist {
+    background: url("@/assets/images/icons/playlist.svg") no-repeat;
+    background-size: 2rem;
+    filter: var(--base);
+
+    width: 2rem;
+    height: 1.6rem;
   }
 
   .volume_wrapper {
