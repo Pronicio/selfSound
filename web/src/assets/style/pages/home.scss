@@ -7,16 +7,12 @@ section {
     width: 70%;
     height: 100%;
 
-    border: green 2px solid;
-
     @media (max-width: 700px) { width: 100%; }
   }
 
   .right {
     width: 30%;
     height: 100%;
-
-    border: red 2px solid;
 
     .top {
       margin: 8px;
@@ -30,7 +26,7 @@ section {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 3px;
+        margin: 5px;
 
         h3 {
           margin: 5px 0;
@@ -52,29 +48,65 @@ section {
           display: flex;
           flex-direction: row;
           align-items: center;
+          justify-content: space-between;
 
           cursor: pointer;
           margin: 5px 0;
 
-          #index {
-            margin: 0 7px 0 0;
-          }
-
-          p {
-            margin: 0;
-            color: var(--sub-text);
-          }
-
-          .info {
+          .details {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+
+            #index {
+              margin: 0 7px 0 0;
+            }
+
+            p {
+              margin: 0;
+              color: var(--sub-text);
+            }
+
+            img {
+              border-radius: 2px;
+            }
+
+            .info {
+              display: flex;
+              flex-direction: column;
+              margin: 5px;
+
+              h6 {
+                font-weight: bold;
+                font-size: 0.9rem;
+                margin: 0;
+                color: var(--text);
+              }
+            }
+          }
+
+          .actions {
+            display: flex;
+            align-items: center;
             margin: 5px;
 
-            h6 {
-              font-weight: bold;
-              font-size: 0.9rem;
-              margin: 0;
-              color: var(--text);
+            > div {
+              margin: 5px;
+            }
+
+            #like_music {
+              background: url("@/assets/images/icons/heart_empty.svg") no-repeat;
+              background-size: 1.5rem;
+              width: 1.5rem;
+              height: 1.5rem;
+              filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg) brightness(97%) contrast(88%);
+            }
+
+            #menu {
+              background: url("@/assets/images/icons/menu.svg") no-repeat;
+              background-size: 1.5rem;
+              width: 1.5rem;
+              height: 0.4rem;
+              filter: invert(52%) sepia(7%) saturate(362%) hue-rotate(100deg) brightness(97%) contrast(88%);
             }
           }
         }
@@ -115,9 +147,9 @@ section {
       }
 
       .categories {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
 
         .genre {
           border-radius: 3px;
@@ -125,8 +157,8 @@ section {
 
           .img {
             color: var(--text);
-            width: 11rem;
-            height: 5rem;
+            width: 100%;
+            height: 11vh;
 
             font-size: 1.5rem;
             font-family: 'Inter', sans-serif;

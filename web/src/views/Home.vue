@@ -9,11 +9,17 @@
         </div>
         <div class="musics" @scroll="infiniteScroll">
           <div class="track" v-for="(item, index) in top" :key="item.id" :id="item.id">
-            <p id="index">{{ index + 1 }}.</p>
-            <img :src="item.album.cover_small" alt="Album Cover"/>
-            <div class="info">
-              <h6>{{ cleanString(item.title) }}</h6>
-              <p>{{ item.artist.name }}</p>
+            <div class="details">
+              <p id="index">{{ index + 1 }}.</p>
+              <img :src="item.album.cover_small" alt="Album Cover"/>
+              <div class="info">
+                <h6>{{ cleanString(item.title) }}</h6>
+                <p>{{ item.artist.name }}</p>
+              </div>
+            </div>
+            <div class="actions">
+              <div id="like_music"></div>
+              <div id="menu"></div>
             </div>
           </div>
         </div>
@@ -69,7 +75,7 @@ export default {
     getTopWorldMusics: async function () {
       const req = await axios({
         method: 'get',
-        url: `${import.meta.env.VITE_BACK}/standard/top_world?limit=6`,
+        url: `${import.meta.env.VITE_BACK}/standard/top_world?limit=10`,
       })
 
       this.top = req.data.data;
@@ -80,7 +86,7 @@ export default {
 
       const req = await axios({
         method: 'get',
-        url: `${import.meta.env.VITE_BACK}/standard/top_world?limit=6&index=${index}`,
+        url: `${import.meta.env.VITE_BACK}/standard/top_world?limit=10&index=${index}`,
       })
 
       this.top = this.top.concat(req.data.data)
