@@ -34,10 +34,14 @@ section {
   .video {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 
     img {
       filter: var(--base);
-      margin: 2vh 0 10vh 0;
+    }
+
+    iframe {
+      margin-bottom: 22vh;
     }
   }
 
