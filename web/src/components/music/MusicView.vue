@@ -1,5 +1,6 @@
 <template>
   <section>
+    <div class="background-filter"></div>
     <div class="background" :style="'background: url('+ videoThumbnail +') center center / cover no-repeat;'"></div>
     <div class="main">
       <div class="video">
