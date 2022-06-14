@@ -40,8 +40,11 @@ section {
       filter: var(--base);
     }
 
-    iframe {
-      margin-bottom: 22vh;
+    .media {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
   }
 

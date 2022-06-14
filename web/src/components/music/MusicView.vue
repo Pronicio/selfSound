@@ -5,7 +5,9 @@
     <div class="main">
       <div class="video">
         <img src="../../assets/images/logo.svg" width="200" alt=""/>
-        <div id="player"></div>
+        <div class="media">
+          <div id="player"></div>
+        </div>
       </div>
 
       <div class="others">
