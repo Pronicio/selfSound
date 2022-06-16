@@ -118,6 +118,8 @@ export default {
 
       // Put in the queue the other music you are looking for.
       this.store.queue = [];
+      this.store.cache_queue = [];
+      this.store.shuffle_cache_queue = [];
       this.searchResult.track.forEach(el => {
         if (data.id !== el.id) {
           track = {
@@ -139,6 +141,12 @@ export default {
           this.store.queue.push(track)
         }
       })
+
+      //If the shuffle option is enabled then execute the mix.
+      if (this.store.controls.shuffle) {
+        this.store.controls.shuffle = false;
+        this.eventBus.emit('control', 'shuffle')
+      }
     },
   },
   setup() {

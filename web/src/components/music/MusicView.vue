@@ -169,14 +169,16 @@ export default {
       let queue = this.store.queue;
       let shuffle_cache_queue = this.store.shuffle_cache_queue
 
-      if (this.store.controls.shuffle) {
-        this.store.controls.shuffle = false
-        this.store.queue = shuffle_cache_queue
-      } else {
-        this.store.controls.shuffle = true
-        this.store.shuffle_cache_queue = [...queue];
+      if (queue.length) {
+        if (this.store.controls.shuffle) {
+          this.store.controls.shuffle = false
+          if (shuffle_cache_queue.length) this.store.queue = shuffle_cache_queue
+        } else {
+          this.store.controls.shuffle = true
+          this.store.shuffle_cache_queue = [...queue];
 
-        this.store.shuffleQueue();
+          this.store.shuffleQueue();
+        }
       }
 
     },

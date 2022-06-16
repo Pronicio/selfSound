@@ -108,6 +108,8 @@ export default {
 
       // Queue up the other music from the album.
       this.store.queue = [];
+      this.store.cache_queue = [];
+      this.store.shuffle_cache_queue = [];
       this.data.tracks.data.forEach(el => {
         if (music.id !== el.id) {
           track = {
@@ -129,6 +131,12 @@ export default {
           this.store.queue.push(track)
         }
       })
+
+      //If the shuffle option is enabled then execute the mix.
+      if (this.store.controls.shuffle) {
+        this.store.controls.shuffle = false;
+        this.eventBus.emit('control', 'shuffle')
+      }
     }
   },
   setup() {
