@@ -10,11 +10,9 @@
         </div>
       </div>
 
-      <div class="others">
-        <Transition name="magic">
-          <component :is="activeComponent"></component>
-        </Transition>
-      </div>
+      <Transition name="magic">
+        <component :is="activeComponent"></component>
+      </Transition>
     </div>
   </section>
 </template>
