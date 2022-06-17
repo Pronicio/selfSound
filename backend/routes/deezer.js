@@ -90,6 +90,21 @@ async function routes (fastify, options) {
 
         rep.send(results.data)
     })
+
+    /**
+     * Get all info of a user / artist
+     * @body {string} id The ID of the user
+     */
+    fastify.post('/profile', async (req, rep) => {
+        const id = req.body.id;
+
+        const results = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/user/${id}`
+        })
+
+        rep.send(results.data)
+    })
 }
 
 module.exports = routes;

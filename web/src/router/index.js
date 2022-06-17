@@ -24,6 +24,11 @@ const routes = [
         path: '/playlist/:query',
         name: 'Playlist',
         component: () => import('../views/elements/Playlist.vue')
+    },
+    {
+        path: '/profile/:query',
+        name: 'Profile',
+        component: () => import('../views/elements/Profile.vue')
     }
 ]
 const router = createRouter({
