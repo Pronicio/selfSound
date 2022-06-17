@@ -22,6 +22,7 @@ import Queue from './Queue.vue'
 import {useStore} from '@/store/main'
 import {secondsToString} from '@/api'
 import axios from "axios";
+import {getYoutubeVideoFromProvider} from "../../api";
 
 export default {
   name: "MusicView",
@@ -108,15 +109,8 @@ export default {
       }
     },
     playFromProvider: async function (data) {
-      let req = await axios({
-        method: 'post',
-        url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
-        data: {
-          query: `${data.title} ${data.artist.name}`
-        }
-      })
-
-      let track = Object.assign(data, {videoId: req.data.id})
+      let req = await getYoutubeVideoFromProvider(data);
+      let track = Object.assign(data, { videoId: req.videoId })
 
       this.store.currentMusic = track;
       localStorage.setItem('track', JSON.stringify(track));

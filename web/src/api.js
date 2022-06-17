@@ -20,8 +20,8 @@ export async function getYoutubeVideoFromProvider (data) {
         album: {
             id: data.album.id,
             cover: {
-                big: data.album.cover_big,
-                xl: data.album.cover_xl,
+                big: data.album.cover_big || data.album.cover.big,
+                xl: data.album.cover_xl || data.album.cover.xl,
             },
         }
     };

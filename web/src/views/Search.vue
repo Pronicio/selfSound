@@ -106,7 +106,6 @@ export default {
       this.searchResult = result;
     },
     playFromProvider: async function (data) {
-
       let track = await getYoutubeVideoFromProvider(data);
 
       //Store music locally for later.

@@ -1,7 +1,7 @@
 <template>
   <div v-if="store.queue.length" class="others">
     <h3>Queue : </h3>
-    <div v-for="item in store.queue" :key="item.id" :id="item.trackId">
+    <div v-for="item in store.queue" :key="item.id" :id="item.trackId" class="track" @click="playFromProvider(item)">
       <img :src="item.album.cover.big" width="50" alt="Album cover"/>
       <p>- {{ item.title }}</p>
     </div>
@@ -10,9 +10,22 @@
 
 <script>
 import {useStore} from '@/store/main'
+import {getYoutubeVideoFromProvider} from "../../api";
 
 export default {
   name: "Queue",
+  methods: {
+    playFromProvider: async function (data) {
+      let track = await getYoutubeVideoFromProvider(data);
+
+      //Store music locally for later.
+      this.store.currentMusic = track;
+      localStorage.setItem('track', JSON.stringify(track));
+
+      //Announces the arrival of the music.
+      this.eventBus.emit('play', track)
+    }
+  },
   setup() {
     const store = useStore()
     return {store}
