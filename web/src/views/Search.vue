@@ -35,7 +35,8 @@
     <h3 v-if="searchResult.playlist.length"> Playlists : </h3>
 
     <div class="result">
-      <div v-for="item in searchResult.playlist" :key="item.id" :id="item.id">
+      <div v-for="item in searchResult.playlist" :key="item.id" :id="item.id"
+           @click="this.$router.push({ name: 'Playlist', params: { query: item.id } })">
         <img :src="item.picture_medium" alt="Playlist cover" loading="lazy"/>
         <h4>{{ cleanString(item.title) }}</h4>
       </div>

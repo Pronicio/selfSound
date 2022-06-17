@@ -52,6 +52,21 @@ async function routes (fastify, options) {
     })
 
     /**
+     * Get all info of a playlist
+     * @body {string} id The ID of the playlist
+     */
+    fastify.post('/playlist', async (req, rep) => {
+        const id = req.body.id;
+
+        const results = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/playlist/${id}`
+        })
+
+        rep.send(results.data)
+    })
+
+    /**
      * Get the Trend playlist
      */
     fastify.get('/trend', async (req, rep) => {

@@ -1,14 +1,12 @@
 <template>
   <section class="sec1">
-    <img class="cover" :src="data.cover_big" alt="Album cover" width="250"/>
+    <img class="cover" :src="data.picture_big" alt="Playlist cover" width="250"/>
     <div class="infos">
-      <p id="label">{{ data.label }}</p>
-      <h1>{{ data.title }}</h1>
+      <h1 style="margin: 0">{{ data.title }}</h1>
       <div class="artist">
-        <img class="artist_picture" :src="data.artist.picture_small" alt="Artist picture" width="30"/>
-        <h2>{{ data.artist.name }}</h2>
+        <h2 v-if="data.creator">{{ data.creator.name }}</h2>
       </div>
-      <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>
+      <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }}</p>
       <div class="controls">
         <button id="listen" @click="playFromProvider(data.tracks.data[0])">
           <div class="logo_play"></div>
@@ -21,9 +19,10 @@
   <section class="sec2">
     <h2>Tracks : </h2>
     <div class="tracks">
-      <div v-if="data.tracks" class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id" @click="playFromProvider(item)">
+      <div v-if="data.tracks" class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id"
+           @click="playFromProvider(item)">
         <div class="details">
-          <img :src="data.cover_small" alt="Album cover" width="50"/>
+          <img :src="item.album.cover_small" alt="Album cover" width="50"/>
           <p>{{ index + 1 }}. {{ item.title }}</p>
         </div>
         <div class="right">
@@ -37,11 +36,12 @@
 
 <script>
 import axios from "axios";
-import { useStore } from '@/store/main'
-import {getYoutubeVideoFromProvider, secondsToString} from "../../api";
+import {secondsToString} from '@/api'
+import {useStore} from '@/store/main'
+import {getYoutubeVideoFromProvider} from "../../api";
 
 export default {
-  name: "Album.vue",
+  name: "Playlist",
   data: function () {
     return {
       id: this.$route.params.query,
@@ -63,7 +63,7 @@ export default {
     getData: async function () {
       let req = await axios({
         method: 'post',
-        url: `${import.meta.env.VITE_BACK}/standard/album`,
+        url: `${import.meta.env.VITE_BACK}/standard/playlist`,
         data: {
           id: this.id
         }
@@ -73,11 +73,7 @@ export default {
       document.title = `SelfSound - ${this.data.title}`
     },
     playFromProvider: async function (music) {
-      const data = Object.assign(music, { album: {
-          cover_big: this.data.cover_big,
-          cover_xl: this.data.cover_xl
-      }})
-      let track = await getYoutubeVideoFromProvider(data);
+      let track = await getYoutubeVideoFromProvider(music);
 
       //Store music locally for later.
       this.store.currentMusic = track;
@@ -103,8 +99,8 @@ export default {
             album: {
               id: this.data.id,
               cover: {
-                big: this.data.cover_big,
-                xl: this.data.cover_xl,
+                big: el.album.cover_big,
+                xl: el.album.cover_xl,
               },
             }
           };
