@@ -22,7 +22,7 @@
       <div v-if="data.tracks" class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id"
            @click="playFromProvider(item)">
         <div class="details">
-          <img :src="item.album.cover_small" alt="Album cover" width="50"/>
+          <img :src="item.album.cover_small" alt="Album cover" width="50" loading="lazy"/>
           <p>{{ index + 1 }}. {{ item.title }}</p>
         </div>
         <div class="right">
