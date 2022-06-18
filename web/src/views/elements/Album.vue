@@ -1,11 +1,11 @@
 <template>
   <section class="sec1">
-    <img class="cover" :src="data.cover_big" alt="Album cover" width="250"/>
+    <object class="cover lazy" :data="data.cover_big" type="image/png" width="250"></object>
     <div class="infos">
       <p id="label">{{ data.label }}</p>
       <h1>{{ data.title }}</h1>
       <div class="artist">
-        <img class="artist_picture" :src="data.artist.picture_small" alt="Artist picture" width="30"/>
+        <img class="artist_picture lazy" :src="data.artist.picture_small" alt="Artist picture" width="30"/>
         <h2>{{ data.artist.name }}</h2>
       </div>
       <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>

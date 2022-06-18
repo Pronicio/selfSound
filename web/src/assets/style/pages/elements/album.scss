@@ -111,7 +111,7 @@
     }
   }
 
-  img {
+  .lazy {
     background: var(--gradient);
     background-size: 200% 100%;
     -webkit-animation: 1.5s shine linear infinite;

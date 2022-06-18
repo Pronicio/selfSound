@@ -1,6 +1,6 @@
 <template>
   <section class="sec1">
-    <img class="cover" :src="data.picture_big" alt="Playlist cover" width="250"/>
+    <object class="cover lazy" :data="data.picture_big" type="image/png" width="250"></object>
     <div class="infos">
       <h1 style="margin: 0">{{ data.title }}</h1>
       <div class="artist">
