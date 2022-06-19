@@ -29,9 +29,9 @@ export const useStore = defineStore('main', {
     }),
     actions: {
         clearAllQueues() {
-            this.store.queue = [];
-            this.store.cache_queue = [];
-            this.store.shuffle_cache_queue = [];
+            this.queue = [];
+            this.cache_queue = [];
+            this.shuffle_cache_queue = [];
         },
         shuffleQueue() {
             for (let i = this.queue.length - 1; i > 0; i--) {
