@@ -1,3 +1,106 @@
+.source_control {
+  display: flex;
+  justify-content: center;
+
+  #switch {
+    margin: 1rem 0 0 0;
+    width: 115px;
+    height: 40px;
+  }
+
+  .toggle {
+    border: 2px solid var(--sub-text);
+    border-radius: 20px;
+    -webkit-transition: border-color .6s  ease-out;
+    transition: border-color .6s  ease-out;
+    box-sizing: border-box;
+
+    .toggle-text-off {
+      line-height: 36px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+
+      -webkit-user-select: none; /* Chrome/Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+ */
+
+      cursor: pointer;
+      color: var(--sub-text);
+    }
+
+    /* used for streak effect */
+    .glow-comp {
+      opacity: 0;
+      border-radius: 6px;
+      background-color: rgba(75, 122, 141, .1);
+      box-shadow: 0 0 12px rgba(75, 122, 141, .2);
+      -webkit-transition: opacity 4.5s 1s;
+      transition: opacity 4.5s 1s;
+    }
+
+    .toggle-button {
+      width: 28px;
+      bottom: 4px;
+      right: 39px;
+      background-color: var(--sub-text);
+      border-radius: 19px;
+      cursor: pointer;
+      -webkit-transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+      transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+    }
+
+    .toggle-text-on {
+      line-height: 36px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      cursor: pointer;
+      -webkit-user-select: none; /* Chrome/Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+ */
+
+
+      color: rgba(0,0,0,0);
+    }
+  }
+
+  .toggle-on {
+    border-color: var(--color);
+    -webkit-transition: all .5s .15s ease-out;
+    transition: all .5s .15s ease-out;
+
+    .toggle-button {
+      width: 65px;
+      border-radius: 23px;
+      background-color: var(--color);
+      box-shadow: 0 0 16px #4b7a8d;
+      -webkit-transition: all .2s .1s, right .1s;
+      transition: all .2s .1s, right .1s;
+    }
+
+    .toggle-text-on {
+      color: var(--color);
+      -webkit-transition: color .3s .15s ;
+      transition: color .3s .15s ;
+    }
+
+    .toggle-text-off {
+      display: none;
+      color: rgba(0,0,0,0);
+    }
+
+    .glow-comp {
+      opacity: 1;
+      -webkit-transition: opacity 1s;
+      transition: opacity 1s;
+    }
+  }
+
+}
+
 .result {
   display: flex;
   flex-direction: row;
@@ -14,6 +117,14 @@
 
     > img {
       width: 12.5rem;
+      box-shadow: rgb(25 25 34 / 30%) 0 1px 6px;
+      border-radius: 4px;
+    }
+
+    .video_cover {
+      width: 200px;
+      height: 200px;
+
       box-shadow: rgb(25 25 34 / 30%) 0 1px 6px;
       border-radius: 4px;
     }

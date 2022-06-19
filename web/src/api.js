@@ -27,6 +27,25 @@ export async function getYoutubeVideoFromProvider (data) {
     };
 }
 
+export function formatYoutubeVideo (data) {
+    return {
+        trackId: null,
+        videoId: data.id,
+        title: data.title,
+        artist: {
+            id: data.channel.id,
+            name: data.channel.name,
+        },
+        album: {
+            id: null,
+            cover: {
+                big: `https://img.youtube.com/vi/${data.id}/hqdefault.jpg`,
+                xl: `https://img.youtube.com/vi/${data.id}/maxresdefault.jpg`,
+            },
+        }
+    };
+}
+
 export function secondsToString (seconds, aff) {
     const numHours = Math.floor(((seconds % 31536000) % 86400) / 3600);
     const numMinutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);

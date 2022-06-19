@@ -110,8 +110,11 @@ export default {
     },
     playFromProvider: async function (data) {
       let req = await getYoutubeVideoFromProvider(data);
-      let track = Object.assign(data, { videoId: req.videoId })
+      let track = Object.assign(data, {videoId: req.videoId})
 
+      this.play(track)
+    },
+    play: function (track) {
       this.store.currentMusic = track;
       localStorage.setItem('track', JSON.stringify(track));
 
@@ -146,14 +149,16 @@ export default {
     nextMusic: function () {
       if (this.store.queue.length) {
         this.store.cache_queue.push(this.store.currentMusic)
-        this.playFromProvider(this.store.queue[0]);
+        if (!this.store.queue[0].videoId) this.playFromProvider(this.store.queue[0]);
+        else this.play(this.store.queue[0])
         this.store.queue.shift();
       }
     },
     beforeMusic: function () {
       if (this.store.cache_queue.length) {
         let musicToPut = this.store.cache_queue.pop();
-        this.playFromProvider(musicToPut);
+        if (!this.store.queue[0].videoId) this.playFromProvider(musicToPut);
+        else this.play(musicToPut)
         this.store.queue.unshift(this.store.currentMusic)
       }
     },

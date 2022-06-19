@@ -1,5 +1,4 @@
-const { stream, video_basic_info } = require('play-dl');
-const { search } = require("youtube-ext");
+const { search, stream, video_basic_info } = require('play-dl');
 
 async function routes(fastify, options) {
 
@@ -11,16 +10,15 @@ async function routes(fastify, options) {
      */
     fastify.post('/search', async (req, rep) => {
         const query = req.body.query;
+        const limit = req.query.limit;
 
         if (req.query.music === "true") {
-            const music = await search(`${query} audio`, /*{ filterType: "video" }*/)
-
-            return rep.send(music.videos[0])
+            const music = await search(`${query} audio`, { limit: 1 })
+            return rep.send(music[0])
         }
 
-        const results = await search(query)
-
-        rep.send(results.videos)
+        const results = await search(query, { limit: limit ? parseInt(limit) : 1 })
+        rep.send(results)
     })
 
     /**
@@ -28,7 +26,6 @@ async function routes(fastify, options) {
      * @body {string} videoID The videoID of the video
      */
     fastify.post('/stream', async (req, rep) => {
-
         try {
             const results = await stream(`https://www.youtube.com/watch?v=${req.body.videoID}`);
 
@@ -48,7 +45,6 @@ async function routes(fastify, options) {
      * @body {string} videoID The videoID of the video
      */
     fastify.post('/video-info', async (req, rep) => {
-
         const results = await video_basic_info(`https://www.youtube.com/watch?v=${req.body.videoID}`);
         rep.send(results)
     })
