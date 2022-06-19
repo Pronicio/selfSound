@@ -109,9 +109,8 @@ export default {
       this.eventBus.emit('play', track)
 
       // Put in the queue the other top music.
-      this.store.queue = [];
-      this.store.cache_queue = [];
-      this.store.shuffle_cache_queue = [];
+      this.store.clearAllQueues();
+
       this.top.forEach(el => {
         if (data.id !== el.id) {
           track = {

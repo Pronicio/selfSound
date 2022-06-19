@@ -82,10 +82,9 @@ export default {
       //Announces the arrival of the music.
       this.eventBus.emit('play', track)
 
-      // Queue up the other music from the album.
-      this.store.queue = [];
-      this.store.cache_queue = [];
-      this.store.shuffle_cache_queue = [];
+      // Queue up the other music from the playlist.
+      this.store.clearAllQueues();
+
       this.data.tracks.data.forEach(el => {
         if (music.id !== el.id) {
           track = {

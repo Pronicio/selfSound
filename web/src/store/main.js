@@ -28,6 +28,11 @@ export const useStore = defineStore('main', {
         cache_queue: []
     }),
     actions: {
+        clearAllQueues() {
+            this.store.queue = [];
+            this.store.cache_queue = [];
+            this.store.shuffle_cache_queue = [];
+        },
         shuffleQueue() {
             for (let i = this.queue.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));

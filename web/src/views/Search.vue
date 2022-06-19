@@ -117,9 +117,8 @@ export default {
       this.eventBus.emit('play', track)
 
       // Put in the queue the other music you are looking for.
-      this.store.queue = [];
-      this.store.cache_queue = [];
-      this.store.shuffle_cache_queue = [];
+      this.store.clearAllQueues();
+
       this.searchResult.track.forEach(el => {
         if (data.id !== el.id) {
           track = {

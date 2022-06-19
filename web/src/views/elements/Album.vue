@@ -87,9 +87,8 @@ export default {
       this.eventBus.emit('play', track)
 
       // Queue up the other music from the album.
-      this.store.queue = [];
-      this.store.cache_queue = [];
-      this.store.shuffle_cache_queue = [];
+      this.store.clearAllQueues();
+
       this.data.tracks.data.forEach(el => {
         if (music.id !== el.id) {
           track = {
