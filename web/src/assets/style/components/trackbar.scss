@@ -40,7 +40,7 @@ p {
   .track {
     display: flex;
     flex-direction: column;
-    width: 12vw;
+    width: 22vw;
 
     p {
       cursor: pointer;
@@ -57,7 +57,6 @@ p {
   flex-direction: column;
 
   width: 50vw;
-  margin-left: 2vw;
 
   .controls {
     display: flex;
@@ -120,7 +119,7 @@ p {
 .tools {
   display: flex;
   align-items: flex-end;
-  margin: 0 1vw 0 4vw;
+  margin: 0 2vw 0 4vw;
 
   > div {
     width: 2rem;
