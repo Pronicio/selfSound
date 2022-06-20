@@ -11,7 +11,6 @@
 
     <div v-if="!ytb" id="standard">
       <h3 v-if="searchResult.track.length"> Tracks : </h3>
-
       <div class="result">
         <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
           <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="playFromProvider(item)"/>
@@ -21,7 +20,6 @@
       </div>
 
       <h3 v-if="searchResult.album.length"> Albums : </h3>
-
       <div class="result">
         <div v-for="item in searchResult.album" :key="item.id" :id="item.id">
           <img :src="item.cover_medium" alt="Album cover" loading="lazy"
@@ -32,7 +30,6 @@
       </div>
 
       <h3 v-if="searchResult.artist.length"> Artists : </h3>
-
       <div class="result">
         <div v-for="item in searchResult.artist" :key="item.id" :id="item.id" class="artist_section">
           <img class="rounded_img" :src="item.picture_medium" alt="Artist picture" loading="lazy"/>
@@ -42,13 +39,16 @@
       </div>
 
       <h3 v-if="searchResult.playlist.length"> Playlists : </h3>
-
       <div class="result">
         <div v-for="item in searchResult.playlist" :key="item.id" :id="item.id"
              @click="this.$router.push({ name: 'Playlist', params: { query: item.id } })">
           <img :src="item.picture_medium" alt="Playlist cover" loading="lazy"/>
           <h4>{{ cleanString(item.title) }}</h4>
         </div>
+      </div>
+
+      <div class="not_found" v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length">
+        <h3>No Results :(</h3>
       </div>
     </div>
 
@@ -61,6 +61,9 @@
           <h4>{{ cleanString(item.title) }}</h4>
           <p class="sub-text">{{ item.channel.name }}</p>
         </div>
+      </div>
+      <div class="not_found" v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length">
+        <h3>No Results :(</h3>
       </div>
     </div>
 
