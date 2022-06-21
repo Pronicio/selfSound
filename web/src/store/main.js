@@ -23,11 +23,17 @@ export const useStore = defineStore('main', {
             shuffle: false,
             repeat_mode: false
         },
-        queue: [],
+        queue: JSON.parse(localStorage.getItem('queue'))?.queue || [],
         shuffle_cache_queue: [],
         cache_queue: []
     }),
     actions: {
+        saveQueue() {
+            const toSave = {
+                queue: this.queue
+            }
+            localStorage.setItem('queue', JSON.stringify(toSave))
+        },
         clearAllQueues() {
             this.queue = [];
             this.cache_queue = [];

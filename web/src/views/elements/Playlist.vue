@@ -107,6 +107,8 @@ export default {
         }
       })
 
+      this.store.saveQueue();
+
       //If the shuffle option is enabled then execute the mix.
       if (this.store.controls.shuffle) {
         this.store.controls.shuffle = false;

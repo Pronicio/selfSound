@@ -175,6 +175,8 @@ export default {
         }
       })
 
+      this.store.saveQueue();
+
     },
     playFromYtb: async function (data) {
       let track = formatYoutubeVideo(data);
@@ -190,6 +192,8 @@ export default {
           this.store.queue.push(track)
         }
       })
+
+      this.store.saveQueue();
     },
     play: async function (track) {
       //Store music locally for later.
