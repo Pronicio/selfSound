@@ -1,6 +1,21 @@
 <template>
   <section>
-    <div class="left"></div>
+    <div class="left">
+      <div class="first">
+        <h2>For you</h2>
+        <div class="cards">
+          <div class="card" v-for="item in sections.for_you" :key="item.title">
+            <img :src="item.img" :alt="item.title"/>
+            <div class="content" :style="`background: ${item.color}`">
+              <h5>{{ item.sub_title }}</h5>
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.description }}</p>
+            </div>
+            <div class="play_white"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="right">
       <div class="top">
         <div class="title">
@@ -64,7 +79,39 @@ export default {
         { id: 85, name: "Alternative", img: "fd252ab727d9a3b0b3c29014873f8f57" },
         { id: 106, name: "Electro", img: "15df4502c1c58137dae5bdd1cc6f0251" },
         { id: 129, name: "Jazz", img: "91468ecc5dfdd19c42a43d2cbdf27059" },
-      ]
+      ],
+      sections: {
+        for_you: [
+          {
+            img: "https://i.goopics.net/bp66e7.png",
+            title: "My New Arrivals",
+            sub_title: "New For you",
+            description: "Deine Freunde, Moderat",
+            color: "rgba(54, 30, 32, 0.5)"
+          },
+          {
+            img: "https://i.goopics.net/m1maim.png",
+            title: "Coexist",
+            sub_title: "New Track for you",
+            description: "Album by The XX",
+            color: "rgba(255, 255, 255, 0.5)"
+          },
+          {
+            img: "https://i.goopics.net/92ku9r.png",
+            title: "After Hours",
+            sub_title: "New Album",
+            description: "The Weeknd",
+            color: "rgba(59, 67, 27, 0.5)"
+          },
+          {
+            img: "https://i.goopics.net/3vdkof.png",
+            title: "If You Wait",
+            sub_title: "Based on your likes",
+            description: "London Grammar",
+            color: "rgba(54, 19, 6, 0.5)"
+          },
+        ]
+      }
     }
   },
   beforeMount: async function() {
