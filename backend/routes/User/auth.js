@@ -17,7 +17,6 @@ async function routes(fastify, options) {
             const infos = req.body
 
             const newUser = await db.register(infos)
-            console.log(newUser);
 
             if (newUser) {
                 const token = fastify.jwt.sign({
@@ -30,7 +29,7 @@ async function routes(fastify, options) {
                 })
             }
 
-            rep.send({error: true})
+            return rep.send({error: true})
         }
     })
 
@@ -59,7 +58,7 @@ async function routes(fastify, options) {
                 })
             }
 
-            rep.send({error: true})
+            return rep.send({error: true})
         }
     })
 
@@ -71,7 +70,7 @@ async function routes(fastify, options) {
         method: 'GET',
         url: '/discord',
         handler: async (req, rep) => {
-            let discordCode = req.query.code;
+            const discordCode = req.query.code;
 
             const params = new URLSearchParams()
             params.append('client_id', process.env.DISCORD_CLIENT_ID)
@@ -86,9 +85,9 @@ async function routes(fastify, options) {
                 }
             }
 
-            let dio = await axios.post("https://discord.com/api/oauth2/token", params, reqConfig);
+            const dio = await axios.post("https://discord.com/api/oauth2/token", params, reqConfig);
 
-            let userResult = await axios.get('https://discord.com/api/users/@me', {
+            const userResult = await axios.get('https://discord.com/api/users/@me', {
                 headers: {
                     authorization: `${dio.data.token_type} ${dio.data.access_token}`,
                 },
@@ -111,9 +110,9 @@ async function routes(fastify, options) {
                     error: false,
                     token: token
                 })
-            } else {
-                rep.send({error: true})
             }
+
+            return rep.send({error: true})
         }
     })
 }

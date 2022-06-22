@@ -62,7 +62,7 @@ class Database {
 
         if (user) return user
 
-        return await this.register({
+        return this.register({
             email: oauth.email,
             username: oauth.username,
             password: this._genPassword(40)
@@ -80,8 +80,8 @@ class Database {
 
     _genPassword(length) {
         let result = '';
-        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!§$*=+}@àç^è|#"~é.,?;&';
-        let charactersLength = characters.length;
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!§$*=+}@àç^è|#"~é.,?;&';
+        const charactersLength = characters.length;
 
         for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
