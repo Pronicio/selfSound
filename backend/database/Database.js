@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const User = require('./Models/User');
 const argon2 = require('argon2');
+
+const User = require('./Models/User');
+const Library = require('./Models/Library');
 
 class Database {
 
@@ -76,6 +78,63 @@ class Database {
 
         if (!user) return false
         return user
+    }
+
+    async getUserLibrary({username}) {
+        const userLib = await Library.findOne({
+            author: username
+        })
+
+        if (!userLib) {
+            return new Library({
+                author: username,
+            })
+        }
+
+        return userLib
+    }
+
+    async putInUserLibrary(username, action, data) {
+        let userLib = await Library.findOne({
+            author: username
+        })
+
+        if (!userLib) {
+            userLib = new Library({
+                author: username,
+            })
+        }
+
+        switch (action) {
+            case 'like':
+                if (data.trackId || data.videoId) {
+                    let providerSearch = userLib.liked.find(el => {
+                        if (!el.trackId) return false
+                        return el.trackId === data.trackId
+                    })
+                    let ytbSearch = userLib.liked.find(el => {
+                        if (!el.videoId) return false
+                        return el.videoId === data.videoId
+                    })
+                    if (providerSearch || ytbSearch) return false
+                    userLib.liked.push(data)
+                }
+                break;
+            case 'playlist':
+                userLib.playlists.push(data)
+                break;
+            case 'album':
+                userLib.albums.push(data)
+                break;
+            case 'artist':
+                userLib.artists.push(data)
+                break;
+            default:
+                return false
+        }
+
+        await userLib.save()
+        return userLib
     }
 
     _genPassword(length) {

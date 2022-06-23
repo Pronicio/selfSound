@@ -37,6 +37,7 @@ fastify.register(require('./routes/soundcloud'), { prefix: 'soundcloud' })
 
 fastify.register(require('./routes/User/user'), { prefix: 'users' })
 fastify.register(require('./routes/User/auth'), { prefix: 'auth' })
+fastify.register(require('./routes/User/library'), { prefix: 'library' })
 
 fastify.listen({ port: process.env.PORT, host: '0.0.0.0' }).then(() => {
     console.log(`Server listening.. PORT: ${process.env.PORT}`)

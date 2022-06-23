@@ -110,9 +110,12 @@
   > div {
     margin: 5px;
     width: 12.5rem;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    overflow: hidden;
     cursor: pointer;
 
     > img {
