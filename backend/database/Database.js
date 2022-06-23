@@ -108,11 +108,11 @@ class Database {
         switch (action) {
             case 'like':
                 if (data.trackId || data.videoId) {
-                    let providerSearch = userLib.liked.find(el => {
+                    const providerSearch = userLib.liked.find(el => {
                         if (!el.trackId) return false
                         return el.trackId === data.trackId
                     })
-                    let ytbSearch = userLib.liked.find(el => {
+                    const ytbSearch = userLib.liked.find(el => {
                         if (!el.videoId) return false
                         return el.videoId === data.videoId
                     })

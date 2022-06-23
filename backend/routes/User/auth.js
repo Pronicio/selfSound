@@ -85,11 +85,11 @@ async function routes(fastify, options) {
                 }
             }
 
-            const dio = await axios.post("https://discord.com/api/oauth2/token", params, reqConfig);
+            const auth = await axios.post("https://discord.com/api/oauth2/token", params, reqConfig);
 
             const userResult = await axios.get('https://discord.com/api/users/@me', {
                 headers: {
-                    authorization: `${dio.data.token_type} ${dio.data.access_token}`,
+                    authorization: `${auth.data.token_type} ${auth.data.access_token}`,
                 },
             });
 
