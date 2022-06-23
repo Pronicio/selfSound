@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config().parsed;
-const Database = require("./Database/Database.js");
+const Database = require("./database/Database.js");
 
 const fastify = require('fastify')({
     logger: false,
