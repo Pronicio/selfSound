@@ -5,20 +5,14 @@ async function routes(fastify, options) {
     /**
      * Get the library of the user
      */
-    fastify.route({
-        method: 'GET',
-        url: '/me',
-        preHandler: async (req, reply, done) => {
-            await req.jwtVerify()
-            done()
-        },
-        handler: async (req, rep) => {
-            const userLib = await db.getUserLibrary({
-                username: req.user.username
-            })
+    fastify.get('/me', async function (req, rep) {
+        await req.jwtVerify()
 
-            return rep.send(userLib)
-        }
+        const userLib = await db.getUserLibrary({
+            username: req.user.username
+        })
+
+        return rep.send(userLib)
     })
 
     /**
@@ -26,25 +20,19 @@ async function routes(fastify, options) {
      * @body {number} action The name of the action
      * @body {number} data The content of the action
      */
-    fastify.route({
-        method: 'PUT',
-        url: '/me',
-        preHandler: async (req, reply, done) => {
-            await req.jwtVerify()
-            done()
-        },
-        handler: async (req, rep) => {
-            const action = req.body.action;
-            const data = req.body.data;
+    fastify.put('/me', async function (req, rep) {
+        await req.jwtVerify()
 
-            const actionInDb = await db.putInUserLibrary(req.user.username, action, data)
+        const action = req.body.action;
+        const data = req.body.data;
 
-            if (!actionInDb) {
-                return rep.send({error: true})
-            }
+        const actionInDb = await db.putInUserLibrary(req.user.username, action, data)
 
-            return rep.send(actionInDb)
+        if (!actionInDb) {
+            return rep.send({error: true})
         }
+
+        return rep.send(actionInDb)
     })
 }
 

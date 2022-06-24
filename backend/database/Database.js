@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const argon2 = require('argon2');
 
+const { verifyProvider } = require('../resources/verifyContent')
+
 const User = require('./Models/User');
 const Library = require('./Models/Library');
 
@@ -108,16 +110,10 @@ class Database {
         switch (action) {
             case 'like':
                 if (data.trackId || data.videoId) {
-                    const providerSearch = userLib.liked.find(el => {
-                        if (!el.trackId) return false
-                        return el.trackId === data.trackId
-                    })
-                    const ytbSearch = userLib.liked.find(el => {
-                        if (!el.videoId) return false
-                        return el.videoId === data.videoId
-                    })
-                    if (providerSearch || ytbSearch) return false
-                    userLib.liked.push(data)
+                    const verif = await verifyProvider(userLib, data);
+
+                    if (verif) userLib.liked.push(verif)
+                    else return false
                 }
                 break;
             case 'playlist':
