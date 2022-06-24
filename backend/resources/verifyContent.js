@@ -1,4 +1,5 @@
-const { deezer, video_basic_info } = require('play-dl');
+const { video_basic_info } = require('play-dl');
+const axios = require('axios');
 
 module.exports = {
     async verifyProvider(userLib, data) {
@@ -14,20 +15,19 @@ module.exports = {
         if (providerSearch || ytbSearch) return false
 
         if (data.trackId) {
-            const res = await deezer(`https://www.deezer.com/track/${data.trackId}`);
+            const res = await axios.get(`https://api.deezer.com/track/${data.trackId}`);
+            const track = res.data
             return {
-                trackId: res.id,
+                trackId: track.id,
                 videoId: null,
-                title: res.shortTitle ? res.shortTitle : res.title,
+                title: track.title_short ? track.title_short : track.title,
                 artist: {
-                    id: res.artist.id,
-                    name: res.artist.name,
+                    id: track.artist.id,
+                    name: track.artist.name,
                 },
                 album: {
-                    id: res.album.id,
-                    cover: {
-                        ...res.album.cover
-                    }
+                    id: track.album.id,
+                    cover: track.album.md5_image
                 }
             }
         } else if (data.videoId) {

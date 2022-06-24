@@ -135,7 +135,7 @@ class Database {
 
     _genPassword(length) {
         let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!§$*=+}@àç^è|#"~é.,?;&';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-!§$*=+}@àç[]^_è|#"~é.,?;&';
         const charactersLength = characters.length;
 
         for (let i = 0; i < length; i++) {
