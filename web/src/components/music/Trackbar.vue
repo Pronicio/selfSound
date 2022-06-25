@@ -14,7 +14,7 @@
     <div class="progressbar">
       <div class="controls">
         <div id="shuffle" @click="control('shuffle')" :style="`filter: ${store.controls.shuffle ? 'var(--base)' : 'var(--unused)'}`"></div>
-        <div id="backward" @click="control('backward')"></div>
+        <div id="backward" @click="control('backward')" :class="store.cache_queue.length ? '' : 'inactive'"></div>
         <div id="play" @click="changeState($event)"></div>
         <div id="forward" @click="control('forward')"></div>
         <div id="repeat-mode" @click="control('repeat-mode')" :style="`filter: ${store.controls.repeat_mode ? 'var(--base)' : 'var(--unused)'}`"></div>

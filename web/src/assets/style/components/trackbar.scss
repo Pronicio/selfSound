@@ -62,7 +62,11 @@ p {
     display: flex;
     justify-content: center;
 
-  > div {
+    .inactive {
+      cursor: not-allowed;
+    }
+
+    > div {
       width: 2rem;
       height: 2rem;
       margin: 5px;
