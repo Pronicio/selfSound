@@ -28,13 +28,13 @@
     <div class="tools">
       <div id="like"></div>
       <div id="lyrics"></div>
-      <div id="playlist"></div>
       <div class="volume_wrapper">
         <div id="volume"></div>
         <div class="volume_popover">
           <input type="range" id="volume_slider" :value="store.controls.volume" @input="changeVolume()">
         </div>
       </div>
+      <div id="settings_horizontal"></div>
       <div id="arrow" @click="changeView"></div>
     </div>
   </div>

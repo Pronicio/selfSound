@@ -144,12 +144,6 @@ p {
     filter: var(--base);
   }
 
-  #playlist {
-    background: url("@/assets/images/icons/playlist.svg") no-repeat;
-    background-size: 2rem;
-    filter: var(--base);
-  }
-
   .volume_wrapper {
 
     &:hover .volume_popover {
@@ -191,6 +185,12 @@ p {
         accent-color: var(--color);
       }
     }
+  }
+
+  #settings_horizontal {
+    background: url("@/assets/images/icons/settings_horizontal.svg") no-repeat;
+    background-size: 2rem;
+    filter: var(--base);
   }
 
   #arrow {
