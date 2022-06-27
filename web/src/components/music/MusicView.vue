@@ -178,9 +178,12 @@ export default {
         }
       }
 
+      this.store.saveControls()
+
     },
     repeat_mode: function () {
       this.store.controls.repeat_mode = !this.store.controls.repeat_mode
+      this.store.saveControls()
     },
     timer: function () {
 
