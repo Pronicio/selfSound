@@ -175,6 +175,12 @@ export default {
         }
       })
 
+      //If the shuffle option is enabled then execute the mix.
+      if (this.store.controls.shuffle) {
+        this.store.controls.shuffle = false;
+        this.eventBus.emit('control', 'shuffle')
+      }
+
       this.store.saveQueue();
 
     },
@@ -193,6 +199,12 @@ export default {
         }
       })
 
+      //If the shuffle option is enabled then execute the mix.
+      if (this.store.controls.shuffle) {
+        this.store.controls.shuffle = false;
+        this.eventBus.emit('control', 'shuffle')
+      }
+
       this.store.saveQueue();
     },
     play: async function (track) {
@@ -202,12 +214,6 @@ export default {
 
       //Announces the arrival of the music.
       this.eventBus.emit('play', track)
-
-      //If the shuffle option is enabled then execute the mix.
-      if (this.store.controls.shuffle) {
-        this.store.controls.shuffle = false;
-        this.eventBus.emit('control', 'shuffle')
-      }
     },
     changeSource: function () {
       const el = document.getElementById('switch')
