@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const argon2 = require('argon2');
 
-const { verifyProvider } = require('../resources/verifyContent')
+const {verifyMusic, verifPlaylist, verifAlbum, verifArtist} = require('../resources/verifyContent')
 
 const User = require('./Models/User');
 const Library = require('./Models/Library');
@@ -96,6 +96,73 @@ class Database {
         return userLib
     }
 
+    async createInUserLibrary(username, action, data) {
+        let userLib = await Library.findOne({
+            author: username
+        })
+
+        if (!userLib) {
+            userLib = new Library({
+                author: username,
+            })
+        }
+
+        switch (action) {
+            case 'playlist':
+                if (data.id) {
+                    const alreadyExist = userLib.playlists.find(el => {
+                        return el.providerId === data.id
+                    })
+                    if (alreadyExist) return false
+
+                    const playlist = await verifPlaylist(data)
+                    userLib.playlists.push(playlist)
+                } else {
+                    const alreadyExist = userLib.playlists.find(el => {
+                        return el.title === data.title
+                    })
+                    if (alreadyExist) return false
+
+                    const newPlaylist = {
+                        providerId: null,
+                        title: data.title,
+                        picture: data.picture,
+                        tracks: []
+                    }
+
+                    userLib.playlists.push(newPlaylist)
+                }
+                break;
+            case 'album':
+                if (data.id) {
+                    const alreadyExist = userLib.albums.find(el => {
+                        return el.providerId === data.id
+                    })
+                    if (alreadyExist) return false
+
+                    const album = await verifAlbum(data)
+                    userLib.albums.push(album)
+                }
+                break;
+            case 'artist':
+                if (data.id) {
+                    const alreadyExist = userLib.artists.find(el => {
+                        return el.providerId === data.id
+                    })
+                    if (alreadyExist) return false
+
+                    const artist = await verifArtist(data)
+                    userLib.artists.push(artist)
+                }
+                break;
+            default:
+                return false
+        }
+
+        await userLib.save()
+        return userLib
+    }
+
     async putInUserLibrary(username, action, data) {
         let userLib = await Library.findOne({
             author: username
@@ -110,12 +177,56 @@ class Database {
         switch (action) {
             case 'like':
                 if (data.trackId || data.videoId) {
-                    const verif = await verifyProvider(userLib, data);
+                    const providerSearch = userLib.liked.find(el => {
+                        if (!el.trackId) return false
+                        return el.trackId === data.trackId
+                    })
+                    const ytbSearch = userLib.liked.find(el => {
+                        if (!el.videoId) return false
+                        return el.videoId === data.videoId
+                    })
+
+                    if (providerSearch || ytbSearch) return false
+
+                    const verif = await verifyMusic(data);
 
                     if (verif) userLib.liked.push(verif)
                     else return false
                 }
                 break;
+            case 'playlist':
+                const playlist = userLib.playlists.find(el => {
+                    return el.title === data.title
+                })
+                const index = userLib.playlists.indexOf(playlist)
+
+                //TODO: Verif Music + put in the playlist
+
+                userLib.playlists[index] = {
+                    ...playlist,
+
+                }
+                break;
+            default:
+                return false
+        }
+
+        await userLib.save()
+        return userLib
+    }
+
+    async deleteInUserLibrary(username, action, data) {
+        let userLib = await Library.findOne({
+            author: username
+        })
+
+        if (!userLib) {
+            userLib = new Library({
+                author: username,
+            })
+        }
+
+        switch (action) {
             case 'playlist':
                 userLib.playlists.push(data)
                 break;
