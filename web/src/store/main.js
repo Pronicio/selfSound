@@ -20,14 +20,18 @@ export const useStore = defineStore('main', {
         },
         controls: {
             volume: localStorage.getItem('volume') || "100",
-            shuffle: false,
-            repeat_mode: false
+            shuffle: localStorage.getItem('shuffle') === 'true' || false,
+            repeat_mode: localStorage.getItem('repeat_mode') === 'true' || false
         },
         queue: JSON.parse(localStorage.getItem('queue'))?.queue || [],
         shuffle_cache_queue: [],
         cache_queue: []
     }),
     actions: {
+        saveControls() {
+            localStorage.setItem('shuffle', this.controls.shuffle)
+            localStorage.setItem('repeat_mode', this.controls.repeat_mode)
+        },
         saveQueue() {
             const toSave = {
                 queue: this.queue
