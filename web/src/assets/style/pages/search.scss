@@ -176,16 +176,16 @@ p {
   margin: 0;
 }
 
+h5 {
+  font-size: 1.1rem;
+}
+
 .center {
   display: flex;
   align-items: center;
   align-content: center;
   justify-content: center;
   margin-top: 5vh;
-
-  h5 {
-    font-size: 1.1rem;
-  }
 
   .loader {
     width: 8rem;
