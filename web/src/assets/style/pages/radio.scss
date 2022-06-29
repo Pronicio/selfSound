@@ -1,0 +1,36 @@
+section {
+  h1 {
+    color: var(--text);
+    font-size: 2rem;
+  }
+
+  .radios {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+   .station {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: space-around;
+
+     width: 10rem;
+     height: 10rem;
+     margin: 5px;
+     padding: 5px;
+
+     cursor: pointer;
+     overflow: hidden;
+
+     background: var(--sub-main);
+     box-shadow: 0 3px 21px rgb(16 18 35 / 30%);
+     border-radius: 9px;
+
+     h3 {
+       margin: 0;
+       color: var(--text);
+     }
+   }
+  }
+}

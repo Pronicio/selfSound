@@ -5,8 +5,8 @@
     <div class="nav">
       <ul>
         <li @click="this.$router.push('/')" :class="`primitive ${this.$route.name === 'Home' ? 'selected' : ''}`"><div class="home"></div> Accueil</li>
-        <li @click="this.$router.push('Discover')" :class="`primitive ${this.$route.name === 'Discover' ? 'selected' : ''}`"><div class="discover"></div> Découvrir</li>
-        <li @click="this.$router.push('Radio')" :class="`primitive ${this.$route.name === 'Radio' ? 'selected' : ''}`"><div class="radio"></div> Radios</li>
+        <li @click="this.$router.push('/discover')" :class="`primitive ${this.$route.name === 'Discover' ? 'selected' : ''}`"><div class="discover"></div> Découvrir</li>
+        <li @click="this.$router.push('/radio')" :class="`primitive ${this.$route.name === 'Radio' ? 'selected' : ''}`"><div class="radio"></div> Radios</li>
 
         <h5>Bibliothèque :</h5>
         <ul>

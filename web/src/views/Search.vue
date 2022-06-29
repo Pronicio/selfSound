@@ -47,8 +47,9 @@
         </div>
       </div>
 
-      <div class="not_found" v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length">
-        <h3>No Results :(</h3>
+      <div class="center">
+        <h3 v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length && finished.standard">No Results :(</h3>
+        <div class="loader" v-if="!finished.standard"></div>
       </div>
     </div>
 
@@ -62,8 +63,9 @@
           <p class="sub-text">{{ item.channel.name }}</p>
         </div>
       </div>
-      <div class="not_found" v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length">
-        <h3>No Results :(</h3>
+      <div class="center">
+        <h3 v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length && finished.ytb">No Results :(</h3>
+        <div class="loader" v-if="!finished.ytb"></div>
       </div>
     </div>
 
@@ -85,6 +87,10 @@ export default {
         album: [],
         artist: [],
         playlist: []
+      },
+      finished: {
+        standard: false,
+        ytb: false
       },
       ytb: !!localStorage.getItem('ytb'),
       ytb_searchResult: []
@@ -130,6 +136,10 @@ export default {
         })
 
         result[property] = req.data;
+
+        if (property === "playlist") {
+          this.finished.standard = true
+        }
       }
 
       this.searchResult = result;
@@ -144,6 +154,8 @@ export default {
       })
 
       this.ytb_searchResult = req.data;
+
+      this.finished.ytb = true
     },
     playFromProvider: async function (data) {
       let track = await getYoutubeVideoFromProvider(data);

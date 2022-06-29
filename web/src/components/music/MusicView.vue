@@ -49,6 +49,10 @@ export default {
       this.playVideo()
     })
 
+    this.eventBus.on('play_radio', (station) => {
+      this.player.pauseVideo();
+    })
+
     this.eventBus.on("control", (data) => {
       if (data === "play") this.player.playVideo();
       if (data === "pause") this.player.pauseVideo();
