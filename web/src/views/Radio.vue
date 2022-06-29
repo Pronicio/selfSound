@@ -3,8 +3,8 @@
     <h1>Toutes nos radios :</h1>
     <div class="radios">
       <div v-for="station in radios" :key="station.name">
-        <div class="station" v-if="station?.favicon">
-          <img :src="station.favicon" width="100" height="100"  alt="station icon" loading="lazy"/>
+        <div class="station" v-if="station?.favicon" @click="playRadio(station)">
+          <img :src="station.favicon" width="100" height="100"  alt="station icon" loading="lazy" onerror="this.onerror=null;this.src='https://i.goopics.net/wge2zb.png';"/>
           <h3>{{ station.name }}</h3>
         </div>
       </div>
@@ -33,6 +33,9 @@ export default {
     },
     getLang: function () {
       return localStorage.getItem('lang') || navigator.language.trim().split(/-|_/)[0]
+    },
+    playRadio: function (station) {
+      this.eventBus.emit('play_radio', station)
     }
   }
 }
