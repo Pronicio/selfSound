@@ -27,7 +27,10 @@ export default {
   },
   mounted: async function () {
     this.eventBus.on('play_radio', (station) => {
+      const audio = document.querySelector('audio')
+
       this.radio = station;
+      audio.volume = this.store.controls.volume / 100
     })
 
     this.eventBus.on('play', (data) => {
