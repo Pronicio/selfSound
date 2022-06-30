@@ -25,6 +25,11 @@ export default {
   beforeMount: async function () {
     await this.getRadiosByCountry()
   },
+  mounted: function () {
+    this.eventBus.on('onSearchRadio', (data) => {
+      this.searchRadio(data)
+    })
+  },
   methods: {
     getRadiosByCountry: async function () {
       const countryCode = this.getLang()
@@ -36,6 +41,22 @@ export default {
     },
     playRadio: function (station) {
       this.eventBus.emit('play_radio', station)
+    },
+    searchRadio: async function (data) {
+      const req = await axios({
+        method: 'post',
+        url: 'https://de1.api.radio-browser.info/json/stations/search',
+        data: {
+          hidebroken: true,
+          limit: 100,
+          name: data,
+          offset: 0,
+          order: "clicktrend",
+          reverse: true
+        }
+      })
+
+      this.radios = req.data
     }
   }
 }
