@@ -1,6 +1,7 @@
 # 🎶 selfSound
 
-SelfSound is a music platform where you can listen to music **freely**!
+SelfSound is a music platform where you can listen to music **freely**!  
+The backend and the frontend are in Javascript. The mobile app will be in Kotlin.
 
 **Backend :** With Fastify (JavaScript) : `/backend/`  
 **Frontend :** With Vue.js (JavaScript) : `/web/`  
