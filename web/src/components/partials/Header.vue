@@ -9,6 +9,20 @@
     <div class="right">
       <img src="https://secure.gravatar.com/avatar/68e616655eb77bb1b600d25e6735f364" width="50" alt="profile picture"/>
       <h4>Pronicio</h4>
+      <div class="tooltip">
+        <h5>Theme : </h5>
+        <ul>
+          <button type="button" class="yellow">
+            <input type="radio" name="name" checked />Yellow
+          </button>
+          <button type="button" class="purple">
+            <input type="radio" name="name" />Purple
+          </button>
+          <button type="button" class="blue">
+            <input type="radio" name="name" />Blue
+          </button>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +44,9 @@ export default {
   },
   methods: {
     search: function () {
+      if (this.$route.name === "Radio") {
+        return this.eventBus.emit('onSearchRadio', this.searchInput)
+      }
       this.$router.push({name: 'Search', params: {query: this.searchInput}})
       this.eventBus.emit('onSearch', this.searchInput)
     }

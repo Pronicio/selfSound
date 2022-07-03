@@ -22,7 +22,6 @@
   }
 
   img {
-    width: 9vh;
     border-radius: 8px;
     margin: 0 1vw 0 2vw;
   }
@@ -64,9 +63,9 @@
 
     #volume_icon {
       background: url("@/assets/images/icons/volume.svg") no-repeat;
-      background-size: 3rem;
-      width: 3rem;
-      height: 3rem;
+      background-size: 2.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
       filter: var(--base);
     }
 
