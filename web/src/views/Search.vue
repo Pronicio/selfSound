@@ -54,7 +54,7 @@
     </div>
 
     <div v-else id="ytb">
-      <h3 v-if="ytb_searchResult.length"> Tracks : </h3>
+      <h3 v-if="ytb_searchResult.length"> Vidéos : </h3>
       <div class="result">
         <div v-for="item in ytb_searchResult" :key="item.id" :id="item.id" @click="playFromYtb(item)">
           <div class="video_cover"
