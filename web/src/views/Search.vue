@@ -48,7 +48,7 @@
       </div>
 
       <div class="center">
-        <h3 v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length && finished.standard">No Results :(</h3>
+        <h3 v-if="!searchResult.track.length && !searchResult.album.length && !searchResult.artist.length && !searchResult.playlist.length && finished.standard">No Results :(</h3>
         <div class="loader" v-if="!finished.standard"></div>
       </div>
     </div>
