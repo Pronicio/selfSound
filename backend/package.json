@@ -19,6 +19,9 @@
     "genius-lyrics": "^4.3.6",
     "mongoose": "^6.4.0",
     "nodemon": "^2.0.15",
-    "play-dl": "^1.9.4"
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "play-dl": "^1.9.4",
+    "sequelize": "^6.21.2"
   }
 }
