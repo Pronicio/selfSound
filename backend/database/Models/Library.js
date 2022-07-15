@@ -1,11 +1,22 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require("sequelize");
 
-const LibrarySchema = new mongoose.Schema({
-    author: String,
-    liked: [],
-    playlists: [],
-    albums: [],
-    artists: []
-});
+module.exports = (sequelize) => {
+    return sequelize.define('Library', {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true
+        },
+        author: {
+            type: DataTypes.STRING,
+            unique: true, allowNull: false
+        }
+    })
+};
 
-module.exports = mongoose.model('Library', LibrarySchema);
+/*
+liked: [],
+playlists: [],
+albums: [],
+artists: []
+ */

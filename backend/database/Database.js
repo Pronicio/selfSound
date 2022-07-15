@@ -13,6 +13,10 @@ class Database {
         })
 
         this.User = require('./Models/User')(sequelize);
+        this.Library = require('./Models/Library')(sequelize);
+
+        this.User.hasOne(this.Library, { targetKey: 'author', foreignKey: 'username' });
+        this.Library.belongsTo(this.User, { targetKey: 'username', foreignKey: 'author' });
 
         try {
             (async () => {
@@ -25,7 +29,7 @@ class Database {
         }
     }
 
-    async register({email, username, password}, oauth) {
+    async register({ email, username, password }, oauth) {
 
         const userExist = await this.User.findOne({
             where: {
@@ -43,7 +47,7 @@ class Database {
             hashLength: 32,
         });
 
-        return this.User.create({
+        const user = await this.User.create({
             username: username,
             email: email,
             password: hash.toString(),
@@ -53,9 +57,15 @@ class Database {
                 discord: oauth?.discord
             }
         })
+
+        const library = await this.Library.create({
+            author: username
+        });
+
+        return user
     }
 
-    async login({email, username, password}) {
+    async login({ email, username, password }) {
 
         const user = await this.User.findOne({
             where: {
@@ -77,7 +87,7 @@ class Database {
     async oauth2(oauth) {
 
         const user = await User.findOne({
-            $or: [{email: oauth.email}, {username: oauth.username}]
+            $or: [ { email: oauth.email }, { username: oauth.username } ]
         })
 
         if (user) return user
@@ -89,13 +99,22 @@ class Database {
         }, oauth)
     }
 
-    async getUser({email, username}) {
-        const user = await User.findOne({
-            $or: [{email: email}, {username: username}]
+    async getUser({ email, username }) {
+        const user = await this.User.findOne({
+            $or: [ { email: email }, { username: username } ]
         })
 
         if (!user) return false
         return user
+    }
+
+    async getUserLib({ username }) {
+        const lib = await this.Library.findOne({
+            where: { author: username },
+            include: this.User
+        })
+
+        return lib.toJSON();
     }
 
     _genPassword(length) {

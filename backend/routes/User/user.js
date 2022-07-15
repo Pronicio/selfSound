@@ -16,7 +16,7 @@ async function routes(fastify, options) {
             username: user.username,
             email: user.email,
             locale: user.locale,
-            avatar: user.avatar,
+            avatar: user.avatar
         })
     })
 }
