@@ -48,13 +48,13 @@
       </div>
 
       <div class="center">
-        <h3 v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length && finished.standard">No Results :(</h3>
+        <h3 v-if="!searchResult.track.length && !searchResult.album.length && !searchResult.artist.length && !searchResult.playlist.length && finished.standard">No Results :(</h3>
         <div class="loader" v-if="!finished.standard"></div>
       </div>
     </div>
 
     <div v-else id="ytb">
-      <h3 v-if="ytb_searchResult.length"> Tracks : </h3>
+      <h3 v-if="ytb_searchResult.length"> Vidéos : </h3>
       <div class="result">
         <div v-for="item in ytb_searchResult" :key="item.id" :id="item.id" @click="playFromYtb(item)">
           <div class="video_cover"
@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="center">
-        <h3 v-if="!searchResult.track.length && !searchResult.track.length && !searchResult.track.length && !searchResult.track.length && finished.ytb">No Results :(</h3>
+        <h3 v-if="!ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && finished.ytb">No Results :(</h3>
         <div class="loader" v-if="!finished.ytb"></div>
       </div>
     </div>
@@ -154,7 +154,6 @@ export default {
       })
 
       this.ytb_searchResult = req.data;
-
       this.finished.ytb = true
     },
     playFromProvider: async function (data) {
