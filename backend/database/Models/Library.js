@@ -13,10 +13,3 @@ module.exports = (sequelize) => {
         }
     })
 };
-
-/*
-liked: [],
-playlists: [],
-albums: [],
-artists: []
- */

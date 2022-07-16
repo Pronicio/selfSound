@@ -12,6 +12,10 @@ async function routes(fastify, options) {
             username: req.user.username
         })
 
+        const lib = await db.getUserLib({
+            username: req.user.username
+        })
+
         rep.send({
             username: user.username,
             email: user.email,

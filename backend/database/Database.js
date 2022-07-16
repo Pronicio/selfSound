@@ -1,5 +1,6 @@
 const { Sequelize, Op } = require('sequelize');
 const argon2 = require('argon2');
+const { readdirSync } = require('fs');
 
 const { verifyMusic, verifPlaylist, verifAlbum, verifArtist } = require('../resources/verifyContent')
 
@@ -8,19 +9,23 @@ class Database {
     constructor(url) {
         this.url = url;
 
-        const sequelize = new Sequelize(url, {
+        this.sequelize = new Sequelize(url, {
             logging: false
         })
 
+        this._handlerModels()
+
+        /*
         this.User = require('./Models/User')(sequelize);
         this.Library = require('./Models/Library')(sequelize);
 
         this.User.hasOne(this.Library, { targetKey: 'author', foreignKey: 'username' });
         this.Library.belongsTo(this.User, { targetKey: 'username', foreignKey: 'author' });
+         */
 
         try {
             (async () => {
-                await sequelize.authenticate();
+                await this.sequelize.authenticate();
                 //await sequelize.sync({ force: true });
             })();
             console.log('Connection has been established successfully.');
@@ -58,9 +63,7 @@ class Database {
             }
         })
 
-        const library = await this.Library.create({
-            author: username
-        });
+        await this.Library.create({ author: username });
 
         return user
     }
@@ -110,11 +113,25 @@ class Database {
 
     async getUserLib({ username }) {
         const lib = await this.Library.findOne({
-            where: { author: username },
-            include: this.User
+            where: { author: username }
         })
 
         return lib.toJSON();
+    }
+
+    _handlerModels() {
+        readdirSync(`${__dirname}/Models`).forEach(folderName => {
+            if (folderName.includes('.js')) {
+                const fileName = folderName.replace('.js', '').trim();
+                this[fileName] = require(`${__dirname}/Models/${fileName}`)(this.sequelize);
+            }
+            else {
+                readdirSync(`${__dirname}/Models/${folderName}`).forEach(fileName => {
+                    fileName = fileName.replace('.js', '').trim();
+                    this[fileName] = require(`${__dirname}/Models/${folderName}/${fileName}`)(this.sequelize);
+                })
+            }
+        });
     }
 
     _genPassword(length) {

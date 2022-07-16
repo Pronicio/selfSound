@@ -22,6 +22,6 @@ module.exports = (sequelize) => {
         locale: { type: DataTypes.STRING, defaultValue: 'en',},
         biography: { type: DataTypes.STRING },
         avatar: { type: DataTypes.STRING },
-        createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+        createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
     })
 };
