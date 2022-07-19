@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-    return sequelize.define('Liked', {
+    return sequelize.define('Track', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -9,11 +9,11 @@ module.exports = (sequelize) => {
         },
         providerId: {
             type: DataTypes.INTEGER,
-            unique: true, allowNull: false
+            unique: true, allowNull: true
         },
         youtubeId: {
             type: DataTypes.STRING,
-            unique: true, allowNull: false
+            unique: true, allowNull: true
         },
         title: { type: DataTypes.STRING, allowNull: false },
         imageCode: { type: DataTypes.STRING }

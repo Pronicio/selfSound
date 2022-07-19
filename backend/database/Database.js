@@ -13,22 +13,13 @@ class Database {
             logging: false
         })
 
-        this._handlerModels()
-
-        /*
-        this.User = require('./Models/User')(sequelize);
-        this.Library = require('./Models/Library')(sequelize);
-
-        this.User.hasOne(this.Library, { targetKey: 'author', foreignKey: 'username' });
-        this.Library.belongsTo(this.User, { targetKey: 'username', foreignKey: 'author' });
-         */
-
         try {
             (async () => {
+                await this._handleModels()
                 await this.sequelize.authenticate();
-                //await sequelize.sync({ force: true });
+                //await this.sequelize.sync({ force: true });
+                console.log('Connection has been established successfully with the database.');
             })();
-            console.log('Connection has been established successfully.');
         } catch (error) {
             console.error('Unable to connect to the database:', error);
         }
@@ -113,25 +104,52 @@ class Database {
 
     async getUserLib({ username }) {
         const lib = await this.Library.findOne({
-            where: { author: username }
+            where: { author: username },
+            include: [ this.Track ]
         })
+
+        console.log(lib)
+
+        /*
+        try {
+            const exampleTrack = await this.Track.create({
+                providerId: 3135556,
+                title: "Harder, Better, Faster, Stronger",
+                imageCode: "2e018122cb56986277102d2041a592c8",
+            })
+
+            console.log("exampleTrack", exampleTrack)
+            await lib.addTrack(exampleTrack)
+        } catch (e) {
+            console.error(e)
+        }
+         */
 
         return lib.toJSON();
     }
 
-    _handlerModels() {
-        readdirSync(`${__dirname}/Models`).forEach(folderName => {
+    async _handleModels() {
+        await readdirSync(`${__dirname}/Models`).forEach(folderName => {
             if (folderName.includes('.js')) {
                 const fileName = folderName.replace('.js', '').trim();
                 this[fileName] = require(`${__dirname}/Models/${fileName}`)(this.sequelize);
-            }
-            else {
+            } else {
                 readdirSync(`${__dirname}/Models/${folderName}`).forEach(fileName => {
                     fileName = fileName.replace('.js', '').trim();
                     this[fileName] = require(`${__dirname}/Models/${folderName}/${fileName}`)(this.sequelize);
                 })
             }
         });
+
+        this._handleAssociations()
+    }
+
+    _handleAssociations() {
+        this.User.hasOne(this.Library, { targetKey: 'author', foreignKey: 'username' });
+        this.Library.belongsTo(this.User, { targetKey: 'username', foreignKey: 'author' });
+
+        this.Track.belongsToMany(this.Library, { through: 'LikedTitles' })
+        this.Library.hasMany(this.Track)
     }
 
     _genPassword(length) {
@@ -145,7 +163,6 @@ class Database {
 
         return result;
     }
-
 }
 
 module.exports = Database;
