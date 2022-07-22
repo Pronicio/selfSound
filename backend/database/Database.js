@@ -103,29 +103,62 @@ class Database {
     }
 
     async getUserLib({ username }) {
-        const lib = await this.Library.findOne({
+        return await this.Library.findOne({
             where: { author: username },
             include: [ this.Track ]
-        })
+        });
+    }
 
-        console.log(lib)
-
-        /*
+    async addTrackToLib(lib, trackData) {
         try {
-            const exampleTrack = await this.Track.create({
-                providerId: 3135556,
-                title: "Harder, Better, Faster, Stronger",
-                imageCode: "2e018122cb56986277102d2041a592c8",
+            let track = await this.Track.findOne({
+                where: {
+                    [Op.or]: [
+                        { providerId: trackData.providerId ? trackData.providerId : "null" },
+                        { youtubeId: trackData.youtubeId ? trackData.youtubeId : "null" }
+                    ]
+                }
             })
 
-            console.log("exampleTrack", exampleTrack)
-            await lib.addTrack(exampleTrack)
+            if (!track) {
+                track = await this.Track.create(trackData)
+                console.log("t1", track);
+
+                let AlbumOfTheTrack = await this.Album.findOne({
+                    where: {
+                        [Op.or]: [
+                            { providerId: trackData.album.providerId ? trackData.album.providerId : "null" },
+                            { youtubeId: trackData.album.youtubeId ? trackData.album.youtubeId : "null" }
+                        ]
+                    }
+                })
+                console.log("al1", AlbumOfTheTrack)
+
+                let ArtistOfTheTrack = await this.Artist.findOne({
+                    where: {
+                        [Op.or]: [
+                            { providerId: trackData.artist.providerId ? trackData.artist.providerId : "null" },
+                            { youtubeId: trackData.artist.youtubeId ? trackData.artist.youtubeId : "null" }
+                        ]
+                    }
+                })
+                console.log("ar1", ArtistOfTheTrack)
+
+                if (!AlbumOfTheTrack) AlbumOfTheTrack = await this.Album.create(trackData.album)
+                if (!ArtistOfTheTrack) ArtistOfTheTrack = await this.Artist.create(trackData.artist)
+                console.log("al2", AlbumOfTheTrack)
+                console.log("ar2", ArtistOfTheTrack)
+
+                await track.addAlbum(AlbumOfTheTrack)
+                await track.addArtist(ArtistOfTheTrack)
+                await AlbumOfTheTrack.addArtist(ArtistOfTheTrack)
+            }
+
+            console.log("t2", track)
+            await lib.addTrack(track)
         } catch (e) {
             console.error(e)
         }
-         */
-
-        return lib.toJSON();
     }
 
     async _handleModels() {
@@ -150,6 +183,16 @@ class Database {
 
         this.Track.belongsToMany(this.Library, { through: 'LikedTitles' })
         this.Library.hasMany(this.Track)
+        //TODO: Albums / Artists / Playlists
+
+        this.Track.hasOne(this.Album)
+        this.Album.belongsToMany(this.Track, { through: 'TracksAlbum' })
+
+        this.Track.hasOne(this.Artist)
+        this.Artist.belongsToMany(this.Track, { through: 'TracksArtist' })
+
+        this.Album.hasOne(this.Artist)
+        this.Artist.belongsToMany(this.Album, { through: 'ArtistsAlbums' })
     }
 
     _genPassword(length) {

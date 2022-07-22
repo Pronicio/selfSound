@@ -9,11 +9,11 @@ module.exports = (sequelize) => {
         },
         providerId: {
             type: DataTypes.INTEGER,
-            unique: true, allowNull: false
+            unique: true, allowNull: true
         },
         youtubeId: {
             type: DataTypes.STRING,
-            unique: true, allowNull: false
+            unique: true, allowNull: true
         },
         name: { type: DataTypes.STRING, allowNull: false },
         imageCode: { type: DataTypes.STRING }

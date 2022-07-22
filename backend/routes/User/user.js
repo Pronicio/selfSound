@@ -16,12 +16,28 @@ async function routes(fastify, options) {
             username: req.user.username
         })
 
+        await db.addTrackToLib(lib, {
+            providerId: 3135556,
+            title: "Harder, Better, Faster, Stronger",
+            imageCode: "2e018122cb56986277102d2041a592c8",
+            album: {
+                providerId: 302127,
+                title: "Discovery",
+                imageCode: "2e018122cb56986277102d2041a592c8"
+            },
+            artist: {
+                providerId: 27,
+                name: "Daft Punk",
+                imageCode: "f2bc007e9133c946ac3c3907ddc5d2ea"
+            }
+        })
+
         rep.send({
             username: user.username,
             email: user.email,
             locale: user.locale,
             avatar: user.avatar,
-            library: { ...lib }
+            library: { ...lib.toJSON() }
         })
     })
 }
