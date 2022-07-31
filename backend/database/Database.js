@@ -122,7 +122,6 @@ class Database {
 
             if (!track) {
                 track = await this.Track.create(trackData)
-                console.log("t1", track);
 
                 let AlbumOfTheTrack = await this.Album.findOne({
                     where: {
@@ -132,8 +131,6 @@ class Database {
                         ]
                     }
                 })
-                console.log("al1", AlbumOfTheTrack)
-
                 let ArtistOfTheTrack = await this.Artist.findOne({
                     where: {
                         [Op.or]: [
@@ -142,23 +139,36 @@ class Database {
                         ]
                     }
                 })
-                console.log("ar1", ArtistOfTheTrack)
 
                 if (!AlbumOfTheTrack) AlbumOfTheTrack = await this.Album.create(trackData.album)
                 if (!ArtistOfTheTrack) ArtistOfTheTrack = await this.Artist.create(trackData.artist)
-                console.log("al2", AlbumOfTheTrack)
-                console.log("ar2", ArtistOfTheTrack)
 
-                await track.addAlbum(AlbumOfTheTrack)
-                await track.addArtist(ArtistOfTheTrack)
-                await AlbumOfTheTrack.addArtist(ArtistOfTheTrack)
+                track.albumId = AlbumOfTheTrack.id
+                track.artistId = ArtistOfTheTrack.id
+
+                await track.save()
             }
 
-            console.log("t2", track)
             await lib.addTrack(track)
         } catch (e) {
             console.error(e)
         }
+    }
+
+    async getTrack(id) {
+        const track = await this.Track.findOne({
+            where: { id: id }
+        });
+
+        const album = await this.Album.findOne({
+            where: { id: track.albumId }
+        })
+
+        const artist = await this.Artist.findOne({
+            where: { id: track.artistId }
+        })
+
+        return { ...track.toJSON(), album: album.toJSON(), artist: artist.toJSON() }
     }
 
     async _handleModels() {
@@ -183,16 +193,8 @@ class Database {
 
         this.Track.belongsToMany(this.Library, { through: 'LikedTitles' })
         this.Library.hasMany(this.Track)
+
         //TODO: Albums / Artists / Playlists
-
-        this.Track.hasOne(this.Album)
-        this.Album.belongsToMany(this.Track, { through: 'TracksAlbum' })
-
-        this.Track.hasOne(this.Artist)
-        this.Artist.belongsToMany(this.Track, { through: 'TracksArtist' })
-
-        this.Album.hasOne(this.Artist)
-        this.Artist.belongsToMany(this.Album, { through: 'ArtistsAlbums' })
     }
 
     _genPassword(length) {

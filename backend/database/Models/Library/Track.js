@@ -16,6 +16,8 @@ module.exports = (sequelize) => {
             unique: true, allowNull: true
         },
         title: { type: DataTypes.STRING, allowNull: false },
-        imageCode: { type: DataTypes.STRING }
+        imageCode: { type: DataTypes.STRING },
+        albumId: { type: DataTypes.STRING, allowNull: true },
+        artistId: { type: DataTypes.STRING, allowNull: true }
     })
 };

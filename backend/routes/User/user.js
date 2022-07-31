@@ -17,8 +17,10 @@ async function routes(fastify, options) {
         })
 
         await db.addTrackToLib(lib, {
-            providerId: 3135556,
-            title: "Harder, Better, Faster, Stronger",
+            providerId: 3135553,
+            title: "One More Time",
+            //providerId: 3135556,
+            //title: "Harder, Better, Faster, Stronger",
             imageCode: "2e018122cb56986277102d2041a592c8",
             album: {
                 providerId: 302127,
@@ -32,12 +34,22 @@ async function routes(fastify, options) {
             }
         })
 
+        //const track1 = await db.getTrack(1)
+        //console.log(track1);
+
+        const tracks = await lib.getTracks();
+        let Titles = []
+        for (const el of tracks) {
+            const track = await db.getTrack(el.id)
+            Titles.push(track)
+        }
+
         rep.send({
             username: user.username,
             email: user.email,
             locale: user.locale,
             avatar: user.avatar,
-            library: { ...lib.toJSON() }
+            library: { tracks: Titles }
         })
     })
 }
