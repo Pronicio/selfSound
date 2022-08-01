@@ -20,7 +20,7 @@ fastify.register(require('@fastify/jwt'), {
     },
 })
 
-const db = new Database(process.env.DB_URL);
+const db = new Database(process.env.MONGO_URL);
 fastify.decorate('db', db);
 
 fastify.get('/', async function (req, rep) {

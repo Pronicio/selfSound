@@ -1,6 +1,8 @@
-const { Sequelize, Op } = require('sequelize');
+const mongoose = require('mongoose');
 const argon2 = require('argon2');
-const { readdirSync } = require('fs');
+
+const User = require('./Models/User');
+const Track = require('./Models/Track');
 
 const { verifyMusic, verifPlaylist, verifAlbum, verifArtist } = require('../resources/verifyContent')
 
@@ -9,15 +11,11 @@ class Database {
     constructor(url) {
         this.url = url;
 
-        this.sequelize = new Sequelize(url, {
-            logging: false
-        })
-
         try {
             (async () => {
-                await this._handleModels()
-                await this.sequelize.authenticate();
-                //await this.sequelize.sync({ force: true });
+                await mongoose.connect(this.url, {
+                    useNewUrlParser: true
+                });
                 console.log('Connection has been established successfully with the database.');
             })();
         } catch (error) {
@@ -27,14 +25,9 @@ class Database {
 
     async register({ email, username, password }, oauth) {
 
-        const userExist = await this.User.findOne({
-            where: {
-                [Op.or]: [
-                    { username: username ? username : null },
-                    { email: email ? email : null }
-                ]
-            }
-        });
+        const userExist = await User.findOne({
+            $or: [{ email: email }, { username: username }]
+        })
 
         if (userExist) return false
 
@@ -43,7 +36,7 @@ class Database {
             hashLength: 32,
         });
 
-        const user = await this.User.create({
+        const user = new User({
             username: username,
             email: email,
             password: hash.toString(),
@@ -54,21 +47,15 @@ class Database {
             }
         })
 
-        await this.Library.create({ author: username });
-
+        await user.save()
         return user
     }
 
     async login({ email, username, password }) {
 
-        const user = await this.User.findOne({
-            where: {
-                [Op.or]: [
-                    { username: username ? username : null },
-                    { email: email ? email : null }
-                ]
-            }
-        });
+        const user = await User.findOne({
+            $or: [{ email: email }, { username: username }]
+        })
 
         if (!user) return false
 
@@ -81,7 +68,7 @@ class Database {
     async oauth2(oauth) {
 
         const user = await User.findOne({
-            $or: [ { email: oauth.email }, { username: oauth.username } ]
+            $or: [{ email: oauth.email }, { username: oauth.username }]
         })
 
         if (user) return user
@@ -94,118 +81,46 @@ class Database {
     }
 
     async getUser({ email, username }) {
-        const user = await this.User.findOne({
-            $or: [ { email: email }, { username: username } ]
+        const user = await User.findOne({
+            $or: [{ email: email }, { username: username }]
         })
 
         if (!user) return false
         return user
     }
 
-    async getUserLib({ username }) {
-        return await this.Library.findOne({
-            where: { author: username },
-            include: [ this.Track ]
-        });
+    async getUserLibrary({ email, username }) {
+        const user = await User.findOne({
+            $or: [{ email: email }, { username: username }]
+        }).populate("liked")
+
+        if (!user) return false
+        return { ...user.liked }
     }
 
-    async addTrackToLib(lib, trackData) {
-        try {
-            let track = await this.Track.findOne({
-                where: {
-                    [Op.or]: [
-                        { providerId: trackData.providerId ? trackData.providerId : "null" },
-                        { youtubeId: trackData.youtubeId ? trackData.youtubeId : "null" }
-                    ]
-                }
-            })
-            console.log("track_find", track)
+    async addLiked({ email, username }, trackData) {
+        const user = await User.findOne({
+            $or: [{ email: email }, { username: username }]
+        })
 
-            if (!track) {
-                track = await this.Track.create(trackData)
-                console.log("track_create", track)
+        if (!user) return false
 
-                let AlbumOfTheTrack = await this.Album.findOne({
-                    where: {
-                        [Op.or]: [
-                            { providerId: trackData.album.providerId ? trackData.album.providerId : "null" },
-                            { youtubeId: trackData.album.youtubeId ? trackData.album.youtubeId : "null" }
-                        ]
-                    }
-                })
-                let ArtistOfTheTrack = await this.Artist.findOne({
-                    where: {
-                        [Op.or]: [
-                            { providerId: trackData.artist.providerId ? trackData.artist.providerId : "null" },
-                            { youtubeId: trackData.artist.youtubeId ? trackData.artist.youtubeId : "null" }
-                        ]
-                    }
-                })
-                console.log("AlbumOfTheTrack_f", AlbumOfTheTrack)
-                console.log("ArtistOfTheTrack_f", ArtistOfTheTrack)
+        let track = await Track.findOne({
+            $or: [
+                { providerId: trackData.providerId ? trackData.providerId : "null" },
+                { youtubeId: trackData.youtubeId ? trackData.youtubeId : "null" }
+            ]
+        })
 
-                if (!AlbumOfTheTrack) AlbumOfTheTrack = await this.Album.create(trackData.album)
-                if (!ArtistOfTheTrack) ArtistOfTheTrack = await this.Artist.create(trackData.artist)
-                console.log("AlbumOfTheTrack_c", AlbumOfTheTrack)
-                console.log("ArtistOfTheTrack_c", ArtistOfTheTrack)
-
-                await track.addAlbum(AlbumOfTheTrack)
-                await AlbumOfTheTrack.addTrack(track)
-
-                await track.addArtist(ArtistOfTheTrack)
-                await ArtistOfTheTrack.addTrack(track)
-
-                await track.save()
-            }
-
-            await lib.addTrack(track)
-        } catch (e) {
-            console.error(e)
+        if (!track) {
+            track = new Track(trackData)
+            await track.save()
         }
-    }
 
-    async getTrack(id) {
-        const track = await this.Track.findOne({
-            where: { id: id },
-            include: [ this.Album, this.Artist ]
-        });
-
-        return { ...track.toJSON() }
-    }
-
-    async _handleModels() {
-        await readdirSync(`${__dirname}/Models`).forEach(folderName => {
-            if (folderName.includes('.js')) {
-                const fileName = folderName.replace('.js', '').trim();
-                this[fileName] = require(`${__dirname}/Models/${fileName}`)(this.sequelize);
-            } else {
-                readdirSync(`${__dirname}/Models/${folderName}`).forEach(fileName => {
-                    fileName = fileName.replace('.js', '').trim();
-                    this[fileName] = require(`${__dirname}/Models/${folderName}/${fileName}`)(this.sequelize);
-                })
-            }
-        });
-
-        this._handleAssociations()
-    }
-
-    _handleAssociations() {
-        this.User.hasOne(this.Library, { targetKey: 'author', foreignKey: 'username' });
-        this.Library.belongsTo(this.User, { targetKey: 'username', foreignKey: 'author' });
-
-        this.Track.belongsToMany(this.Library, { through: 'LikedTitles' })
-        this.Library.hasMany(this.Track)
-
-        //TODO: Albums / Artists / Playlists
-        this.Track.hasMany(this.Album)
-        this.Album.belongsToMany(this.Track, { through: 'TracksAlbum' })
-
-        this.Track.hasMany(this.Artist)
-        this.Artist.belongsToMany(this.Track, { through: 'TracksArtist' })
-
-        //TODO: Finish that :
-        this.Album.hasOne(this.Artist)
-        this.Artist.belongsToMany(this.Album, { through: 'ArtistsAlbums' })
+        return User.findOneAndUpdate(
+            { $or: [{ email: email }, { username: username }] },
+            { $addToSet: { liked: track._id } }
+        );
     }
 
     _genPassword(length) {

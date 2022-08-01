@@ -1,27 +1,17 @@
-const { DataTypes } = require("sequelize");
+const mongoose = require('mongoose');
 
-module.exports = (sequelize) => {
-    return sequelize.define('User', {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true
-        },
-        username: {
-            type: DataTypes.STRING,
-            unique: true, allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
-            unique: true, allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        locale: { type: DataTypes.STRING, defaultValue: 'en',},
-        biography: { type: DataTypes.STRING },
-        avatar: { type: DataTypes.STRING },
-        createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-    })
-};
+const UserSchema = new mongoose.Schema({
+    username: String,
+    email: String,
+    password: String,
+    locale: { type: String, default: 'en', },
+    biography: { type: String, default: null, },
+    avatar: { type: String, default: null, },
+    createdAt: { type: Date, default: Date.now },
+    oauth2: {
+        discord: { type: Boolean, default: false }
+    },
+    liked: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }]
+});
+
+module.exports = mongoose.model('User', UserSchema);
