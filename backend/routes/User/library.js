@@ -1,3 +1,5 @@
+const { verifyMusic, verifPlaylist, verifAlbum, verifArtist } = require('../../resources/verifyContent')
+
 async function routes(fastify, options) {
 
     const db = fastify.db;
@@ -8,11 +10,11 @@ async function routes(fastify, options) {
     fastify.get('/me', async function (req, rep) {
         await req.jwtVerify()
 
-        const userLib = await db.getUserLibrary({
+        const lib = await db.getUserLibrary({
             username: req.user.username
         })
 
-        return rep.send(userLib)
+        return rep.send(lib)
     })
 
     /**
@@ -29,7 +31,7 @@ async function routes(fastify, options) {
         const actionInDb = await db.createInUserLibrary(req.user.username, action, data)
 
         if (!actionInDb) {
-            return rep.send({error: true})
+            return rep.send({ error: true })
         }
 
         return rep.send(actionInDb)
@@ -46,13 +48,15 @@ async function routes(fastify, options) {
         const action = req.body.action;
         const data = req.body.data;
 
-        const actionInDb = await db.putInUserLibrary(req.user.username, action, data)
+        if (action === "liked") {
+            const trackData = await verifyMusic(data)
+            if (!trackData) return rep.send({ error: true })
 
-        if (!actionInDb) {
-            return rep.send({error: true})
+            const res = await db.addLiked({ username: req.user.username }, trackData)
+
+            if (!res) return rep.send({ error: true })
+            return rep.send(trackData)
         }
-
-        return rep.send(actionInDb)
     })
 
     /**
@@ -69,7 +73,7 @@ async function routes(fastify, options) {
         const actionInDb = await db.deleteInUserLibrary(req.user.username, action, data)
 
         if (!actionInDb) {
-            return rep.send({error: true})
+            return rep.send({ error: true })
         }
 
         return rep.send(actionInDb)

@@ -4,8 +4,6 @@ const argon2 = require('argon2');
 const User = require('./Models/User');
 const Track = require('./Models/Track');
 
-const { verifyMusic, verifPlaylist, verifAlbum, verifArtist } = require('../resources/verifyContent')
-
 class Database {
 
     constructor(url) {
@@ -107,7 +105,7 @@ class Database {
 
         let track = await Track.findOne({
             $or: [
-                { providerId: trackData.providerId ? trackData.providerId : "null" },
+                { providerId: trackData.providerId ? trackData.providerId : 1 },
                 { youtubeId: trackData.youtubeId ? trackData.youtubeId : "null" }
             ]
         })

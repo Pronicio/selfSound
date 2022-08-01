@@ -3,28 +3,28 @@ const axios = require('axios');
 
 module.exports = {
     async verifyMusic(data) {
-        if (data.trackId) {
-            const res = await axios.get(`https://api.deezer.com/track/${data.trackId}`);
+        if (data.providerId) {
+            const res = await axios.get(`https://api.deezer.com/track/${data.providerId}`);
             const track = res.data
             return {
-                trackId: track.id,
-                videoId: null,
+                providerId: track.id,
+                youtubeId: null,
                 title: track.title_short ? track.title_short : track.title,
+                imageCode: track.md5_image,
                 artist: {
                     id: track.artist.id,
                     name: track.artist.name,
                 },
                 album: {
-                    id: track.album.id,
-                    cover: track.album.md5_image
+                    id: track.album.id
                 }
             }
-        } else if (data.videoId) {
-            const res = await video_basic_info(`https://www.youtube.com/watch?v=${data.videoId}`);
+        } else if (data.youtubeId) {
+            const res = await video_basic_info(`https://www.youtube.com/watch?v=${data.youtubeId}`);
             const video = res.video_details
             return {
-                trackId: null,
-                videoId: video.id,
+                providerId: 0,
+                youtubeId: video.id,
                 title: video.title,
                 artist: {
                     id: video.channel.id,
