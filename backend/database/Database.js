@@ -3,6 +3,8 @@ const argon2 = require('argon2');
 
 const User = require('./Models/User');
 const Track = require('./Models/Track');
+const Album = require('./Models/Album');
+const Artist = require('./Models/Artist');
 
 class Database {
 
@@ -24,7 +26,7 @@ class Database {
     async register({ email, username, password }, oauth) {
 
         const userExist = await User.findOne({
-            $or: [{ email: email }, { username: username }]
+            $or: [ { email: email }, { username: username } ]
         })
 
         if (userExist) return false
@@ -52,7 +54,7 @@ class Database {
     async login({ email, username, password }) {
 
         const user = await User.findOne({
-            $or: [{ email: email }, { username: username }]
+            $or: [ { email: email }, { username: username } ]
         })
 
         if (!user) return false
@@ -66,7 +68,7 @@ class Database {
     async oauth2(oauth) {
 
         const user = await User.findOne({
-            $or: [{ email: oauth.email }, { username: oauth.username }]
+            $or: [ { email: oauth.email }, { username: oauth.username } ]
         })
 
         if (user) return user
@@ -80,7 +82,7 @@ class Database {
 
     async getUser({ email, username }) {
         const user = await User.findOne({
-            $or: [{ email: email }, { username: username }]
+            $or: [ { email: email }, { username: username } ]
         })
 
         if (!user) return false
@@ -88,17 +90,22 @@ class Database {
     }
 
     async getUserLibrary({ email, username }) {
-        const user = await User.findOne({
-            $or: [{ email: email }, { username: username }]
-        }).populate("liked")
+        const user = (await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+            .populate("liked")
+            .populate("albums")
+            .populate("artists")
+            .exec())
+            .toObject({ transform: (doc, ret) => { delete ret._id; delete ret.__v; return ret; } })
 
         if (!user) return false
-        return { ...user.liked }
+        return { liked: user.liked, albums: user.albums, artists: user.artists }
     }
 
     async addLiked({ email, username }, trackData) {
         const user = await User.findOne({
-            $or: [{ email: email }, { username: username }]
+            $or: [ { email: email }, { username: username } ]
         })
 
         if (!user) return false
@@ -116,8 +123,52 @@ class Database {
         }
 
         return User.findOneAndUpdate(
-            { $or: [{ email: email }, { username: username }] },
+            { $or: [ { email: email }, { username: username } ] },
             { $addToSet: { liked: track._id } }
+        );
+    }
+
+    async copyAlbum({ email, username }, albumData) {
+        const user = await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+
+        if (!user) return false
+
+        let album = await Album.findOne({
+            id: albumData.id
+        })
+
+        if (!album) {
+            album = new Album(albumData)
+            await album.save()
+        }
+
+        return User.findOneAndUpdate(
+            { $or: [ { email: email }, { username: username } ] },
+            { $addToSet: { albums: album._id } }
+        );
+    }
+
+    async addArtist({ email, username }, artistData) {
+        const user = await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+
+        if (!user) return false
+
+        let artist = await Artist.findOne({
+            id: artistData.id
+        })
+
+        if (!artist) {
+            artist = new Artist(artistData)
+            await artist.save()
+        }
+
+        return User.findOneAndUpdate(
+            { $or: [ { email: email }, { username: username } ] },
+            { $addToSet: { artists: artist._id } }
         );
     }
 

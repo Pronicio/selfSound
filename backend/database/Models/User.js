@@ -11,7 +11,16 @@ const UserSchema = new mongoose.Schema({
     oauth2: {
         discord: { type: Boolean, default: false }
     },
-    liked: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }]
+    liked: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }],
+    albums: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Album' }],
+    artists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artist' }]
 });
+
+if (!UserSchema.options.toObject) UserSchema.options.toObject = {};
+
+UserSchema.options.toObject.transform = function (doc, ret, options) {
+    delete ret._id;
+    return ret;
+}
 
 module.exports = mongoose.model('User', UserSchema);

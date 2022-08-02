@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const ArtistSchema = new mongoose.Schema({
-    providerId: { type: Number },
-    youtubeId: { type: String },
+    id: { type: Number },
     name: { type: String, required: true },
     imageCode: { type: String }
 });

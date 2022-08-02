@@ -28,13 +28,26 @@ async function routes(fastify, options) {
         const action = req.body.action;
         const data = req.body.data;
 
-        const actionInDb = await db.createInUserLibrary(req.user.username, action, data)
+        if (action === "album") {
+            const albumData = await verifAlbum(data)
+            if (!albumData) return rep.send({ error: true })
 
-        if (!actionInDb) {
-            return rep.send({ error: true })
+            const res = await db.copyAlbum({ username: req.user.username }, albumData)
+
+            if (!res) return rep.send({ error: true })
+            return rep.send(albumData)
+        }
+        else if (action === "artist") {
+            const artistData = await verifArtist(data)
+            if (!artistData) return rep.send({ error: true })
+
+            const res = await db.addArtist({ username: req.user.username }, artistData)
+
+            if (!res) return rep.send({ error: true })
+            return rep.send(artistData)
         }
 
-        return rep.send(actionInDb)
+        rep.send({ error: true })
     })
 
     /**
@@ -57,6 +70,8 @@ async function routes(fastify, options) {
             if (!res) return rep.send({ error: true })
             return rep.send(trackData)
         }
+
+        rep.send({ error: true })
     })
 
     /**

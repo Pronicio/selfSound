@@ -51,24 +51,20 @@ module.exports = {
     },
     async verifAlbum(data) {
         const res = await axios.get(`https://api.deezer.com/album/${data.id}`);
-        const album = res.data
+        const album = res.data;
         return {
-            providerId: album.id,
+            id: album.id,
             title: album.title,
-            picture: album.md5_image,
-            artist: {
-                id: album.artist.id,
-                name: album.artist.name,
-            }
+            imageCode: album.md5_image.match(/[0-9a-f]{32}/g)[0]
         }
     },
     async verifArtist(data) {
         const res = await axios.get(`https://api.deezer.com/artist/${data.id}`);
         const artist = res.data
         return {
-            providerId: artist.id,
+            id: artist.id,
             name: artist.name,
-            picture: artist.picture_medium,
+            imageCode: artist.picture_medium.match(/[0-9a-f]{32}/g)[0]
         }
     }
 };
