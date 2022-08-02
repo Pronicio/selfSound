@@ -8,10 +8,11 @@ async function routes(fastify, options) {
      * Get the library of the user
      */
     fastify.get('/me', async function (req, rep) {
-        await req.jwtVerify()
+        const userData = await fastify.verifyUser(req)
+        if (!userData) return rep.send({ error: true })
 
         const lib = await db.getUserLibrary({
-            username: req.user.username
+            username: userData.username
         })
 
         return rep.send(lib)
@@ -23,7 +24,8 @@ async function routes(fastify, options) {
      * @body {object} data The content of the action
      */
     fastify.post('/me', async function (req, rep) {
-        await req.jwtVerify()
+        const userData = await fastify.verifyUser(req)
+        if (!userData) return rep.send({ error: true })
 
         const action = req.body.action;
         const data = req.body.data;
@@ -32,7 +34,7 @@ async function routes(fastify, options) {
             const albumData = await verifAlbum(data)
             if (!albumData) return rep.send({ error: true })
 
-            const res = await db.copyAlbum({ username: req.user.username }, albumData)
+            const res = await db.copyAlbum({ username: userData.username }, albumData)
 
             if (!res) return rep.send({ error: true })
             return rep.send(albumData)
@@ -41,7 +43,7 @@ async function routes(fastify, options) {
             const artistData = await verifArtist(data)
             if (!artistData) return rep.send({ error: true })
 
-            const res = await db.addArtist({ username: req.user.username }, artistData)
+            const res = await db.addArtist({ username: userData.username }, artistData)
 
             if (!res) return rep.send({ error: true })
             return rep.send(artistData)
@@ -56,7 +58,8 @@ async function routes(fastify, options) {
      * @body {object} data The content of the action
      */
     fastify.put('/me', async function (req, rep) {
-        await req.jwtVerify()
+        const userData = await fastify.verifyUser(req)
+        if (!userData) return rep.send({ error: true })
 
         const action = req.body.action;
         const data = req.body.data;
@@ -65,7 +68,7 @@ async function routes(fastify, options) {
             const trackData = await verifyMusic(data)
             if (!trackData) return rep.send({ error: true })
 
-            const res = await db.addLiked({ username: req.user.username }, trackData)
+            const res = await db.addLiked({ username: userData.username }, trackData)
 
             if (!res) return rep.send({ error: true })
             return rep.send(trackData)
@@ -80,12 +83,13 @@ async function routes(fastify, options) {
      * @body {object} data The content of the action
      */
     fastify.delete('/me', async function (req, rep) {
-        await req.jwtVerify()
+        const userData = await fastify.verifyUser(req)
+        if (!userData) return rep.send({ error: true })
 
         const action = req.body.action;
         const data = req.body.data;
 
-        const actionInDb = await db.deleteInUserLibrary(req.user.username, action, data)
+        const actionInDb = await db.deleteInUserLibrary(userData.username, action, data)
 
         if (!actionInDb) {
             return rep.send({ error: true })

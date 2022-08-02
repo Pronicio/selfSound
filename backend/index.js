@@ -29,6 +29,8 @@ fastify.get('/', async function (req, rep) {
     })
 })
 
+fastify.decorate('verifyUser', require('./resources/verifyUser'))
+
 fastify.register(require('./routes/deezer'), { prefix: 'standard' })
 fastify.register(require('./routes/radio'), { prefix: 'radio' })
 fastify.register(require('./routes/lyrics'), { prefix: 'lyrics' })

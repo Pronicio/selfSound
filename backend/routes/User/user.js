@@ -6,10 +6,11 @@ async function routes(fastify, options) {
      * Get infos about the user
      */
     fastify.get('/me', async function (req, rep) {
-        await req.jwtVerify()
+        const userData = await fastify.verifyUser(req, fastify)
+        if (!userData) return rep.send({ error: true })
 
         const user = await db.getUser({
-            username: req.user.username
+            username: userData.username
         })
 
         rep.send({

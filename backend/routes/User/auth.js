@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { AES } = require("crypto-js");
 
 async function routes(fastify, options) {
 
@@ -20,13 +21,15 @@ async function routes(fastify, options) {
                 username: newUser.username
             })
 
+            const encrypted = AES.encrypt(token, process.env.TOKEN);
+
             return rep.send({
                 error: false,
-                token: token
+                token: encrypted.toString()
             })
         }
 
-        return rep.send({error: true})
+        return rep.send({ error: true })
     })
 
     /**
@@ -45,13 +48,15 @@ async function routes(fastify, options) {
                 username: User.username
             })
 
+            const encrypted = AES.encrypt(token, process.env.TOKEN);
+
             return rep.send({
                 error: false,
-                token: token
+                token: encrypted.toString()
             })
         }
 
-        return rep.send({error: true})
+        return rep.send({ error: true })
     })
 
     /**
@@ -95,13 +100,15 @@ async function routes(fastify, options) {
                 username: user.username
             })
 
+            const encrypted = AES.encrypt(token, process.env.TOKEN);
+
             return rep.send({
                 error: false,
-                token: token
+                token: encrypted.toString()
             })
         }
 
-        return rep.send({error: true})
+        return rep.send({ error: true })
     })
 }
 
