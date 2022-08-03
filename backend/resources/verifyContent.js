@@ -1,4 +1,4 @@
-const { video_basic_info } = require('play-dl');
+const { video_basic_info, playlist_info } = require('play-dl');
 const axios = require('axios');
 
 module.exports = {
@@ -36,17 +36,31 @@ module.exports = {
         return false
     },
     async verifPlaylist(data) {
-        const res = await axios.get(`https://api.deezer.com/playlist/${data.id}`);
-        const playlist = res.data
-        return {
-            providerId: playlist.id,
-            title: playlist.title,
-            picture: playlist.md5_image,
-            creator: {
-                id: playlist.creator.id,
-                name: playlist.creator.name,
-            },
-            tracks: null
+        if (data.providerId) {
+            const res = await axios.get(`https://api.deezer.com/playlist/${data.providerId}`);
+            const playlist = res.data
+            return {
+                providerId: playlist.id,
+                name: playlist.title,
+                picture: playlist.md5_image,
+                creator: {
+                    id: playlist.creator.id,
+                    name: playlist.creator.name,
+                },
+                tracks: null
+            }
+        } else if (data.youtubeId) {
+            const res = await playlist_info(`https://www.youtube.com/playlist?list=${data.youtubeId}`, { incomplete : true });
+            return {
+                youtubeId: res.id,
+                name: res.title,
+                picture: null,
+                creator: {
+                    id: res.channel.id,
+                    name: res.channel.name,
+                },
+                tracks: null
+            }
         }
     },
     async verifAlbum(data) {

@@ -5,6 +5,7 @@ const User = require('./Models/User');
 const Track = require('./Models/Track');
 const Album = require('./Models/Album');
 const Artist = require('./Models/Artist');
+const Playlist = require('./Models/Playlist');
 
 class Database {
 
@@ -96,11 +97,12 @@ class Database {
             .populate("liked")
             .populate("albums")
             .populate("artists")
+            .populate("playlists")
             .exec())
             .toObject({ transform: (doc, ret) => { delete ret._id; delete ret.__v; return ret; } })
 
         if (!user) return false
-        return { liked: user.liked, albums: user.albums, artists: user.artists }
+        return { liked: user.liked, albums: user.albums, artists: user.artists, playlists: user.playlists }
     }
 
     async addLiked({ email, username }, trackData) {
@@ -128,7 +130,7 @@ class Database {
         );
     }
 
-    async copyAlbum({ email, username }, albumData) {
+    async addAlbum({ email, username }, albumData) {
         const user = await User.findOne({
             $or: [ { email: email }, { username: username } ]
         })
@@ -169,6 +171,29 @@ class Database {
         return User.findOneAndUpdate(
             { $or: [ { email: email }, { username: username } ] },
             { $addToSet: { artists: artist._id } }
+        );
+    }
+
+    async addPlaylist({ email, username }, playlistData) {
+        const user = await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+
+        if (!user) return false
+
+        let playlist = await Playlist.findOne({ $or: [
+            { providerId: playlistData.providerId ? playlistData.providerId : 1 } ,
+            { youtubeId: playlistData.youtubeId ? playlistData.youtubeId : "null" }
+        ]})
+
+        if (!playlist) {
+            playlist = new Playlist(playlistData)
+            await playlist.save()
+        }
+
+        return User.findOneAndUpdate(
+            { $or: [ { email: email }, { username: username } ] },
+            { $addToSet: { playlists: playlist._id } }
         );
     }
 

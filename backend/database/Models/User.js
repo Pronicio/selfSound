@@ -13,7 +13,8 @@ const UserSchema = new mongoose.Schema({
     },
     liked: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }],
     albums: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Album' }],
-    artists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artist' }]
+    artists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artist' }],
+    playlists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Playlist' }]
 });
 
 if (!UserSchema.options.toObject) UserSchema.options.toObject = {};

@@ -30,22 +30,21 @@ async function routes(fastify, options) {
         const action = req.body.action;
         const data = req.body.data;
 
-        if (action === "album") {
-            const albumData = await verifAlbum(data)
-            if (!albumData) return rep.send({ error: true })
+        try {
+            const actionName = action.charAt(0).toUpperCase() + action.slice(1);
+            if (actionName !== "Album" && actionName !== "Artist" && actionName !== "Playlist") {
+                return rep.send({ error: true })
+            }
 
-            const res = await db.copyAlbum({ username: userData.username }, albumData)
+            const Data = await eval(`verif${actionName}`)(data);
+            if (!Data) return rep.send({ error: true })
 
-            if (!res) return rep.send({ error: true })
-            return rep.send(albumData)
-        } else if (action === "artist") {
-            const artistData = await verifArtist(data)
-            if (!artistData) return rep.send({ error: true })
-
-            const res = await db.addArtist({ username: userData.username }, artistData)
+            const res = await eval(`db.add${actionName}`)({ username: userData.username }, Data);
 
             if (!res) return rep.send({ error: true })
-            return rep.send(artistData)
+            return rep.send(Data)
+        } catch (e) {
+            console.error(e)
         }
 
         rep.send({ error: true })
