@@ -42,7 +42,7 @@ module.exports = {
             return {
                 providerId: playlist.id,
                 name: playlist.title,
-                picture: playlist.md5_image,
+                imageCode: playlist.md5_image,
                 creator: {
                     id: playlist.creator.id,
                     name: playlist.creator.name,
@@ -50,7 +50,7 @@ module.exports = {
                 tracks: null
             }
         } else if (data.youtubeId) {
-            const res = await playlist_info(`https://www.youtube.com/playlist?list=${data.youtubeId}`, { incomplete : true });
+            const res = await playlist_info(`https://www.youtube.com/playlist?list=${data.youtubeId}`, { incomplete: true });
             return {
                 youtubeId: res.id,
                 name: res.title,

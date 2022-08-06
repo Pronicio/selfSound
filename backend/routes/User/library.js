@@ -37,15 +37,22 @@ async function routes(fastify, options) {
         const data = req.body.data;
 
         try {
-            const actionName = action.charAt(0).toUpperCase() + action.slice(1);
-            if (actionName !== "Album" && actionName !== "Artist" && actionName !== "Playlist") {
+            let actionName = action.charAt(0).toUpperCase() + action.slice(1);
+            if (actionName !== "Album" && actionName !== "Artist" && actionName !== "Playlist" && actionName !== "CreatePlaylist") {
                 return rep.send({ error: true })
             }
 
-            const Data = await eval(`verif${actionName}`)(data);
-            if (!Data) return rep.send({ error: true })
+            let Data = data;
+            if (actionName !== "CreatePlaylist") {
+                Data = await eval(`verif${actionName}`)(data);
+                if (!Data) return rep.send({ error: true })
+            }
 
-            const res = await eval(`db.add${actionName}`)({ username: req.user.username }, Data);
+            let methodName = "add"
+            if (actionName === "CreatePlaylist") methodName = "create";
+            actionName = "Playlist";
+
+            const res = await eval(`db.${methodName}${actionName}`)({ username: req.user.username }, Data);
 
             if (!res) return rep.send({ error: true })
             return rep.send(Data)
@@ -70,6 +77,14 @@ async function routes(fastify, options) {
             if (!trackData) return rep.send({ error: true })
 
             const res = await db.addLiked({ username: req.user.username }, trackData)
+
+            if (!res) return rep.send({ error: true })
+            return rep.send(trackData)
+        } else if (action === "playlist") {
+            const trackData = await verifyMusic(data)
+            if (!trackData) return rep.send({ error: true })
+
+            const res = await db.addTrackToPlaylist({ username: req.user.username }, trackData, data.playlistId)
 
             if (!res) return rep.send({ error: true })
             return rep.send(trackData)
