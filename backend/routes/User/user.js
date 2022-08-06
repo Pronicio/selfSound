@@ -3,14 +3,23 @@ async function routes(fastify, options) {
     const db = fastify.db;
 
     /**
+     * Checks the user's token
+     */
+    fastify.addHook('preHandler', (req, rep, done) => {
+        fastify.verifyUser(req, fastify).then(userData => {
+            if (!userData) return rep.send({ error: true })
+
+            req.user = userData;
+            done()
+        })
+    })
+
+    /**
      * Get infos about the user
      */
     fastify.get('/me', async function (req, rep) {
-        const userData = await fastify.verifyUser(req, fastify)
-        if (!userData) return rep.send({ error: true })
-
         const user = await db.getUser({
-            username: userData.username
+            username: req.user.username
         })
 
         rep.send({

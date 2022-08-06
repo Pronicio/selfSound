@@ -8,6 +8,6 @@ module.exports = async (req, fastify) => {
         const human = decrypted.toString(CryptoJS.enc.Utf8);
         return fastify.jwt.decode(human)
     } catch (e) {
-        console.error(e)
+        //console.error(e)
     }
 };
