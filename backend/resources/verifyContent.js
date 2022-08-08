@@ -1,33 +1,31 @@
-const { video_basic_info } = require('play-dl');
+const { video_basic_info, playlist_info } = require('play-dl');
 const axios = require('axios');
 
 module.exports = {
     async verifyMusic(data) {
-        if (data.trackId) {
-            const res = await axios.get(`https://api.deezer.com/track/${data.trackId}`);
+        if (data.providerId) {
+            const res = await axios.get(`https://api.deezer.com/track/${data.providerId}`);
             const track = res.data
             return {
-                trackId: track.id,
-                videoId: null,
+                providerId: track.id,
                 title: track.title_short ? track.title_short : track.title,
+                imageCode: track.md5_image,
                 artist: {
-                    id: track.artist.id,
+                    providerId: track.artist.id,
                     name: track.artist.name,
                 },
                 album: {
-                    id: track.album.id,
-                    cover: track.album.md5_image
+                    id: track.album.id
                 }
             }
-        } else if (data.videoId) {
-            const res = await video_basic_info(`https://www.youtube.com/watch?v=${data.videoId}`);
+        } else if (data.youtubeId) {
+            const res = await video_basic_info(`https://www.youtube.com/watch?v=${data.youtubeId}`);
             const video = res.video_details
             return {
-                trackId: null,
-                videoId: video.id,
+                youtubeId: video.id,
                 title: video.title,
                 artist: {
-                    id: video.channel.id,
+                    youtubeId: video.channel.id,
                     name: video.channel.name,
                 }
             }
@@ -36,39 +34,51 @@ module.exports = {
         return false
     },
     async verifPlaylist(data) {
-        const res = await axios.get(`https://api.deezer.com/playlist/${data.id}`);
-        const playlist = res.data
-        return {
-            providerId: playlist.id,
-            title: playlist.title,
-            picture: playlist.md5_image,
-            creator: {
-                id: playlist.creator.id,
-                name: playlist.creator.name,
-            },
-            tracks: null
+        if (data.providerId) {
+            const res = await axios.get(`https://api.deezer.com/playlist/${data.providerId}`);
+            const playlist = res.data
+            return {
+                providerId: playlist.id,
+                name: playlist.title,
+                imageCode: playlist.md5_image,
+                creator: {
+                    id: playlist.creator.id,
+                    name: playlist.creator.name,
+                },
+                tracks: null,
+                mode: "added"
+            }
+        } else if (data.youtubeId) {
+            const res = await playlist_info(`https://www.youtube.com/playlist?list=${data.youtubeId}`, { incomplete: true });
+            return {
+                youtubeId: res.id,
+                name: res.title,
+                picture: null,
+                creator: {
+                    id: res.channel.id,
+                    name: res.channel.name,
+                },
+                tracks: null,
+                mode: "added"
+            }
         }
     },
     async verifAlbum(data) {
         const res = await axios.get(`https://api.deezer.com/album/${data.id}`);
-        const album = res.data
+        const album = res.data;
         return {
-            providerId: album.id,
+            id: album.id,
             title: album.title,
-            picture: album.md5_image,
-            artist: {
-                id: album.artist.id,
-                name: album.artist.name,
-            }
+            imageCode: album.md5_image.match(/[0-9a-f]{32}/g)[0]
         }
     },
     async verifArtist(data) {
         const res = await axios.get(`https://api.deezer.com/artist/${data.id}`);
         const artist = res.data
         return {
-            providerId: artist.id,
+            id: artist.id,
             name: artist.name,
-            picture: artist.picture_medium,
+            imageCode: artist.picture_medium.match(/[0-9a-f]{32}/g)[0]
         }
     }
 };
