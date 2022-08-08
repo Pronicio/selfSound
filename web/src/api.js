@@ -97,7 +97,7 @@ export function toHumanString (number) {
 }
 
 export function cleanString (text) {
-    let result = text
+    const result = text
         .replace(/ *\([^)]*\) */g, "") //Remove brackets
         .replace(/\[.*?]/g, "") //Remove hooks
         .replace(/[^a-zA-Z0-9 ]/g, ""); //Remove special characters
