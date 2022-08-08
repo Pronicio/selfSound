@@ -221,7 +221,8 @@ class Database {
             playlist = new Playlist({
                 name: playlistData.name,
                 creator: { id: user._id },
-                imageCode: playlistData.imageCode
+                imageCode: playlistData.imageCode,
+                mode: "created"
             })
             await playlist.save()
         }
@@ -260,6 +261,88 @@ class Database {
         return Playlist.findByIdAndUpdate(
             playlistId,
             { $addToSet: { tracks: track._id } }
+        );
+    }
+
+    async deleteLiked({ email, username }, trackData) {
+        const user = await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+
+        if (!user) return false
+
+        let track = await Track.findOne({
+            $or: [
+                { providerId: trackData.providerId ? trackData.providerId : 1 },
+                { youtubeId: trackData.youtubeId ? trackData.youtubeId : "null" }
+            ]
+        })
+
+        if (!track) return false
+
+        return User.findOneAndUpdate(
+            { $or: [ { email: email }, { username: username } ] },
+            { $pull: { liked: track._id } }
+        );
+    }
+
+    async deleteAlbum({ email, username }, albumData) {
+        const user = await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+
+        if (!user) return false
+
+        let album = await Album.findOne({
+            id: albumData.id
+        })
+
+        if (!album) return false
+
+        return User.findOneAndUpdate(
+            { $or: [ { email: email }, { username: username } ] },
+            { $pull: { albums: album._id } }
+        );
+    }
+
+    async deleteArtist({ email, username }, artistData) {
+        const user = await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+
+        if (!user) return false
+
+        let artist = await Artist.findOne({
+            id: artistData.id
+        })
+
+        if (!artist) return false
+
+        return User.findOneAndUpdate(
+            { $or: [ { email: email }, { username: username } ] },
+            { $pull: { artists: artist._id } }
+        );
+    }
+
+    async deletePlaylist({ email, username }, playlistData) {
+        const user = await User.findOne({
+            $or: [ { email: email }, { username: username } ]
+        })
+
+        if (!user) return false
+
+        let playlist = await Playlist.findOne({
+            $or: [
+                { providerId: playlistData.providerId ? playlistData.providerId : 1 },
+                { youtubeId: playlistData.youtubeId ? playlistData.youtubeId : "null" }
+            ]
+        })
+
+        if (!playlist) return false
+
+        return User.findOneAndUpdate(
+            { $or: [ { email: email }, { username: username } ] },
+            { $pull: { playlists: playlist._id } }
         );
     }
 

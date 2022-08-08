@@ -8,11 +8,10 @@ module.exports = {
             const track = res.data
             return {
                 providerId: track.id,
-                youtubeId: null,
                 title: track.title_short ? track.title_short : track.title,
                 imageCode: track.md5_image,
                 artist: {
-                    id: track.artist.id,
+                    providerId: track.artist.id,
                     name: track.artist.name,
                 },
                 album: {
@@ -23,11 +22,10 @@ module.exports = {
             const res = await video_basic_info(`https://www.youtube.com/watch?v=${data.youtubeId}`);
             const video = res.video_details
             return {
-                providerId: 0,
                 youtubeId: video.id,
                 title: video.title,
                 artist: {
-                    id: video.channel.id,
+                    youtubeId: video.channel.id,
                     name: video.channel.name,
                 }
             }
@@ -47,7 +45,8 @@ module.exports = {
                     id: playlist.creator.id,
                     name: playlist.creator.name,
                 },
-                tracks: null
+                tracks: null,
+                mode: "added"
             }
         } else if (data.youtubeId) {
             const res = await playlist_info(`https://www.youtube.com/playlist?list=${data.youtubeId}`, { incomplete: true });
@@ -59,7 +58,8 @@ module.exports = {
                     id: res.channel.id,
                     name: res.channel.name,
                 },
-                tracks: null
+                tracks: null,
+                mode: "added"
             }
         }
     },

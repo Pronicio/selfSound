@@ -6,7 +6,8 @@ const PlaylistSchema = new mongoose.Schema({
     name: { type: String, required: true },
     imageCode: { type: String },
     creator: { type: Object },
-    tracks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }]
+    tracks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }],
+    mode: { type: String },
 });
 
 module.exports = mongoose.model('Playlist', PlaylistSchema);

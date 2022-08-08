@@ -6,8 +6,7 @@ const TrackSchema = new mongoose.Schema({
     title: { type: String, required: true },
     imageCode: { type: String },
     album: {
-        providerId: { type: Number },
-        youtubeId: { type: String }
+        id: { type: Number }
     },
     artist: {
         name: { type: String },

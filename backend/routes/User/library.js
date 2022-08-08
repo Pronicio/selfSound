@@ -49,8 +49,7 @@ async function routes(fastify, options) {
             }
 
             let methodName = "add"
-            if (actionName === "CreatePlaylist") methodName = "create";
-            actionName = "Playlist";
+            if (actionName === "CreatePlaylist") { methodName = "create"; actionName = "Playlist"; }
 
             const res = await eval(`db.${methodName}${actionName}`)({ username: req.user.username }, Data);
 
@@ -102,13 +101,23 @@ async function routes(fastify, options) {
         const action = req.body.action;
         const data = req.body.data;
 
-        const actionInDb = await db.deleteInUserLibrary(req.user.username, action, data)
+        try {
+            let actionName = action.charAt(0).toUpperCase() + action.slice(1);
+            if (actionName !== "Liked" && actionName !== "Album" && actionName !== "Artist" && actionName !== "Playlist") {
+                return rep.send({ error: true })
+            }
 
-        if (!actionInDb) {
-            return rep.send({ error: true })
+            let methodName = "delete"
+
+            const res = await eval(`db.${methodName}${actionName}`)({ username: req.user.username }, data);
+
+            if (!res) return rep.send({ error: true })
+            return rep.send({ success: true })
+        } catch (e) {
+            console.error(e)
         }
 
-        return rep.send(actionInDb)
+        rep.send({ error: true })
     })
 }
 
