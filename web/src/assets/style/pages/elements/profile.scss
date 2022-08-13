@@ -9,11 +9,6 @@ section {
     img {
       border-radius: 50%;
       margin: 0 2rem 0 0;
-
-      background: var(--gradient);
-      background-size: 200% 100%;
-      -webkit-animation: 1.5s shine linear infinite;
-      animation: 1.5s shine linear infinite;
     }
 
     h1 {
@@ -23,7 +18,7 @@ section {
     .flag {
       margin: 1rem;
       width: 2rem;
-      height: 2rem;
+      height: 1.5rem;
     }
   }
 }

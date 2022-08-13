@@ -1,9 +1,9 @@
 <template>
   <section>
     <div class="user">
-      <img :src="user.picture_medium" alt="User picture" width="250" height="250"/>
+      <img class="lazy" :src="user.picture_medium" alt="User picture" width="250" height="250"/>
       <h1>{{ user.name }}</h1>
-      <div class="flag" :style="`background: url('${flag}')`"></div>
+      <div class="flag" :style="`background: url('${flag}') no-repeat;`"></div>
     </div>
     <div class="options">
 
@@ -19,7 +19,9 @@ export default {
   data: function () {
     return {
       id: this.$route.params.query,
-      user: {},
+      user: {
+        picture_medium: "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      },
       flag: null
     }
   },
