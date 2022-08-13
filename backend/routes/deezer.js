@@ -107,15 +107,16 @@ async function routes (fastify, options) {
     })
 
     /**
-     * Get the flow of a user / artist
+     * Get specified infos of a user / artist
      * @body {string} id The ID of the user
      */
-    fastify.post('/profile/flow', async (req, rep) => {
+    fastify.post('/profile/:key', async (req, rep) => {
         const id = req.body.id;
+        const key = req.params.key
 
         const results = await axios({
             method: 'get',
-            url: `https://api.deezer.com/user/${id}/flow?limit=20`
+            url: `https://api.deezer.com/user/${id}/${key}?limit=20`
         })
 
         rep.send(results.data)
