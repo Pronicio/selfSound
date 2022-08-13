@@ -1,6 +1,6 @@
 <template>
   <section class="sec1">
-    <object class="cover lazy" :data="data.cover_big" type="image/png" width="250"></object>
+    <img class="cover lazy" :src="data.cover_big" alt="Album cover" width="250"/>
     <div class="infos">
       <p id="label">{{ data.label }}</p>
       <h1>{{ data.title }}</h1>
@@ -47,8 +47,9 @@ export default {
       id: this.$route.params.query,
       data: {
         artist: {
-          picture_small: null
-        }
+          picture_small: "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        },
+        cover_big: "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
       }
     }
   },

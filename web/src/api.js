@@ -100,7 +100,7 @@ export function cleanString (text) {
     const result = text
         .replace(/ *\([^)]*\) */g, "") //Remove brackets
         .replace(/\[.*?]/g, "") //Remove hooks
-        .replace(/[^a-zA-Z0-9 ]/g, ""); //Remove special characters
+        //.replace(/[^a-zA-Z0-9 ]/g, ""); //Remove special characters
 
     return result.trim();
 }

@@ -1,10 +1,10 @@
 <template>
   <section class="sec1">
-    <object class="cover lazy" :data="data.picture_big" type="image/png" width="250"></object>
+    <img class="cover lazy" :src="data.picture_big" alt="Playlist cover" width="250"/>
     <div class="infos">
       <h1 style="margin: 0">{{ data.title }}</h1>
       <div class="artist">
-        <h2 v-if="data.creator">{{ data.creator.name }}</h2>
+        <h2 v-if="data.creator" @click="openUserProfile(data.creator)">{{ data.creator.name }}</h2>
       </div>
       <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }}</p>
       <div class="controls">
@@ -36,9 +36,9 @@
 
 <script>
 import axios from "axios";
-import {secondsToString} from '@/api'
-import {useStore} from '@/store/main'
-import {getYoutubeVideoFromProvider} from "../../api";
+import { secondsToString } from '@/api'
+import { useStore } from '@/store/main'
+import { getYoutubeVideoFromProvider } from "../../api";
 
 export default {
   name: "Playlist",
@@ -48,7 +48,8 @@ export default {
       data: {
         artist: {
           picture_small: null
-        }
+        },
+        picture_big: "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
       }
     }
   },
@@ -114,6 +115,10 @@ export default {
         this.store.controls.shuffle = false;
         this.eventBus.emit('control', 'shuffle')
       }
+    },
+    openUserProfile: function (creator) {
+      if (creator.type !== "user") return
+      this.$router.push({ name: 'Profile', params: { query: creator.id } })
     }
   },
   setup() {
