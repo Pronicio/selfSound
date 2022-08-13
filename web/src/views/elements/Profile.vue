@@ -22,7 +22,7 @@
       </div>
       <div class="list">
         <div class="tracks" v-if="currentNav === 'flow' || currentNav === 'charts'">
-          <div class="track" v-for="track in this[currentNav]">
+          <div class="track" v-for="track in this[currentNav]" :key="track.id">
             <img class="lazy" :src="track.album.cover_medium" alt="Album cover" loading="lazy"
                  @click="playFromProvider(track, 'flow')"/>
             <h3 @click="playFromProvider(track, 'flow')">{{ track.title_short ? track.title_short : track.title }}</h3>
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="groups" v-if="currentNav === 'playlists' || currentNav === 'albums'">
-          <div class="group" v-for="list in this[currentNav]">
+          <div class="group" v-for="list in this[currentNav]" :key="list.id">
             <img class="lazy" :src="list.picture_medium || list.cover_medium" alt="Cover" loading="lazy"
                  @click="sendToPage(list)"/>
             <h3 @click="sendToPage(list)">{{ list.title }}</h3>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="artists" v-if="currentNav === 'artists'">
-          <div class="artist" v-for="artist in this.artists">
+          <div class="artist" v-for="artist in this.artists" :key="artist.id">
             <img class="lazy" :src="artist.picture_medium" alt="Cover" loading="lazy"/>
             <h3>{{ artist.name }}</h3>
             <p>{{ toHumanString(artist.nb_fan) }} fans</p>
