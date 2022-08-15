@@ -31,7 +31,8 @@
 
       <h3 v-if="searchResult.artist.length"> Artists : </h3>
       <div class="result">
-        <div v-for="item in searchResult.artist" :key="item.id" :id="item.id" class="artist_section">
+        <div v-for="item in searchResult.artist" :key="item.id" :id="item.id" class="artist_section"
+             @click="this.$router.push({ name: 'Artist', params: { query: item.id } })">
           <img class="rounded_img" :src="item.picture_medium" alt="Artist picture" loading="lazy"/>
           <h5>{{ item.name }}</h5>
           <p class="sub-text">{{ toHumanString(item.nb_fan) }} fans</p>

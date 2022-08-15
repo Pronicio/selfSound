@@ -6,7 +6,7 @@
       <h1>{{ data.title }}</h1>
       <div class="artist">
         <img class="artist_picture lazy" :src="data.artist.picture_small" alt="Artist picture" width="30"/>
-        <h2>{{ data.artist.name }}</h2>
+        <h2 @click="this.$router.push({ name: 'Artist', params: { query: data.artist.id } })">{{ data.artist.name }}</h2>
       </div>
       <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>
       <div class="controls">
@@ -71,7 +71,7 @@ export default {
       })
 
       this.data = req.data;
-      document.title = `SelfSound - ${this.data.title}`
+      document.title = `SelfSound - ${req.data.title}`
     },
     playFromProvider: async function (music) {
       const data = Object.assign(music, { album: {

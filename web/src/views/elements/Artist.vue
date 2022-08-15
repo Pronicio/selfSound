@@ -1,16 +1,17 @@
 <template>
   <section>
     <div class="user">
-      <img class="lazy" :src="user.picture_medium" alt="User picture" width="250" height="250"/>
-      <h1>{{ user.name }}</h1>
-      <div class="flag" :style="`background: url('${flag}') no-repeat;`"></div>
+      <img class="lazy" :src="artist.picture_medium" alt="User picture" width="250" height="250"/>
+      <div class="name">
+        <h1>{{ artist.name }}</h1>
+        <p>{{ toHumanString(artist.nb_fan) }} fans</p>
+      </div>
     </div>
     <div class="options">
-      <p id="flow" class="selected" @click="currentNav = 'flow'">Flow</p>
-      <p id="charts" @click="currentNav = 'charts'">Charts</p>
-      <p id="playlists" @click="currentNav = 'playlists'">Playlists</p>
+      <p id="top" class="selected" @click="currentNav = 'top'">Top</p>
       <p id="albums" @click="currentNav = 'albums'">Albums</p>
-      <p id="artists" @click="currentNav = 'artists'">Artists</p>
+      <p id="related" @click="currentNav = 'related'">Related</p>
+      <p id="playlists" @click="currentNav = 'playlists'">Playlists</p>
     </div>
     <div class="data">
       <div class="title">
@@ -21,7 +22,7 @@
         </div>
       </div>
       <div class="list">
-        <div class="tracks" v-if="currentNav === 'flow' || currentNav === 'charts'">
+        <div class="tracks" v-if="currentNav === 'top'">
           <div class="track" v-for="track in this[currentNav]" :key="track.id">
             <img class="lazy" :src="track.album.cover_medium" alt="Album cover" loading="lazy"
                  @click="playFromProvider(track, 'flow')"/>
@@ -29,16 +30,17 @@
             <p>{{ track.artist.name }}</p>
           </div>
         </div>
-        <div class="groups" v-if="currentNav === 'playlists' || currentNav === 'albums'">
+        <div class="groups" v-if="currentNav === 'albums' || currentNav === 'playlists'">
           <div class="group" v-for="list in this[currentNav]" :key="list.id">
             <img class="lazy" :src="list.picture_medium || list.cover_medium" alt="Cover" loading="lazy"
                  @click="sendToPage(list)"/>
             <h3 @click="sendToPage(list)">{{ list.title }}</h3>
-            <p>{{ list.creator?.name || list.artist.name }}</p>
+            <p>{{ artist.name }}</p>
           </div>
         </div>
-        <div class="artists" v-if="currentNav === 'artists'">
-          <div class="artist" v-for="artist in this.artists" :key="artist.id" @click="sendToPage({ type: 'artist', id: artist.id })">
+        <div class="artists" v-if="currentNav === 'related'">
+          <div class="artist" v-for="artist in this.related" :key="artist.id"
+               @click="sendToPage({ type: 'artist', id: artist.id })">
             <img class="lazy" :src="artist.picture_medium" alt="Cover" loading="lazy"/>
             <h3>{{ artist.name }}</h3>
             <p>{{ toHumanString(artist.nb_fan) }} fans</p>
@@ -55,20 +57,20 @@ import { useStore } from '@/store/main'
 import { getYoutubeVideoFromProvider, toHumanString } from "../../api";
 
 export default {
-  name: "Profile",
+  name: "Artist",
   data: function () {
     return {
       id: this.$route.params.query,
-      user: {
+      artist: {
+        nb_fan: 0,
         picture_medium: "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
       },
       flag: null,
-      currentNav: 'flow',
-      flow: [],
-      charts: [],
-      playlists: [],
+      currentNav: 'top',
+      top: [],
       albums: [],
-      artists: []
+      related: [],
+      playlists: []
     }
   },
   beforeMount: function () {
@@ -88,25 +90,25 @@ export default {
   },
   methods: {
     getData: async function () {
+      console.log(this.id);
       let req = await axios({
         method: 'post',
-        url: `${import.meta.env.VITE_BACK}/standard/profile`,
+        url: `${import.meta.env.VITE_BACK}/standard/artist`,
         data: {
           id: this.id
         }
       })
 
-      this.user = req.data;
-      this.flag = `https://flagicons.lipis.dev/flags/4x3/${req.data.country.toLowerCase()}.svg`
+      this.artist = req.data;
 
-      document.title = `SelfSound - ${this.user.name}`
+      document.title = `SelfSound - ${this.artist.name}`
       await this.getMoreData()
     },
     getMoreData: async function () {
       if (!this[this.currentNav].length) {
         let req = await axios({
           method: 'post',
-          url: `${import.meta.env.VITE_BACK}/standard/profile/${this.currentNav}`,
+          url: `${import.meta.env.VITE_BACK}/standard/artist/${this.currentNav}`,
           data: {
             id: this.id
           }
@@ -115,10 +117,10 @@ export default {
         this[this.currentNav] = req.data.data;
       }
 
-      document.title = `SelfSound - ${this.user.name} - ${this.currentNav}`
+      document.title = `SelfSound - ${this.artist.name} - ${this.currentNav}`
 
       try {
-        const category = this.currentNav === 'flow' || this.currentNav === 'charts' ? 'tracks' : 'groups';
+        const category = this.currentNav === 'top' ? 'tracks' : 'groups';
         const scrollContainer = document.querySelector(`.${category}`);
 
         scrollContainer.addEventListener("wheel", (evt) => {
@@ -147,7 +149,7 @@ export default {
       // Queue up the other music from the playlist.
       this.store.clearAllQueues();
 
-      this[lib].forEach(el => {
+      this.top.forEach(el => {
         if (music.id !== el.id) {
           track = {
             trackId: el.id,
@@ -178,7 +180,10 @@ export default {
       }
     },
     sendToPage: function (list) {
-      this.$router.push({ name: list.type.charAt(0).toUpperCase() + list.type.slice(1), params: { query: list.id } })
+      this.$router.push({
+        name: list.type.charAt(0).toUpperCase() + list.type.slice(1),
+        params: { query: list.id }
+      })
     },
     back: function () {
       const scrollContainer = document.querySelector(".flow");
@@ -198,6 +203,16 @@ export default {
       newNav.classList.add("selected")
 
       this.getMoreData()
+    },
+    '$route.params': function (n, o) {
+      this.id = n.query;
+
+      this.top = []
+      this.albums = []
+      this.related = []
+      this.playlists = []
+
+      this.getData()
     }
   },
   setup() {
@@ -213,4 +228,5 @@ export default {
 
 <style scoped lang="scss">
 @import '../../assets/style/pages/elements/profile.scss';
+@import '../../assets/style/pages/elements/artist.scss';
 </style>
