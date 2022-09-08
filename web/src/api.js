@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getYoutubeVideoFromProvider (data) {
+export async function getYoutubeVideoFromProvider(data) {
     const req = await axios({
         method: 'post',
         url: `${import.meta.env.VITE_BACK}/youtube/search?music=true`,
@@ -27,7 +27,7 @@ export async function getYoutubeVideoFromProvider (data) {
     };
 }
 
-export function formatYoutubeVideo (data) {
+export function formatYoutubeVideo(data) {
     return {
         trackId: null,
         videoId: data.id,
@@ -46,7 +46,7 @@ export function formatYoutubeVideo (data) {
     };
 }
 
-export function secondsToString (seconds, aff) {
+export function secondsToString(seconds, aff) {
     const numHours = Math.floor(((seconds % 31536000) % 86400) / 3600);
     const numMinutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
     const numSeconds = (((seconds % 31536000) % 86400) % 3600) % 60;
@@ -58,7 +58,7 @@ export function secondsToString (seconds, aff) {
     return `${("0" + numHours).slice(-2)}:${("0" + numMinutes).slice(-2)}:${("0" + Math.trunc(numSeconds)).slice(-2)}${aff ? 'h' : ''}`;
 }
 
-export function toHumanString (number) {
+export function toHumanString(number) {
     const PREFIXES = {
         '24': 'Y',
         '21': 'Z',
@@ -96,11 +96,11 @@ export function toHumanString (number) {
     return _precise(n / Math.pow(10, e)).toString() + PREFIXES[e];
 }
 
-export function cleanString (text) {
+export function cleanString(text) {
     const result = text
         .replace(/ *\([^)]*\) */g, "") //Remove brackets
         .replace(/\[.*?]/g, "") //Remove hooks
-        //.replace(/[^a-zA-Z0-9 ]/g, ""); //Remove special characters
+    //.replace(/[^a-zA-Z0-9 ]/g, ""); //Remove special characters
 
     return result.trim();
 }

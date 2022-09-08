@@ -19,10 +19,10 @@
 
 <script>
 import Queue from './Queue.vue'
-import {useStore} from '@/store/main'
-import {secondsToString} from '@/api'
+import { useStore } from '@/store/main'
+import { secondsToString } from '@/api'
 import axios from "axios";
-import {getYoutubeVideoFromProvider} from "../../api";
+import { getYoutubeVideoFromProvider } from "../../api";
 
 export default {
   name: "MusicView",
@@ -71,6 +71,8 @@ export default {
     })
 
     const slider = document.getElementById('slider');
+    if (!slider) return
+
     slider.addEventListener('click', e => {
 
       clearInterval(this.interval);
@@ -108,13 +110,13 @@ export default {
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       } else {
         this.player.destroy();
-        this.player = new YT.Player('player', Object.assign(options, {playerVars: {'autoplay': 1}}));
+        this.player = new YT.Player('player', Object.assign(options, { playerVars: { 'autoplay': 1 } }));
         this.eventBus.emit('putControl', 'pause')
       }
     },
     playFromProvider: async function (data) {
       let req = await getYoutubeVideoFromProvider(data);
-      let track = Object.assign(data, {videoId: req.videoId})
+      let track = Object.assign(data, { videoId: req.videoId })
 
       this.play(track)
     },
@@ -176,7 +178,7 @@ export default {
           if (shuffle_cache_queue.length) this.store.queue = shuffle_cache_queue
         } else {
           this.store.controls.shuffle = true
-          this.store.shuffle_cache_queue = [...queue];
+          this.store.shuffle_cache_queue = [ ...queue ];
 
           this.store.shuffleQueue();
         }
@@ -200,7 +202,7 @@ export default {
   },
   setup() {
     const store = useStore()
-    return {store, secondsToString}
+    return { store, secondsToString }
   },
   watch: {
     iframeEnable(value) {

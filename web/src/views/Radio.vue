@@ -3,7 +3,8 @@
     <h1>Toutes nos radios :</h1>
     <div class="radios">
       <div class="station" v-for="station in radios" :key="station.name" @click="playRadio(station)">
-        <img :src="station.favicon" width="100" height="100"  alt="station icon" loading="lazy" onerror="this.onerror=null;this.src='https://i.goopics.net/wge2zb.png';"/>
+        <img :src="station.favicon" width="100" height="100"  alt="station icon" loading="lazy"
+             onerror="this.onerror=null;this.src='https://i.goopics.net/wge2zb.png';"/>
         <h3>{{ station.name }}</h3>
       </div>
     </div>

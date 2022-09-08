@@ -49,7 +49,8 @@
       </div>
 
       <div class="center">
-        <h3 v-if="!searchResult.track.length && !searchResult.album.length && !searchResult.artist.length && !searchResult.playlist.length && finished.standard">No Results :(</h3>
+        <h3 v-if="!searchResult.track.length && !searchResult.album.length && !searchResult.artist.length && !searchResult.playlist.length && finished.standard">
+          No Results :(</h3>
         <div class="loader" v-if="!finished.standard"></div>
       </div>
     </div>
@@ -65,7 +66,8 @@
         </div>
       </div>
       <div class="center">
-        <h3 v-if="!ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && finished.ytb">No Results :(</h3>
+        <h3 v-if="!ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && finished.ytb">
+          No Results :(</h3>
         <div class="loader" v-if="!finished.ytb"></div>
       </div>
     </div>
@@ -75,8 +77,8 @@
 
 <script>
 import axios from 'axios';
-import {useStore} from '@/store/main'
-import {getYoutubeVideoFromProvider, formatYoutubeVideo, toHumanString, cleanString} from "../api";
+import { useStore } from '@/store/main'
+import { getYoutubeVideoFromProvider, formatYoutubeVideo, toHumanString, cleanString } from "../api";
 
 export default {
   name: "Search",
