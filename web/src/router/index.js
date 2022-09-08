@@ -39,10 +39,24 @@ const routes = [
         path: '/profile/:query',
         name: 'Profile',
         component: () => import('../views/elements/Profile.vue')
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/account/Login.vue')
     }
 ]
 const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.name === "Login") return next()
+    const auth = localStorage.getItem('token')
+    //TODO: check token with the server !
+    if (!auth) return next({ name: 'Login' })
+    next()
+})
+
 export default router
