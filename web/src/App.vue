@@ -1,23 +1,23 @@
 <template>
-  <Account v-if="accountRoute"/>
-  <Client v-else/>
+  <Header/>
+  <Sidebar/>
+  <main>
+    <router-view/>
+  </main>
+  <Trackbar/>
+  <Radio/>
 </template>
 
 <script>
-import Client from './layout/Client.vue'
-import Account from './layout/Account.vue'
+import Header from './components/partials/Header.vue'
+import Sidebar from './components/partials/Sidebar.vue'
+import Trackbar from './components/music/Trackbar.vue'
+import Radio from './components/music/Radio.vue'
 
 export default {
   name: "Home",
   components: {
-    Client, Account
-  },
-  setup() {
-    const accountRoute = window.location.pathname === '/login';
-
-    return {
-      accountRoute
-    }
+    Header, Sidebar, Trackbar, Radio
   }
 }
 

@@ -35,6 +35,11 @@ section {
     }
 
     button {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
       border: 1px solid var(--separators);
       border-radius: 5px;
       background: var(--main);
@@ -48,11 +53,7 @@ section {
       gap: 13px;
 
       .google {
-        background: url("@/assets/images/icons/google.png") no-repeat;
-        background-size: 25px;
         border-radius: 10px;
-        width: 25px;
-        height: 25px;
       }
     }
 
@@ -88,7 +89,7 @@ section {
         gap: 13px;
 
         font-family: 'Inter', sans-serif;
-        color: var(--text);
+        color: var(--main);
         background: var(--color);
         cursor: pointer;
       }

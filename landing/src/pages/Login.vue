@@ -1,11 +1,11 @@
 <template>
   <section>
-    <img class="illustration" src="../../assets/images/illustration.png" alt="Illustration">
+    <img class="illustration" src="../assets/images/illustration.png" alt="Illustration">
     <div class="form">
-      <img src="../../assets/images/icon.svg" alt="Icon" width="72">
+      <img src="../assets/images/icon.svg" alt="Icon" width="72">
       <h1>Login to your Account</h1>
       <h2>See what is going on with your business</h2>
-      <button><i class="google"></i>Continue with Google</button>
+      <button><img class="google" src="../assets/images/google.png" alt="Connect with google" width="25"/>Continue with Google</button>
       <p>------------- or Sign in with Email ------------- </p>
       <form v-on:submit.prevent="login">
         <label for="email">Email</label>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { useHead } from '@vueuse/head'
+
 export default {
   name: "Login",
   data: function () {
@@ -33,10 +35,15 @@ export default {
     login: function () {
       console.log(this.email, this.password)
     }
+  },
+  setup() {
+    useHead({
+      title: 'SelfSound - Login',
+    })
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import '../../assets/style/pages/account/login.scss';
+@import '../assets/style/login.scss';
 </style>
