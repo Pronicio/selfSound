@@ -2,7 +2,7 @@
   <section>
     <img class="illustration" src="../assets/images/illustration.png" alt="Illustration">
     <div class="form">
-      <img src="../assets/images/icon.svg" alt="Icon" width="72">
+      <img src="../assets/images/icon.svg" alt="Icon" width="50">
       <h1>Login to your Account</h1>
       <h2>See what is going on with your business</h2>
       <button><img class="google" src="../assets/images/google.png" alt="Connect with google" width="25"/>Continue with Google</button>

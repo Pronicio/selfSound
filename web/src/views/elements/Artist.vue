@@ -90,7 +90,6 @@ export default {
   },
   methods: {
     getData: async function () {
-      console.log(this.id);
       let req = await axios({
         method: 'post',
         url: `${import.meta.env.VITE_BACK}/standard/artist`,

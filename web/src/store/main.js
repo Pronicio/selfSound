@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useStore = defineStore('main', {
     state: () => ({
+        lang: localStorage.getItem('lang') || navigator.language.trim().split(/-|_/)[0],
         currentMusic: JSON.parse(localStorage.getItem('track')) || {
             trackId: null,
             videoId: null,
