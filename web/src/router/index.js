@@ -47,10 +47,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.name === "Login") return next()
+    if (to.query?.token) {
+        //TODO: check token with the server !
+        localStorage.setItem("token", to.query.token)
+        return window.location.href = window.location.origin
+    }
+
     const auth = localStorage.getItem('token')
-    //TODO: check token with the server !
-    if (!auth) return next() //TODO: Redirect to landing
+    if (!auth) return window.location.href = import.meta.env.VITE_LANDING_PAGE;
     next()
 })
 

@@ -58,7 +58,7 @@ export default {
 
       if (!data.error) {
         this.success = true;
-        console.log(data.token)
+        window.location.replace(`${import.meta.env.VITE_APP}?token=${data.token}`);
       } else {
         this.error = true;
       }

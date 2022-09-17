@@ -1,5 +1,6 @@
 const axios = require('axios')
 const { AES } = require("crypto-js");
+const Base64 = require('crypto-js/enc-base64')
 
 async function routes(fastify, options) {
 
@@ -22,10 +23,11 @@ async function routes(fastify, options) {
             })
 
             const encrypted = AES.encrypt(token, process.env.TOKEN);
+            const key = encrypted.toString()
 
             return rep.send({
                 error: false,
-                token: encrypted.toString()
+                token: Buffer.from(key).toString('base64')
             })
         }
 
@@ -49,10 +51,11 @@ async function routes(fastify, options) {
             })
 
             const encrypted = AES.encrypt(token, process.env.TOKEN);
+            const key = encrypted.toString()
 
             return rep.send({
                 error: false,
-                token: encrypted.toString()
+                token: Buffer.from(key).toString('base64')
             })
         }
 
@@ -101,10 +104,11 @@ async function routes(fastify, options) {
             })
 
             const encrypted = AES.encrypt(token, process.env.TOKEN);
+            const key = encrypted.toString()
 
             return rep.send({
                 error: false,
-                token: encrypted.toString()
+                token: Buffer.from(key).toString('base64')
             })
         }
 
