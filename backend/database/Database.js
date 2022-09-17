@@ -271,7 +271,7 @@ class Database {
 
         if (!user) return false
 
-        let track = await Track.findOne({
+        const track = await Track.findOne({
             $or: [
                 { providerId: trackData.providerId ? trackData.providerId : 1 },
                 { youtubeId: trackData.youtubeId ? trackData.youtubeId : "null" }
@@ -293,7 +293,7 @@ class Database {
 
         if (!user) return false
 
-        let album = await Album.findOne({
+        const album = await Album.findOne({
             id: albumData.id
         })
 
@@ -312,7 +312,7 @@ class Database {
 
         if (!user) return false
 
-        let artist = await Artist.findOne({
+        const artist = await Artist.findOne({
             id: artistData.id
         })
 
@@ -331,7 +331,7 @@ class Database {
 
         if (!user) return false
 
-        let playlist = await Playlist.findOne({
+        const playlist = await Playlist.findOne({
             $or: [
                 { providerId: playlistData.providerId ? playlistData.providerId : 1 },
                 { youtubeId: playlistData.youtubeId ? playlistData.youtubeId : "null" }
