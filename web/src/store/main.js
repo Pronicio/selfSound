@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useStore = defineStore('main', {
     state: () => ({
+        lang: localStorage.getItem('lang') || navigator.language.trim().split(/-|_/)[0],
         currentMusic: JSON.parse(localStorage.getItem('track')) || {
             trackId: null,
             videoId: null,
@@ -46,7 +47,7 @@ export const useStore = defineStore('main', {
         shuffleQueue() {
             for (let i = this.queue.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [this.queue[i], this.queue[j]] = [this.queue[j], this.queue[i]];
+                [ this.queue[i], this.queue[j] ] = [ this.queue[j], this.queue[i] ];
             }
         }
     }

@@ -6,13 +6,8 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  base: '/',
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "src/assets/style/style.scss";`
-      }
-    }
+  ssgOptions: {
+    script: 'async'
   },
   resolve: {
     alias: {
@@ -20,6 +15,6 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000
+    port: 3001
   }
 })

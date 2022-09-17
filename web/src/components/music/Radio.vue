@@ -1,7 +1,8 @@
 <template>
   <div class="radio" v-show="radio.url">
     <audio autoplay :src="radio.url"></audio>
-    <img :src="radio.favicon" alt="Radio Logo" width="80" height="80" onerror="this.onerror=null;this.src='https://i.goopics.net/wge2zb.png';"/>
+    <img :src="radio.favicon" alt="Radio Logo" width="80" height="80"
+         onerror="this.onerror=null;this.src='https://i.goopics.net/wge2zb.png';"/>
     <div class="controls">
       <div id="stopRadio" @click="changeState($event)"></div>
       <p>{{ radio.name }}</p>
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-import {useStore} from '@/store/main'
+import { useStore } from '@/store/main'
 import axios from "axios";
 
 export default {

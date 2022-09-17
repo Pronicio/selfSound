@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import {useStore} from '@/store/main'
-import {getYoutubeVideoFromProvider} from "../../api";
+import { useStore } from '@/store/main'
+import { getYoutubeVideoFromProvider } from "../../api";
 
 export default {
   name: "Queue",
@@ -30,7 +30,7 @@ export default {
   },
   setup() {
     const store = useStore()
-    return {store}
+    return { store }
   },
 }
 </script>

@@ -6,7 +6,7 @@
       <h1>{{ data.title }}</h1>
       <div class="artist">
         <img class="artist_picture lazy" :src="data.artist.picture_small" alt="Artist picture" width="30"/>
-        <h2>{{ data.artist.name }}</h2>
+        <h2 @click="this.$router.push({ name: 'Artist', params: { query: data.artist.id } })">{{ data.artist.name }}</h2>
       </div>
       <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }} - {{ data.release_date }}</p>
       <div class="controls">
@@ -21,7 +21,8 @@
   <section class="sec2">
     <h2>Tracks : </h2>
     <div class="tracks">
-      <div v-if="data.tracks" class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id" @click="playFromProvider(item)">
+      <div v-if="data.tracks" class="track" v-for="(item, index) in data.tracks.data" :key="item.id" :id="item.id"
+           @click="playFromProvider(item)">
         <div class="details">
           <img :src="data.cover_small" alt="Album cover" width="50"/>
           <p>{{ index + 1 }}. {{ item.title }}</p>
@@ -38,7 +39,7 @@
 <script>
 import axios from "axios";
 import { useStore } from '@/store/main'
-import {getYoutubeVideoFromProvider, secondsToString} from "../../api";
+import { getYoutubeVideoFromProvider, secondsToString } from "../../api";
 
 export default {
   name: "Album.vue",
@@ -71,13 +72,15 @@ export default {
       })
 
       this.data = req.data;
-      document.title = `SelfSound - ${this.data.title}`
+      document.title = `SelfSound - ${req.data.title}`
     },
     playFromProvider: async function (music) {
-      const data = Object.assign(music, { album: {
+      const data = Object.assign(music, {
+        album: {
           cover_big: this.data.cover_big,
           cover_xl: this.data.cover_xl
-      }})
+        }
+      })
       let track = await getYoutubeVideoFromProvider(data);
 
       //Store music locally for later.

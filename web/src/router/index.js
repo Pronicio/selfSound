@@ -26,6 +26,11 @@ const routes = [
         component: () => import('../views/elements/Album.vue')
     },
     {
+        path: '/artist/:query',
+        name: 'Artist',
+        component: () => import('../views/elements/Artist.vue')
+    },
+    {
         path: '/playlist/:query',
         name: 'Playlist',
         component: () => import('../views/elements/Playlist.vue')
@@ -40,4 +45,17 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.query?.token) {
+        //TODO: check token with the server !
+        localStorage.setItem("token", to.query.token)
+        return window.location.href = window.location.origin
+    }
+
+    const auth = localStorage.getItem('token')
+    if (!auth) return window.location.href = import.meta.env.VITE_LANDING_PAGE;
+    next()
+})
+
 export default router

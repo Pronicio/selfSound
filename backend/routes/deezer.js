@@ -43,6 +43,37 @@ async function routes (fastify, options) {
     })
 
     /**
+     * Get an artist
+     * @body {string} id The ID of the album
+     */
+    fastify.post('/artist', async (req, rep) => {
+        const id = req.body.id;
+
+        const res = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/artist/${id}`
+        })
+
+        rep.send(res.data)
+    })
+
+    /**
+     * Get an artist
+     * @body {string} id The ID of the album
+     */
+    fastify.post('/artist/:key', async (req, rep) => {
+        const id = req.body.id;
+        const key = req.params.key
+
+        const res = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/artist/${id}/${key}?limit=20`
+        })
+
+        rep.send(res.data)
+    })
+
+    /**
      * Get all info of a music from deezer
      * @body {string} musicID The musicID of the music
      */

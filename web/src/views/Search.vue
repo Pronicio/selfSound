@@ -31,7 +31,8 @@
 
       <h3 v-if="searchResult.artist.length"> Artists : </h3>
       <div class="result">
-        <div v-for="item in searchResult.artist" :key="item.id" :id="item.id" class="artist_section">
+        <div v-for="item in searchResult.artist" :key="item.id" :id="item.id" class="artist_section"
+             @click="this.$router.push({ name: 'Artist', params: { query: item.id } })">
           <img class="rounded_img" :src="item.picture_medium" alt="Artist picture" loading="lazy"/>
           <h5>{{ item.name }}</h5>
           <p class="sub-text">{{ toHumanString(item.nb_fan) }} fans</p>
@@ -48,7 +49,8 @@
       </div>
 
       <div class="center">
-        <h3 v-if="!searchResult.track.length && !searchResult.album.length && !searchResult.artist.length && !searchResult.playlist.length && finished.standard">No Results :(</h3>
+        <h3 v-if="!searchResult.track.length && !searchResult.album.length && !searchResult.artist.length && !searchResult.playlist.length && finished.standard">
+          No Results :(</h3>
         <div class="loader" v-if="!finished.standard"></div>
       </div>
     </div>
@@ -64,7 +66,8 @@
         </div>
       </div>
       <div class="center">
-        <h3 v-if="!ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && finished.ytb">No Results :(</h3>
+        <h3 v-if="!ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && !ytb_searchResult.length && finished.ytb">
+          No Results :(</h3>
         <div class="loader" v-if="!finished.ytb"></div>
       </div>
     </div>
@@ -74,8 +77,8 @@
 
 <script>
 import axios from 'axios';
-import {useStore} from '@/store/main'
-import {getYoutubeVideoFromProvider, formatYoutubeVideo, toHumanString, cleanString} from "../api";
+import { useStore } from '@/store/main'
+import { getYoutubeVideoFromProvider, formatYoutubeVideo, toHumanString, cleanString } from "../api";
 
 export default {
   name: "Search",

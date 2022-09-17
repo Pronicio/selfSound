@@ -33,7 +33,7 @@ export default {
       if (this.$route.name === "Radio") {
         return this.eventBus.emit('onSearchRadio', this.searchInput)
       }
-      this.$router.push({name: 'Search', params: {query: this.searchInput}})
+      this.$router.push({ name: 'Search', params: { query: this.searchInput } })
       this.eventBus.emit('onSearch', this.searchInput)
     }
   }
