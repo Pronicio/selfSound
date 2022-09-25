@@ -16,7 +16,8 @@
           <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="playFromProvider(item)"/>
           <div class="title">
             <h4>{{ item.title }}</h4>
-            <p class="sub-text">{{ item.artist.name }}</p>
+            <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: item.artist.id } })">
+              {{ item.artist.name }}</p>
           </div>
         </div>
       </div>
