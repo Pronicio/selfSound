@@ -8,7 +8,7 @@
       <img class="cover" :src="store.currentMusic.album.cover.big" width="80" alt="cover"/>
       <div class="track">
         <p>{{ cleanString(store.currentMusic.title) }}</p>
-        <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: store.currentMusic.artist.id } })">
+        <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: store.currentMusic.artist.id } }) & changeView()">
           {{ store.currentMusic.artist.name }}</p>
       </div>
     </div>

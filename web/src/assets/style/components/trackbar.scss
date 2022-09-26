@@ -42,7 +42,7 @@ p {
     flex-direction: column;
     width: 22vw;
 
-    p {
+    .sub-text {
       cursor: pointer;
 
       &:hover {

@@ -29,6 +29,7 @@ section {
 
 .main {
   display: flex;
+  justify-content: space-between;
   margin: 1.5rem;
   height: 84vh;
 
@@ -39,6 +40,7 @@ section {
 
     img {
       filter: var(--base);
+      margin: 10px 0 0;
     }
 
     .media {
@@ -49,17 +51,10 @@ section {
     }
   }
 
-  .others {
-    position: relative;
-    top: 0;
-    left: 16vw;
-
-    width: 100%;
-    height: 84vh;
-
-    overflow: auto;
-
+  .queue {
     display: flex;
     flex-direction: column;
+    width: 40%;
+    height: 84vh;
   }
 }
