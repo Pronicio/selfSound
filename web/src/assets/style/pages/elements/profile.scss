@@ -53,39 +53,12 @@ section {
     margin-left: 10px;
 
     .title {
-      display: flex;
-      justify-content: space-between;
       margin: 2rem 0;
 
       h2 {
         margin: 0;
         font-size: 2rem;
         color: var(--text);
-      }
-
-      .move {
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-
-        .back, .next {
-          background: url("@/assets/images/icons/arrow.svg") no-repeat;
-          background-size: 2rem;
-          width: 2rem;
-          height: 2rem;
-
-          cursor: pointer;
-          filter: var(--base);
-        }
-
-        .back {
-          transform: rotate(270deg);
-          margin-right: 10px;
-        }
-
-        .next {
-          transform: rotate(90deg);
-        }
       }
     }
 
@@ -98,18 +71,20 @@ section {
       .tracks, .groups, .artists {
         display: flex;
         flex-direction: row;
-        flex-wrap: nowrap;
-        overflow: auto;
+        flex-wrap: wrap;
+        justify-content: space-around;
 
         .track, .group {
           display: flex;
           flex-direction: column;
+          max-width: 250px;
 
-          margin: 0 10px;
+          margin: 0 10px 15px 0;
           cursor: pointer;
 
           img {
             border-radius: 4px;
+            max-width: 250px;
           }
 
           h3 {
@@ -132,7 +107,7 @@ section {
           }
 
           &:first-of-type {
-            margin: 0 10px 0 0;
+            margin: 0 10px 15px 0;
           }
         }
       }
