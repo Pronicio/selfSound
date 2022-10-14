@@ -39,7 +39,7 @@ export function formatYoutubeVideo(data) {
         album: {
             id: null,
             cover: {
-                big: `https://img.youtube.com/vi/${data.id}/hqdefault.jpg`,
+                big: `https://img.youtube.com/vi/${data.id}/mqdefault.jpg`,
                 xl: `https://img.youtube.com/vi/${data.id}/maxresdefault.jpg`,
             },
         }

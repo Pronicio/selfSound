@@ -15,10 +15,6 @@
     <div class="data">
       <div class="title">
         <h2>{{ currentNav.charAt(0).toUpperCase() + currentNav.slice(1) }} :</h2>
-        <div class="move">
-          <div class="back" @click="back"></div>
-          <div class="next" @click="next"></div>
-        </div>
       </div>
       <div class="list">
         <div class="tracks" v-if="currentNav === 'flow' || currentNav === 'charts'">
@@ -78,14 +74,6 @@ export default {
       this.$router.push('/')
     }
   },
-  mounted() {
-    const scrollContainer = document.querySelector(".tracks");
-
-    scrollContainer.addEventListener("wheel", (evt) => {
-      evt.preventDefault();
-      scrollContainer.scrollLeft += evt.deltaY;
-    });
-  },
   methods: {
     getData: async function () {
       let req = await axios({
@@ -116,23 +104,6 @@ export default {
       }
 
       document.title = `SelfSound - ${this.user.name} - ${this.currentNav}`
-
-      try {
-        const category = this.currentNav === 'flow' || this.currentNav === 'charts' ? 'tracks' : 'groups';
-        const scrollContainer = document.querySelector(`.${category}`);
-
-        scrollContainer.addEventListener("wheel", (evt) => {
-          evt.preventDefault();
-          scrollContainer.scrollLeft += evt.deltaY;
-        });
-      } catch (e) {
-        const scrollContainer = document.querySelector(`.artists`);
-
-        scrollContainer.addEventListener("wheel", (evt) => {
-          evt.preventDefault();
-          scrollContainer.scrollLeft += evt.deltaY;
-        });
-      }
     },
     playFromProvider: async function (music, lib) {
       let track = await getYoutubeVideoFromProvider(music);
@@ -179,15 +150,7 @@ export default {
     },
     sendToPage: function (list) {
       this.$router.push({ name: list.type.charAt(0).toUpperCase() + list.type.slice(1), params: { query: list.id } })
-    },
-    back: function () {
-      const scrollContainer = document.querySelector(".flow");
-      scrollContainer.scrollLeft += 250;
-    },
-    next: function () {
-      const scrollContainer = document.querySelector(".flow");
-      scrollContainer.scrollLeft += -250;
-    },
+    }
   },
   watch: {
     currentNav(newValue, oldValue) {

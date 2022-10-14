@@ -58,6 +58,7 @@ export default {
       let value = document.getElementById('radio_volume_slider').value
 
       localStorage.setItem('volume', value);
+      this.store.controls.volume = value
       audio.volume = value / 100
     }
   },

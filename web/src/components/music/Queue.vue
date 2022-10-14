@@ -1,9 +1,17 @@
 <template>
-  <div v-if="store.queue.length" class="others">
+  <div class="queue" v-if="store.queue.length">
     <h3>Queue : </h3>
-    <div v-for="item in store.queue" :key="item.id" :id="item.trackId" class="track" @click="play(item)">
-      <img :src="item.album.cover.big" width="50" alt="Album cover" loading="lazy"/>
-      <p>- {{ item.title }}</p>
+    <div class="list">
+      <div v-for="item in store.queue" :key="item.id" :id="item.trackId" class="track" @click="play(item)">
+        <div class="details">
+          <img :src="item.album.cover.big" width="50" alt="Album cover" loading="lazy"/>
+          <p>{{ item.title }}</p>
+        </div>
+        <div class="actions">
+          <div id="like_music"></div>
+          <div id="menu"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

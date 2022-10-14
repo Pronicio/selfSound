@@ -105,7 +105,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
 
   > div {
     margin: 5px;
@@ -116,7 +115,6 @@
     align-items: flex-start;
 
     overflow: hidden;
-    cursor: pointer;
 
     > img {
       width: 12.5rem;
@@ -125,8 +123,8 @@
     }
 
     .video_cover {
-      width: 200px;
-      height: 200px;
+      width: 320px;
+      height: 180px;
 
       box-shadow: rgb(25 25 34 / 30%) 0 1px 6px;
       border-radius: 4px;
@@ -144,6 +142,43 @@
       &:hover {
         text-decoration: none;
       }
+    }
+  }
+}
+
+.tracks {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 75vh;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    overflow: hidden;
+    margin: 5px;
+    width: auto;
+
+    > img {
+      width: 5rem;
+      box-shadow: rgb(25 25 34 / 30%) 0 1px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      cursor: pointer;
+
+      h4, p {
+        margin: 5px 0 0 5px;
+      }
+
     }
   }
 }
@@ -191,7 +226,7 @@ h5 {
     width: 10rem;
     height: 10rem;
     border: 12px solid #FFF;
-    border-bottom-color: #FF3D00;
+    border-bottom-color: var(--color);
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;

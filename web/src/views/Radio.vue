@@ -28,6 +28,7 @@ export default {
     this.eventBus.on('onSearchRadio', (data) => {
       this.searchRadio(data)
     })
+    document.title = 'SelfSound - Radio'
   },
   methods: {
     getRadiosByCountry: async function () {

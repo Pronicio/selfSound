@@ -8,7 +8,7 @@
       <img class="cover" :src="store.currentMusic.album.cover.big" width="80" alt="cover"/>
       <div class="track">
         <p>{{ cleanString(store.currentMusic.title) }}</p>
-        <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: store.currentMusic.artist.id } })">
+        <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: store.currentMusic.artist.id } }); closeView()">
           {{ store.currentMusic.artist.name }}</p>
       </div>
     </div>
@@ -85,6 +85,11 @@ export default {
         document.getElementById("arrow").classList.remove("rotate");
         document.querySelector("body").style.overflow = "auto"
       }
+    },
+    closeView: function () {
+      this.view = false;
+      document.getElementById("arrow").classList.remove("rotate");
+      document.querySelector("body").style.overflow = "auto"
     },
     control: function (name) {
       this.eventBus.emit('control', name)

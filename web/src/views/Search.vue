@@ -11,11 +11,14 @@
 
     <div v-if="!ytb" id="standard">
       <h3 v-if="searchResult.track.length"> Tracks : </h3>
-      <div class="result">
+      <div class="result tracks">
         <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
           <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="playFromProvider(item)"/>
-          <h4>{{ cleanString(item.title_short) }}</h4>
-          <p class="sub-text">{{ item.artist.name }}</p>
+          <div class="title">
+            <h4 @click="playFromProvider(item)">{{ item.title }}</h4>
+            <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: item.artist.id } })">
+              {{ item.artist.name }}</p>
+          </div>
         </div>
       </div>
 
@@ -25,7 +28,8 @@
           <img :src="item.cover_medium" alt="Album cover" loading="lazy"
                @click="this.$router.push({ name: 'Album', params: { query: item.id } })"/>
           <h4>{{ cleanString(item.title) }}</h4>
-          <p class="sub-text">{{ item.artist.name }}</p>
+          <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: item.artist.id } })">
+            {{ item.artist.name }}</p>
         </div>
       </div>
 
@@ -60,9 +64,12 @@
       <div class="result">
         <div v-for="item in ytb_searchResult" :key="item.id" :id="item.id" @click="playFromYtb(item)">
           <div class="video_cover"
-               :style="`background: url('https://img.youtube.com/vi/${item.id}/hqdefault.jpg') no-repeat center;`"/>
-          <h4>{{ cleanString(item.title) }}</h4>
-          <p class="sub-text">{{ item.channel.name }}</p>
+               :style="`background: url('https://img.youtube.com/vi/${item.id}/mqdefault.jpg') no-repeat center;`"/>
+          <div class="title">
+            <h4>{{ item.title }}</h4>
+            <p class="channel_name">{{ item.channel.name }}</p>
+            <p class="description sub-text">{{ item.description }}</p>
+          </div>
         </div>
       </div>
       <div class="center">
@@ -255,4 +262,5 @@ export default {
 
 <style scoped lang="scss">
 @import '../assets/style/pages/search.scss';
+@import '../assets/style/pages/youtube_search.scss';
 </style>
