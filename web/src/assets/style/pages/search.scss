@@ -115,7 +115,6 @@
     align-items: flex-start;
 
     overflow: hidden;
-    cursor: pointer;
 
     > img {
       width: 12.5rem;
@@ -159,7 +158,6 @@
     align-items: stretch;
 
     overflow: hidden;
-    cursor: pointer;
     margin: 5px;
     width: auto;
 
@@ -167,6 +165,7 @@
       width: 5rem;
       box-shadow: rgb(25 25 34 / 30%) 0 1px 6px;
       border-radius: 4px;
+      cursor: pointer;
     }
 
     .title {
@@ -174,6 +173,7 @@
       flex-direction: column;
       justify-content: center;
       align-content: center;
+      cursor: pointer;
 
       h4, p {
         margin: 5px 0 0 5px;
@@ -226,7 +226,7 @@ h5 {
     width: 10rem;
     height: 10rem;
     border: 12px solid #FFF;
-    border-bottom-color: #FF3D00;
+    border-bottom-color: var(--color);
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;

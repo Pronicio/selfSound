@@ -14,8 +14,8 @@
       <div class="result tracks">
         <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
           <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="playFromProvider(item)"/>
-          <div class="title" @click="playFromProvider(item)">
-            <h4>{{ item.title }}</h4>
+          <div class="title">
+            <h4 @click="playFromProvider(item)">{{ item.title }}</h4>
             <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: item.artist.id } })">
               {{ item.artist.name }}</p>
           </div>
@@ -28,7 +28,8 @@
           <img :src="item.cover_medium" alt="Album cover" loading="lazy"
                @click="this.$router.push({ name: 'Album', params: { query: item.id } })"/>
           <h4>{{ cleanString(item.title) }}</h4>
-          <p class="sub-text">{{ item.artist.name }}</p>
+          <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: item.artist.id } })">
+            {{ item.artist.name }}</p>
         </div>
       </div>
 

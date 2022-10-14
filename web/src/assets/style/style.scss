@@ -65,10 +65,10 @@ body {
 
 main {
   background: var(--main);
-  margin: 8.5vh 5px 12vh 14vw;
+  margin: 4rem 5px 12vh 14vw;
 
   @media (max-width: $mobile) {
-    margin: 8.6vh 5px 12vh 5px;
+    margin: 4rem 5px 12vh 5px;
   }
 }
 
