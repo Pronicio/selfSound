@@ -22,7 +22,6 @@ async fn get_stream(code: String) -> String {
         .unwrap();
 
     let link = &info.signature_cipher.url;
-    println!("{:?}", link.as_str());
 
     link.as_str().into()
 }

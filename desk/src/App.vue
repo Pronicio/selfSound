@@ -1,31 +1,52 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <section>
+    <input type="text" v-model="code">
+    <button @click="start">Get stream</button>
+    <audio :src="url" controls autoplay></audio>
+  </section>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+<script>
+import { getStream } from "./api.js";
+
+export default {
+  data: function () {
+    return {
+      code: "CVXOJ-CBcJQ",
+      url: null
+    }
+  },
+  methods: {
+    async start() {
+      const data = await getStream(this.code)
+
+      if (data.type === "stream") {
+        this.url = data.url;
+      }
+    }
+  }
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+</script>
+
+<style>
+body {
+  margin: 0;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+#app {
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+  padding: 3rem;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+audio {
+  width: 100%;
 }
 </style>
