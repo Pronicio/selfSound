@@ -1,15 +1,24 @@
 <template>
-  <section>
-    <input type="text" v-model="code">
-    <button @click="start">Get stream</button>
-    <audio :src="url" controls autoplay></audio>
+  <Navbar></Navbar>
+  <section class="main">
+    <Header></Header>
+    <main>
+      <router-view/>
+    </main>
+    <footer></footer>
   </section>
 </template>
 
 <script>
 import { getStream } from "./api.js";
+import Navbar from "./components/Navbar.vue";
+import Header from "./components/Header.vue";
 
 export default {
+  name: "App",
+  components: {
+    Navbar, Header
+  },
   data: function () {
     return {
       code: "CVXOJ-CBcJQ",
@@ -28,25 +37,6 @@ export default {
 }
 </script>
 
-<style>
-body {
-  margin: 0;
-}
-
-#app {
-  justify-content: center;
-  align-content: center;
-  height: 100vh;
-  padding: 3rem;
-}
-
-section {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-audio {
-  width: 100%;
-}
+<style lang="scss">
+@import './assets/style/style.scss';
 </style>

@@ -1,0 +1,66 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  img {
+    margin-bottom: 2.5rem;
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+
+    background: #1A1E1F;
+    border-radius: 22px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+    a {
+      margin-bottom: 20px;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      .ic {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      .ic-home {
+        background: url("@/assets/icons/home.svg") no-repeat;
+        background-size: 2rem;
+      }
+
+      .ic-playlist {
+        background: url("@/assets/icons/playlist.svg") no-repeat;
+        background-size: 2rem;
+      }
+
+      .ic-radio {
+        background: url("@/assets/icons/radio.svg") no-repeat;
+        background-size: 2rem;
+      }
+
+      .ic-videos {
+        background: url("@/assets/icons/videos.svg") no-repeat;
+        background-size: 2rem;
+      }
+
+      .ic-profile {
+        background: url("@/assets/icons/profile.svg") no-repeat;
+        background-size: 2rem;
+      }
+
+      .ic-logout {
+        background: url("@/assets/icons/logout.svg") no-repeat;
+        background-size: 2rem;
+      }
+    }
+  }
+}

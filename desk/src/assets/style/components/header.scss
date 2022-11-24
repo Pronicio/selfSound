@@ -1,0 +1,26 @@
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  background: #1A1E1F;
+  border-radius: 22px;
+  padding: 20px;
+
+  .ic-search {
+    background: url("@/assets/icons/search.svg") no-repeat;
+    background-size: 1.3rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-right: 5px;
+  }
+
+  input {
+    font-family: "Quicksand", sans-serif;
+    border: none;
+    background: none;
+    outline: none;
+    color: var(--sub-text);
+    width: 50vw;
+  }
+}
