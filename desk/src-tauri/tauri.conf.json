@@ -3,7 +3,7 @@
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:5173",
+    "devPath": "http://localhost:3000",
     "distDir": "../dist",
     "withGlobalTauri": true
   },
@@ -18,7 +18,8 @@
         "all": true,
         "request": true,
         "scope": [
-          "https://api.deezer.com/*"
+          "https://api.deezer.com/*",
+          "https://music.youtube.com/*"
         ]
       }
     },

@@ -10,9 +10,11 @@
 </template>
 
 <script>
-import { getStream } from "./api.js";
+import { getStream } from "./structure/api.js";
 import Navbar from "./components/Navbar.vue";
 import Header from "./components/Header.vue";
+
+import { Youtube } from "./structure/api.js";
 
 export default {
   name: "App",
@@ -24,6 +26,10 @@ export default {
       code: "CVXOJ-CBcJQ",
       url: null
     }
+  },
+  mounted() {
+    const ytb = new Youtube()
+    ytb.initalize().then()
   },
   methods: {
     async start() {
