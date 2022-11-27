@@ -29,7 +29,11 @@ export default {
   },
   mounted() {
     const ytb = new Youtube()
-    ytb.initalize().then()
+    ytb.initalize().then(() => {
+      ytb.search("Nahla pnl", "song").then(result => {
+        console.log(result)
+      })
+    })
   },
   methods: {
     async start() {
