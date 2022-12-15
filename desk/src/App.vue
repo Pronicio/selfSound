@@ -14,7 +14,7 @@ import { getStream } from "./structure/api.js";
 import Navbar from "./components/Navbar.vue";
 import Header from "./components/Header.vue";
 
-import { Youtube } from "./structure/api.js";
+import { getMusic } from "./structure/api.js";
 
 export default {
   name: "App",
@@ -28,11 +28,11 @@ export default {
     }
   },
   mounted() {
-    const ytb = new Youtube()
-    ytb.initalize().then(() => {
-      ytb.search("Nahla pnl", "song").then(result => {
-        console.log(result)
-      })
+    getMusic({
+      title: "Hello",
+      artist: {
+        name: "Adele"
+      }
     })
   },
   methods: {
