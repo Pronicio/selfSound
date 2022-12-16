@@ -1,6 +1,7 @@
 package main
 
 import (
+	"back/database"
 	apiRoutes "back/routes"
 	crypt "back/utils"
 	"fmt"
@@ -38,6 +39,8 @@ func main() {
 
 	api := app.Group("/api")
 	apiRoutes.ApiRouter(api)
+
+	database.Connect()
 
 	port := os.Getenv("PORT")
 	err = app.Listen(":" + port)
