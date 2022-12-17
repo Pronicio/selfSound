@@ -3,11 +3,12 @@ package main
 import (
 	"back/database"
 	apiRoutes "back/routes"
-	crypt "back/utils"
+	utils "back/utils"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
+	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -40,6 +41,20 @@ func main() {
 	api := app.Group("/api")
 	apiRoutes.ApiRouter(api)
 
+	apiAuth := api.Group("/auth")
+	apiRoutes.AuthRouter(apiAuth)
+
+	secret := os.Getenv("JWT_SECRET")
+	app.Use(jwtware.New(jwtware.Config{
+		SigningKey: []byte(secret),
+	}))
+
+	apiUser := api.Group("/user")
+	apiRoutes.UserRouter(apiUser)
+
+	apiLib := api.Group("/lib")
+	apiRoutes.LibRouter(apiLib)
+
 	database.Connect()
 
 	port := os.Getenv("PORT")
@@ -51,9 +66,9 @@ func main() {
 
 func test() {
 	// Crypt code :
-	crypted := crypt.EncryptData("test")
+	crypted := utils.EncryptData("test")
 	println(crypted)
 
-	matched := crypt.VerifyData("test", crypted)
+	matched := utils.VerifyData("test", crypted)
 	println(matched)
 }
