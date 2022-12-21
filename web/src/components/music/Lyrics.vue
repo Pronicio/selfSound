@@ -23,6 +23,11 @@ export default {
   mounted() {
     console.log(this.store.currentMusic.lyrics)
     if (!this.store.currentMusic.lyrics[0]) this.search(this.store.currentMusic.title, this.store.currentMusic.artist.name)
+
+    this.eventBus.on('play', (data) => {
+      this.lyrics = []
+      this.search(this.store.currentMusic.title, this.store.currentMusic.artist.name)
+    })
   },
   methods: {
     async search(title, artist) {
@@ -33,6 +38,9 @@ export default {
           query: title,
           artist: artist
         }
+      }).catch(e => {
+        this.lyrics = ["No lyrics found.."]
+        return this.store.currentMusic.lyrics = this.lyrics;
       })
 
       this.lyrics = req.data.lyrics.split('\n');
