@@ -17,7 +17,8 @@ export const useStore = defineStore('main', {
                     big: null,
                     xl: null,
                 },
-            }
+            },
+            lyrics: []
         },
         controls: {
             volume: localStorage.getItem('volume') || "100",

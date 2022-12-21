@@ -20,7 +20,7 @@
 html {
   --main: #171717;
   --sub-main: #272727;
-  --separators: #7A8580;
+  --separators: #40404A;
 
   --color: #EE4950;
 
@@ -68,7 +68,7 @@ main {
   margin: 4rem 5px 12vh 14vw;
 
   @media (max-width: $mobile) {
-    margin: 4rem 5px 12vh 5px;
+    margin: 0;
   }
 }
 

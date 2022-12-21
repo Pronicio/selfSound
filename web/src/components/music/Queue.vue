@@ -1,6 +1,5 @@
 <template>
   <div class="queue" v-if="store.queue.length">
-    <h3>Queue : </h3>
     <div class="list">
       <div v-for="item in store.queue" :key="item.id" :id="item.trackId" class="track" @click="play(item)">
         <div class="details">

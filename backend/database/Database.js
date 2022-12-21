@@ -8,7 +8,6 @@ const Artist = require('./Models/Artist');
 const Playlist = require('./Models/Playlist');
 
 class Database {
-
     constructor(url) {
         this.url = url;
 

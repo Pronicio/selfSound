@@ -9,25 +9,32 @@
           <div id="player"></div>
         </div>
       </div>
-
-      <Transition name="magic">
-        <component :is="activeComponent"></component>
-      </Transition>
+      <div class="right">
+        <div class="selector">
+          <h3 @click="switchWin('Queue')" class="current" id="Queue">Queue</h3>
+          <p>|</p>
+          <h3 @click="switchWin('Lyrics')" id="Lyrics">Lyrics</h3>
+        </div>
+        <Transition name="magic">
+          <component :is="activeComponent"></component>
+        </Transition>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 import Queue from './Queue.vue'
+import Lyrics from './Lyrics.vue'
 import { useStore } from '@/store/main'
 import { secondsToString } from '@/api'
 import axios from "axios";
-import { getYoutubeVideoFromProvider } from "../../api";
+import { getYoutubeVideoFromProvider } from "@/api";
 
 export default {
   name: "MusicView",
   components: {
-    Queue
+    Queue, Lyrics
   },
   data: function () {
     return {
@@ -47,6 +54,7 @@ export default {
     this.eventBus.on('play', (data) => {
       this.videoThumbnail = data.album.cover.xl;
       this.playVideo()
+      this.store.currentMusic.lyrics = []
     })
 
     this.eventBus.on('play_radio', (station) => {
@@ -90,7 +98,7 @@ export default {
   },
   methods: {
     playVideo: async function () {
-      let options = {
+      const options = {
         height: '360',
         width: '640',
         videoId: this.store.currentMusic.videoId,
@@ -115,8 +123,8 @@ export default {
       }
     },
     playFromProvider: async function (data) {
-      let req = await getYoutubeVideoFromProvider(data);
-      let track = Object.assign(data, { videoId: req.videoId })
+      const req = await getYoutubeVideoFromProvider(data);
+      const track = Object.assign(data, { videoId: req.videoId })
 
       this.play(track)
     },
@@ -169,8 +177,8 @@ export default {
       }
     },
     shuffle: function () {
-      let queue = this.store.queue;
-      let shuffle_cache_queue = this.store.shuffle_cache_queue
+      const queue = this.store.queue;
+      const shuffle_cache_queue = this.store.shuffle_cache_queue
 
       if (queue.length) {
         if (this.store.controls.shuffle) {
@@ -192,12 +200,18 @@ export default {
       this.store.saveControls()
     },
     timer: function () {
-
-      let duration = this.player.getDuration()
-      let currentDuration = this.player.getCurrentTime()
+      const duration = this.player.getDuration()
+      const currentDuration = this.player.getCurrentTime()
 
       document.getElementById('slider').value = (currentDuration * 100) / duration
       document.getElementById("rangeValue").innerHTML = this.secondsToString(currentDuration)
+    },
+    switchWin: function (name) {
+      if (this.activeComponent === name) return;
+      this.activeComponent = name
+
+      document.querySelector(".current").classList.remove("current");
+      document.getElementById(name).classList.add("current");
     }
   },
   setup() {
