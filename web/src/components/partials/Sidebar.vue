@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <img src="../../assets/images/logo.svg" alt="logo"/>
+    <img @click="this.$router.push('/')" src="../../assets/images/logo.svg" alt="logo"/>
 
     <div class="nav">
       <ul>

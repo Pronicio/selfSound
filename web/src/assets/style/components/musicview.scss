@@ -51,10 +51,37 @@ section {
     }
   }
 
-  .queue {
+  .right {
     display: flex;
     flex-direction: column;
+
     width: 40%;
-    height: 84vh;
+    height: 85vh;
+
+    .selector {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .current {
+        color: var(--text);
+        border-bottom: 1px white solid;
+        padding: 8px;
+      }
+
+      h3, p {
+        margin: 0;
+        color: var(--sub-text);
+        cursor: pointer;
+        padding: 8px;
+      }
+
+      p {
+        color: var(--sub-text);
+        margin: 8px;
+        cursor: default;
+      }
+    }
   }
 }

@@ -1,4 +1,3 @@
-const { deezer } = require('play-dl');
 const axios = require('axios')
 
 async function routes (fastify, options) {
@@ -78,8 +77,14 @@ async function routes (fastify, options) {
      * @body {string} musicID The musicID of the music
      */
     fastify.post('/music', async (req, rep) => {
-        const results = await deezer(`https://www.deezer.com/track/${req.body.musicID}`);
-        rep.send(results)
+        const id = req.body.musicID;
+
+        const results = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/track/3135556${id}`
+        })
+
+        rep.send(results.data)
     })
 
     /**
@@ -101,8 +106,12 @@ async function routes (fastify, options) {
      * Get the Trend playlist
      */
     fastify.get('/trend', async (req, rep) => {
-        const results = await deezer(`https://www.deezer.com/en/playlist/53362031`);
-        rep.send(results)
+        const results = await axios({
+            method: 'get',
+            url: `hhttps://www.deezer.com/en/playlist/53362031`
+        })
+
+        rep.send(results.data)
     })
 
     /**
@@ -111,7 +120,6 @@ async function routes (fastify, options) {
      * @param {number} index The index of the page
      */
     fastify.get('/top_world', async (req, rep) => {
-
         const indexText = req.query.index ? `&index=${req.query.index}` : ''
 
         const results = await axios({

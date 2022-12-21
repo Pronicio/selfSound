@@ -18,6 +18,7 @@
     "dotenv": "^16.0.2",
     "fastify": "^4.5.3",
     "genius-lyrics": "^4.4.0",
+    "lyrics-finder": "^21.7.0",
     "mongoose": "^6.5.5",
     "nodemon": "^2.0.19",
     "play-dl": "^1.9.5"
