@@ -6,7 +6,7 @@
   <div class="trackbar" v-if="store.currentMusic.title">
     <div class="infos">
       <img class="cover" :src="store.currentMusic.album.cover.big" width="80" alt="cover"/>
-      <div class="track">
+      <div class="title">
         <p>{{ cleanString(store.currentMusic.title) }}</p>
         <p class="sub-text" @click="this.$router.push({ name: 'Artist', params: { query: store.currentMusic.artist.id } }); closeView()">
           {{ store.currentMusic.artist.name }}</p>

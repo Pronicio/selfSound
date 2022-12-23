@@ -25,11 +25,11 @@
         <div class="musics" @scroll="infiniteScroll">
           <div class="track" v-for="(item, index) in top" :key="item.id" :id="item.id">
             <div class="details" @click="playFromProvider(item)">
-              <p id="index">{{ index + 1 }}.</p>
-              <img :src="item.album.cover_small" alt="Album Cover"/>
+              <p class="index">{{ index + 1 }}.</p>
+              <img :src="item.album.cover_small" alt="Album Cover" :id="item.album.id"/>
               <div class="info">
                 <h6>{{ cleanString(item.title) }}</h6>
-                <p>{{ item.artist.name }}</p>
+                <p :id="item.artist.id" class="artist">{{ item.artist.name }}</p>
               </div>
             </div>
             <div class="actions">

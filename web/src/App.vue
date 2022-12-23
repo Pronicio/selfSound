@@ -7,23 +7,23 @@
   <Trackbar/>
   <Radio/>
   <div id="context-menu">
-    <div class="item">
+    <div class="item" @click="action('like')">
       <div id="like"></div>
       J'aime
     </div>
-    <div class="item">
+    <div class="item" @click="action('add-to-queue')">
       <div id="add-to-queue"></div>
       Lire ensuite
     </div>
-    <div class="item">
+    <div class="item" @click="action('add-to-playlist')">
       <div id="add-to-playlist"></div>
       Ajouter à une playlist
     </div>
-    <div class="item">
+    <div class="item" @click="action('album')">
       <div id="album"></div>
       Voir l'album
     </div>
-    <div class="item">
+    <div class="item" @click="action('artist')">
       <div id="artist"></div>
       Voir l'artiste
     </div>
@@ -41,6 +41,11 @@ export default {
   components: {
     Header, Sidebar, Trackbar, Radio
   },
+  data: function () {
+    return {
+      trackObject: null
+    }
+  },
   mounted() {
     const scope = document.querySelector("body");
 
@@ -48,28 +53,28 @@ export default {
     scope.addEventListener("click", (e) => this.activeMenu(e));
   },
   methods: {
-    activeMenu: function (e) {
+    activeMenu: function (e, force) {
       const contextMenu = document.getElementById("context-menu");
-      // ? close the menu if the user clicks outside of it
+
+      if (force) return contextMenu.classList.remove("visible");
+
       if (e.target.offsetParent != contextMenu) {
         contextMenu.classList.remove("visible");
       }
     },
     ctxMenu: function (event) {
-
-      //TODO: Detect if track !!! 
-      event.path.includes(value => {
-        console.log("vv", value)
-      })
-
       const contextMenu = document.getElementById("context-menu");
+      contextMenu.classList.remove("visible");
+
+      const isTrack = event.path.find(el => el.className === "track")
+      if (!isTrack) return;
+
+      this.trackObject = isTrack
 
       event.preventDefault();
 
       const { clientX: mouseX, clientY: mouseY } = event;
-      const { normalizedX, normalizedY } = this.normalizePozition(mouseX, mouseY);
-
-      contextMenu.classList.remove("visible");
+      const { normalizedX, normalizedY } = this.normalizePosition(mouseX, mouseY);
 
       contextMenu.style.top = `${normalizedY}px`;
       contextMenu.style.left = `${normalizedX}px`;
@@ -78,7 +83,7 @@ export default {
         contextMenu.classList.add("visible");
       });
     },
-    normalizePozition: function (mouseX, mouseY) {
+    normalizePosition: function (mouseX, mouseY) {
       const contextMenu = document.getElementById("context-menu");
       const scope = document.querySelector("body");
 
@@ -108,6 +113,41 @@ export default {
       }
 
       return { normalizedX, normalizedY };
+    },
+    action: function (name) {
+      //TODO: Finish that..
+      switch (name) {
+        case 'like':
+          //
+          break;
+        case 'add-to-queue':
+          //
+          break;
+        case 'add-to-playlist':
+          //
+          break;
+        case 'album':
+          this.trackObject.children[0].childNodes.forEach(el => {
+            if (el.localName === "img") {
+              this.$router.push({ name: 'Album', params: { query: el.id } })
+            }
+          })
+          break;
+        case 'artist':
+          this.trackObject.children[0].childNodes.forEach(el => {
+            if (el.localName === "p" && el.hasAttribute('id')) {
+              this.$router.push({ name: 'Artist', params: { query: el.id } })
+            }
+
+            if (el.localName === "div") {
+              this.$router.push({ name: 'Artist', params: { query: el.childNodes[1].id } })
+            }
+          })
+          break;
+      }
+
+
+      this.activeMenu(null, true)
     }
   }
 }
