@@ -27,6 +27,32 @@ export async function getYoutubeVideoFromProvider(data) {
     };
 }
 
+export async function getTrackFromId(id) {
+    const req = await axios({
+        method: 'post',
+        url: `${import.meta.env.VITE_BACK}/standard/music`,
+        data: {
+            musicID: id
+        }
+    })
+
+    return {
+        trackId: req.data.id,
+        title: req.data.title_short ? req.data.title_short : req.data.title,
+        artist: {
+            id: req.data.artist.id,
+            name: req.data.artist.name,
+        },
+        album: {
+            id: req.data.album.id,
+            cover: {
+                big: req.data.album.cover_big || req.data.album.cover.big,
+                xl: req.data.album.cover_xl || req.data.album.cover.xl,
+            },
+        }
+    };
+}
+
 export function formatYoutubeVideo(data) {
     return {
         trackId: null,

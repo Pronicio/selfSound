@@ -21,7 +21,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.store.currentMusic.lyrics)
     if (!this.store.currentMusic.lyrics[0]) this.search(this.store.currentMusic.title, this.store.currentMusic.artist.name)
 
     this.eventBus.on('play', (data) => {

@@ -35,6 +35,8 @@ import Header from './components/partials/Header.vue'
 import Sidebar from './components/partials/Sidebar.vue'
 import Trackbar from './components/music/Trackbar.vue'
 import Radio from './components/music/Radio.vue'
+import { getTrackFromId, getYoutubeVideoFromProvider } from "@/api";
+import { useStore } from "@/store/main";
 
 export default {
   name: "Home",
@@ -121,7 +123,9 @@ export default {
           //
           break;
         case 'add-to-queue':
-          //
+          // TODO: Get infos of the music.
+          this.addToQueue(this.trackObject.id)
+          this.eventBus.emit('add-to-queue', "track")
           break;
         case 'add-to-playlist':
           //
@@ -148,6 +152,19 @@ export default {
 
 
       this.activeMenu(null, true)
+    },
+    addToQueue: async function (id) {
+      const data = await getTrackFromId(id)
+      const track = await getYoutubeVideoFromProvider(data);
+
+      this.store.queue.unshift(track)
+      this.store.saveQueue();
+    },
+  },
+  setup() {
+    const store = useStore()
+    return {
+      store
     }
   }
 }
