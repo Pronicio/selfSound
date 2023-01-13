@@ -117,39 +117,24 @@ export default {
       return { normalizedX, normalizedY };
     },
     action: function (name) {
-      //TODO: Finish that..
       switch (name) {
         case 'like':
-          //
+          //TODO: like
           break;
         case 'add-to-queue':
-          // TODO: Get infos of the music.
           this.addToQueue(this.trackObject.id)
           this.eventBus.emit('add-to-queue', "track")
           break;
         case 'add-to-playlist':
-          //
+          //TODO: add-to-playlist
           break;
         case 'album':
-          this.trackObject.children[0].childNodes.forEach(el => {
-            if (el.localName === "img") {
-              this.$router.push({ name: 'Album', params: { query: el.id } })
-            }
-          })
+          this.$router.push({ name: 'Album', params: { query: this.trackObject.querySelector("img").id } })
           break;
         case 'artist':
-          this.trackObject.children[0].childNodes.forEach(el => {
-            if (el.localName === "p" && el.hasAttribute('id')) {
-              this.$router.push({ name: 'Artist', params: { query: el.id } })
-            }
-
-            if (el.localName === "div") {
-              this.$router.push({ name: 'Artist', params: { query: el.childNodes[1].id } })
-            }
-          })
+          this.$router.push({ name: 'Artist', params: { query: this.trackObject.querySelector(".artist").id } })
           break;
       }
-
 
       this.activeMenu(null, true)
     },

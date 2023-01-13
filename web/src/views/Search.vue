@@ -12,7 +12,7 @@
     <div v-if="!ytb" id="standard">
       <h3 v-if="searchResult.track.length"> Tracks : </h3>
       <div class="result tracks">
-        <div v-for="item in searchResult.track" :key="item.id" :id="item.id">
+        <div class="track" v-for="item in searchResult.track" :key="item.id" :id="item.id">
           <img :src="item.album.cover_medium" alt="Album cover" loading="lazy" @click="playFromProvider(item)"/>
           <div class="title">
             <h4 @click="playFromProvider(item)">{{ item.title }}</h4>
