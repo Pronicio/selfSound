@@ -17,7 +17,7 @@
         <div id="shuffle" @click="control('shuffle')"
              :style="`filter: ${store.controls.shuffle ? 'var(--base)' : 'var(--unused)'}`"></div>
         <div id="backward" @click="control('backward')" :class="store.cache_queue.length ? '' : 'inactive'"></div>
-        <div id="play" @click="changeState($event)"></div>
+        <div id="play" class="mainControl" @click="changeState($event)"></div>
         <div id="forward" @click="control('forward')"></div>
         <div id="repeat-mode" @click="control('repeat-mode')"
              :style="`filter: ${store.controls.repeat_mode ? 'var(--base)' : 'var(--unused)'}`"></div>
@@ -63,6 +63,11 @@ export default {
       this.eventBus.emit('play', this.store.currentMusic)
     }
 
+    this.eventBus.on("forceState", (name) => {
+      const el = document.querySelector(".mainControl");
+      el.id = name === "play" ? "pause" : "play";
+    })
+
     this.eventBus.on("putControl", (data) => {
       let play = document.getElementById('play')
       let pause = document.getElementById('pause')
@@ -93,9 +98,9 @@ export default {
     control: function (name) {
       this.eventBus.emit('control', name)
     },
-    changeState: function (event) {
-      let targetId = event.currentTarget.id;
-      let el = document.getElementById(targetId)
+    changeState: function (event, forceState) {
+      const targetId = event.currentTarget.id;
+      const el = document.getElementById(targetId);
 
       if (targetId === "play") {
         el.id = "pause"

@@ -46,7 +46,6 @@ export default {
     }
   },
   mounted: async function () {
-
     window.onYouTubeIframeAPIReady = () => {
       this.iframeEnable = true;
     };
@@ -82,7 +81,6 @@ export default {
     if (!slider) return
 
     slider.addEventListener('click', e => {
-
       clearInterval(this.interval);
 
       let duration = this.player.getDuration()
@@ -141,6 +139,7 @@ export default {
     },
     onPlayerStateChange: function (event) {
       if (event.data === 1) {
+        this.eventBus.emit('forceState', "play")
         this.interval = setInterval(this.timer, 1000);
       }
 
@@ -148,8 +147,11 @@ export default {
         clearInterval(this.interval);
       }
 
-      if (event.data === 0) {
+      if (event.data === 2) {
+        this.eventBus.emit('forceState', "pause")
+      }
 
+      if (event.data === 0) {
         //If repeat mode is enabled then replay
         if (this.store.controls.repeat_mode) {
           return this.playVideo();
