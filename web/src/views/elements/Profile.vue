@@ -18,11 +18,11 @@
       </div>
       <div class="list">
         <div class="tracks" v-if="currentNav === 'flow' || currentNav === 'charts'">
-          <div class="track" v-for="track in this[currentNav]" :key="track.id">
+          <div class="track" v-for="track in this[currentNav]" :key="track.id" :id="track.id">
             <img class="lazy" :src="track.album.cover_medium" alt="Album cover" loading="lazy"
-                 @click="playFromProvider(track, 'flow')"/>
+                 @click="playFromProvider(track, 'flow')" :id="track.album.id"/>
             <h3 @click="playFromProvider(track, 'flow')">{{ track.title_short ? track.title_short : track.title }}</h3>
-            <p>{{ track.artist.name }}</p>
+            <p class="artist" :id="track.artist.id">{{ track.artist.name }}</p>
           </div>
         </div>
         <div class="groups" v-if="currentNav === 'playlists' || currentNav === 'albums'">

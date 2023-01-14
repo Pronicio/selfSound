@@ -81,7 +81,7 @@ async function routes (fastify, options) {
 
         const results = await axios({
             method: 'get',
-            url: `https://api.deezer.com/track/3135556${id}`
+            url: `https://api.deezer.com/track/${id}`
         })
 
         rep.send(results.data)

@@ -18,8 +18,8 @@
 }
 
 html {
-  --main: #171717;
-  --sub-main: #272727;
+  --main: #17171A;
+  --sub-main: #242528;
   --separators: #40404A;
 
   --color: #EE4950;
@@ -110,5 +110,72 @@ main {
 @keyframes shine {
   to {
     background-position-x: -200%;
+  }
+}
+
+#context-menu {
+  position: fixed;
+  z-index: 100;
+  width: 200px;
+  background: #292a2d;
+  border-radius: 5px;
+  transform: scale(0);
+  transform-origin: top left;
+  padding: 5px;
+  border: var(--separators) 1px solid;
+
+  &.visible {
+    transform: scale(1);
+    transition: transform 200ms ease-in-out;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: 5px 10px;
+    font-size: 1rem;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: inherit;
+
+    &:hover {
+      background: #343434;
+    }
+
+    > div {
+      filter: var(--base);
+      margin-right: 5px;
+
+      width: 2rem;
+      height: 2rem;
+    }
+
+    #add-to-queue {
+      background: url("@/assets/images/icons/playlist.svg") no-repeat;
+      background-size: 2rem;
+    }
+
+    #like {
+      background: url("@/assets/images/icons/heart_empty.svg") no-repeat;
+      background-size: 2rem;
+    }
+
+    #add-to-playlist {
+      background: url("@/assets/images/icons/playlist_add.svg") no-repeat;
+      background-size: 2rem;
+      width: 34px;
+    }
+
+    #album {
+      background: url("@/assets/images/icons/album.svg") no-repeat;
+      background-size: 2rem;
+    }
+
+    #artist {
+      background: url("@/assets/images/icons/artist.svg") no-repeat;
+      background-size: 2rem;
+    }
   }
 }

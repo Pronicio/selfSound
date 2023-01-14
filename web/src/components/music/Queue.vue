@@ -3,8 +3,8 @@
     <div class="list">
       <div v-for="item in store.queue" :key="item.id" :id="item.trackId" class="track" @click="play(item)">
         <div class="details">
-          <img :src="item.album.cover.big" width="50" alt="Album cover" loading="lazy"/>
-          <p>{{ item.title }}</p>
+          <img :src="item.album.cover.big" width="50" alt="Album cover" loading="lazy" :id="item.album.id"/>
+          <p :id="item.artist.id" class="artist">{{ item.title }}</p>
         </div>
         <div class="actions">
           <div id="like_music"></div>
