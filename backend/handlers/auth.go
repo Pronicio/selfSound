@@ -9,11 +9,11 @@ import (
 
 func Login() fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		user := c.FormValue("user")
-		pass := c.FormValue("pass")
+		username := c.FormValue("username")
+		password := c.FormValue("password")
 
 		//TODO: Database integration.
-		if user != "john" || pass != "doe" {
+		if username != "john" || password != "doe" {
 			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 

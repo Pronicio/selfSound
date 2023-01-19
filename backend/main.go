@@ -8,7 +8,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
-	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -44,10 +43,12 @@ func main() {
 	apiAuth := api.Group("/auth")
 	apiRoutes.AuthRouter(apiAuth)
 
-	secret := os.Getenv("JWT_SECRET")
-	app.Use(jwtware.New(jwtware.Config{
-		SigningKey: []byte(secret),
-	}))
+	/*
+		secret := os.Getenv("JWT_SECRET")
+		app.Use(jwtware.New(jwtware.Config{
+			SigningKey: []byte(secret),
+		}))
+	*/
 
 	apiUser := api.Group("/user")
 	apiRoutes.UserRouter(apiUser)
