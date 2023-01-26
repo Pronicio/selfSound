@@ -68,9 +68,18 @@ export default {
       const contextMenu = document.getElementById("context-menu");
       contextMenu.classList.remove("visible");
 
-      const isTrack = event.path.find(el => el.className === "track")
-      if (!isTrack) return;
+      let prevElement = event.srcElement;
+      let isTrack = false;
+      while (true) {
+        if (prevElement.parentElement.className === "track") {
+          isTrack = prevElement.parentElement;
+          break
+        }
 
+        prevElement = prevElement.parentElement
+      }
+
+      if (!isTrack) return;
       this.trackObject = isTrack
 
       event.preventDefault();
