@@ -10,7 +10,7 @@ export async function getYoutubeVideoFromProvider(data) {
     })
 
     return {
-        trackId: data.id,
+        trackId: data.trackId,
         videoId: req.data.id,
         title: data.title_short ? data.title_short : data.title,
         artist: {

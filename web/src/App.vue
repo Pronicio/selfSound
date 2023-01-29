@@ -38,6 +38,8 @@ import Radio from './components/music/Radio.vue'
 import { getTrackFromId, getYoutubeVideoFromProvider } from "@/api";
 import { useStore } from "@/store/main";
 
+import { toRaw } from 'vue';
+
 export default {
   name: "Home",
   components: {
@@ -148,8 +150,19 @@ export default {
       this.activeMenu(null, true)
     },
     addToQueue: async function (id) {
-      const data = await getTrackFromId(id)
-      const track = await getYoutubeVideoFromProvider(data);
+      let track;
+      const searchQueue = this.store.searchSongInCache(id)
+
+      if (searchQueue) {
+        if (!searchQueue.videoId) {
+          track = await getYoutubeVideoFromProvider(searchQueue);
+        } else {
+          track = searchQueue;
+        }
+      } else {
+        const data = await getTrackFromId(id);
+        track = await getYoutubeVideoFromProvider(data);
+      }
 
       this.store.queue.unshift(track)
       this.store.saveQueue();
@@ -157,9 +170,7 @@ export default {
   },
   setup() {
     const store = useStore()
-    return {
-      store
-    }
+    return { store }
   }
 }
 
