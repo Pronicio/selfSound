@@ -201,7 +201,6 @@ export default {
 
 </script>
 
-
 <style scoped lang="scss">
 @import '../assets/style/pages/home.scss';
 </style>

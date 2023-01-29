@@ -160,6 +160,48 @@ async function routes (fastify, options) {
 
         rep.send(results.data)
     })
+
+    /**
+     * Get all genres
+     */
+    fastify.get('/genres', async (req, rep) => {
+        const results = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/editorial`
+        })
+
+        rep.send(results.data.data)
+    })
+
+    /**
+     * Get all charts of a genre
+     * @body {string} id The ID of the genre
+     */
+    fastify.post('/genre/charts', async (req, rep) => {
+        const id = req.body.id;
+
+        const results = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/editorial/${id}/charts`
+        })
+
+        rep.send(results.data.tracks)
+    })
+
+    /**
+     * Get new releases of a genre
+     * @body {string} id The ID of the genre
+     */
+    fastify.post('/genre/releases', async (req, rep) => {
+        const id = req.body.id;
+
+        const results = await axios({
+            method: 'get',
+            url: `https://api.deezer.com/editorial/${id}/releases`
+        })
+
+        rep.send(results.data.data)
+    })
 }
 
 module.exports = routes;

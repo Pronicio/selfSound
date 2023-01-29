@@ -1,0 +1,43 @@
+section {
+
+  h1 {
+    margin: 0.67em 10px;
+    color: var(--text);
+    font-size: 2rem;
+  }
+
+  .collection {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+
+    cursor: pointer;
+
+    .card {
+      margin: 8px;
+      padding: 10px;
+      background: var(--sub-main);
+      box-shadow: 0 3px 21px rgb(16 18 35 / 30%);
+      border-radius: 9px;
+
+      font-size: 1.5rem;
+      font-weight: 600;
+
+      position: relative;
+      text-align: center;
+      color: white;
+
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        text-shadow: 0 0 3px #131313;
+      }
+    }
+  }
+}

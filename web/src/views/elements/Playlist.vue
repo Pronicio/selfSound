@@ -6,7 +6,7 @@
       <div class="artist">
         <h2 v-if="data.creator" @click="openUserProfile(data.creator)">{{ data.creator.name }}</h2>
       </div>
-      <p> {{ data.nb_tracks }} track(s) - {{ secondsToString(data.duration, true) }}</p>
+      <p> {{ data.nb_tracks || ".." }} track(s) - {{ secondsToString(data.duration, true) }}</p>
       <div class="controls">
         <button id="listen" @click="playFromProvider(data.tracks.data[0])">
           <div class="logo_play"></div>
