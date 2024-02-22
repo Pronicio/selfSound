@@ -46,16 +46,4 @@ const router = createRouter({
     routes,
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.query?.token) {
-        //TODO: check token with the server !
-        localStorage.setItem("token", to.query.token)
-        return window.location.href = window.location.origin
-    }
-
-    const auth = localStorage.getItem('token')
-    if (!auth) return window.location.href = import.meta.env.VITE_LANDING_PAGE;
-    next()
-})
-
 export default router
